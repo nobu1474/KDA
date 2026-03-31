@@ -1,0 +1,23 @@
+・仮想環境の起動（アクティベート）
+
+source venv/bin/activate
+
+・抜ける方法
+
+deactivate
+
+
+(venv) KDA % python --version
+>> Python 3.11.9
+
+uda-lab kda の git hub アクセストークン
+[REDACTED: GitHub Personal Access Token]
+
+
+・作業前
+git pull
+
+・作業後
+git add .
+git commit -m "変更内容"
+git push
