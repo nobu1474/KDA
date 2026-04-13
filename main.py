@@ -239,7 +239,7 @@ print(f"  Number of distinct polynomials: {len({tuple(sorted(v.items(), key=lamb
 # plot_poly_map_on_sphere(poly_map, title="Jones polynomial classes by projection direction")
 
 # 異なるJones多項式ごとに2D図式を表示
-# plot_distinct_jones_poly_diagrams([nmtorus_points_3d], poly_map)
+# plot_distinct_jones_poly_diagrams(curves, poly_map)
 
 
 # 射影方向を変えてみる
@@ -263,7 +263,145 @@ print(f"  Number of distinct polynomials: {len({tuple(sorted(v.items(), key=lamb
 
 """
 persistent Jonres polynomial を作っていきたい
-TODO: そのための曲線の集合のデータを作る。良いデータの作り方は何かないか
+TODO: そのための曲線の集合のデータを作る。良いデータの作り方は何かないか 曲線の集合ではなくセグメントの集合を頂点集合としているのでその必要はなさそう
 """
 
+# from sample_data import generate_curve_group, plot_curves
+# curves = generate_curve_group(n_curves=2, n_points=200, noise_sigma=0, seed=42)
+# plot_curves(curves)
 
+# crossings = find_crossings(curves)
+# print("\n" + "⭐️"*60)
+# print(f"Number of crossings: {len(crossings)}")
+
+# print(2**len(crossings)) # 交点の数に対して、状態の数は2の交点数乗になるはず
+
+# import time
+# start = time.perf_counter() #計測開始
+
+# jp = jones_polynomial(curves)
+
+# end = time.perf_counter() #計測終了
+# print(f"{(end - start)//60} 分 {(end - start)%60} 秒") #計測結果を表示
+
+# print(f"\nJones polynomial (bracket form):")
+# print(f"  Raw dict: {jp}")
+# print(f"\nFormatted: {format_jones_polynomial(jp)}")
+
+
+
+# import time
+# start = time.perf_counter() #計測開始
+
+# poly_map = integrated_jones_polynomial(curves)
+
+# end = time.perf_counter() #計測終了
+# print(f"{(end - start)//60} 分 {(end - start)%60} 秒") #計測結果を表示
+
+# # 可視化のための人たち
+# plot_poly_map_on_sphere(poly_map, title="Jones polynomial classes by projection direction")
+
+# # 異なるJones多項式ごとに2D図式を表示
+# plot_distinct_jones_poly_diagrams(curves, poly_map)
+
+
+# ============================================================================
+# VRフィルトレーション（Vietoris-Rips Filtration）テスト
+# ============================================================================
+# if __name__ == "__main__":
+#     from functions import (
+#         build_vr_persistence_with_homcloud,
+#         build_vr_filtration, 
+#         extract_facet_presence_from_filtration,
+#         print_vr_filtration_summary
+#     )
+#     from sample_data import make_braided_curves
+    
+#     print("\n" + "="*70)
+#     print("Vietoris-Rips Filtration Construction Test")
+#     print("="*70)
+    
+#     # テスト用曲線を生成
+#     curves = make_braided_curves(n=50)
+    
+#     # セグメント化：各曲線を単位長セグメントに分割
+#     # 論文では、各セグメント li は隣接するセグメントペアから構成される
+#     segments = []
+#     for curve in curves:
+#         for i in range(len(curve) - 1):
+#             segment = curve[i:i+2]
+#             segments.append(segment)
+    
+#     print(f"\nNumber of curves: {len(curves)}")
+#     print(f"Number of segments: {len(segments)}")
+#     print(f"Segment shape example: {segments[0].shape}")
+    
+#     try:
+#         homcloud_result = build_vr_persistence_with_homcloud(
+#             segments,
+#             maxdim=2,
+#             maxvalue=0.5,
+#             save_to="./rips_segments.pdgm",
+#         )
+#         d1 = homcloud_result["diagrams"][1]
+
+#         print("\n" + "="*70)
+#         print("HomCloud VR Persistence Result")
+#         print("="*70)
+#         print(f"PDGM path: {homcloud_result['pdgm_path']}")
+#         print(f"#pairs in H1: {len(d1['births'])}")
+
+#         for i, (b, d) in enumerate(zip(d1["births"][:5], d1["deaths"][:5])):
+#             print(f"  Pair {i}: birth={b:.6f}, death={d:.6f}, lifespan={d-b:.6f}")
+
+#     except RuntimeError as err:
+#         print("\n[WARN] HomCloud 実行に失敗したため、既存の手動VR実装にフォールバックします。")
+#         print(f"Reason: {err}")
+
+#         vr_filtration, distances = build_vr_filtration(segments, max_radius=0.5)
+#         print_vr_filtration_summary(vr_filtration)
+
+#         facet_summary_1d = extract_facet_presence_from_filtration(vr_filtration, dimension=1)
+
+#         print("\n" + "="*70)
+#         print("Facet Presence Summary (1-Facets / Edges):")
+#         print("="*70)
+#         for i, bar in enumerate(facet_summary_1d[:5]):
+#             print(f"\nFacet {i}: vertices {bar['facet']}")
+#             print(f"  First seen:  {bar['first_seen_radius']:.6f}")
+#             print(f"  Last seen:   {bar['last_seen_radius']:.6f}")
+#             print(f"  Span:        {bar['presence_span']:.6f}")
+#             print(f"  Stages:      {bar['active_stages']}")
+
+#         if len(facet_summary_1d) > 5:
+#             print(f"\n... ({len(facet_summary_1d) - 5} more facets)")
+
+#         print("\n" + "="*70)
+#         print("Segment Distance Matrix Statistics:")
+#         print("="*70)
+#         print(f"Min distance: {distances[distances > 0].min():.6f}")
+#         print(f"Max distance: {distances.max():.6f}")
+#         print(f"Mean distance: {distances[distances > 0].mean():.6f}")
+#         print(f"Median distance: {np.median(distances[distances > 0]):.6f}")
+
+# print(f"  Number of distinct polynomials: {len({tuple(sorted(v.items(), key=lambda item: str(item[0]))) for v in poly_map.values()})}")
+
+
+from functions import build_vr_filtration, distance_matrix, compute_critical_values, build_vietoris_rips_complex
+
+print("\n" + "="*70)
+print("Vietoris-Rips Filtration Construction Test")
+print("="*70)
+
+segments = []
+for curve in curves:
+    for i in range(len(curve) - 1):
+        segments.append(curve[i:i+2]) # スライス記法だから、curve[i:i+2] は curve[i] と curve[i+1] の2点を含むセグメントになる
+
+distances = distance_matrix(segments)
+# critical_values = compute_critical_values(distances)
+complexes = build_vietoris_rips_complex(distances, 3)
+for i in range(min(5, len(complexes))):
+    print(len(complexes[i]))
+# vr_filtration = build_vr_filtration(segments)
+# print(vr_filtration)

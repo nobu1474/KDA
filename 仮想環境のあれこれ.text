@@ -10,8 +10,6 @@ deactivate
 (venv) KDA % python --version
 >> Python 3.11.9
 
-uda-lab kda の git hub アクセストークン
-[REDACTED: GitHub Personal Access Token]
 
 
 ・作業前

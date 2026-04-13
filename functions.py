@@ -22,6 +22,7 @@
 import numpy as np
 from math import gcd
 import plotly.graph_objects as go
+from pathlib import Path
 
 def orient(a, b, c):
     """
@@ -570,7 +571,10 @@ def project_to_2D(curve, vector):
 
 
 def generate_unit_sphere_points(n_points, seed=None):
-    """Generates N points uniformly sampled on a unit sphere in 3D."""
+    """
+    Generates N points uniformly sampled on a unit sphere in 3D.
+    授業で作ってたやつ
+    """
     if seed is not None:
         np.random.seed(seed)
 
@@ -739,3 +743,432 @@ def plot_distinct_jones_poly_diagrams(curves, poly_map, title="Jones polynomial 
         fig.show()
     
     print(f"\nDisplayed {len(poly_to_direction)} distinct Jones polynomials")
+
+
+# ============================================================================
+# VRフィルトレーション (Vietoris-Rips Filtration)
+# 論文 Section 3.2 に基づく実装
+# ============================================================================
+
+def segment_hausdorff_distance(segment_a, segment_b):
+    """
+    2つのセグメント（点列）間のHausdorff距離を計算する。
+    セグメントは二つの端点で指定される線分。
+
+    d_H(A, B) = max( sup_{a in A} inf_{b in B} ||a-b||,
+                     sup_{b in B} inf_{a in A} ||a-b|| )
+    """
+    a = np.asarray(segment_a, dtype=float)
+    b = np.asarray(segment_b, dtype=float)
+
+    # 全点間距離行列 (|A|, |B|)
+    pairwise = np.linalg.norm(a[:, None, :] - b[None, :, :], axis=2) # こいつ何しとるかわからんけど多分めちゃくちゃ偉い。
+
+    # directed Hausdorff: A -> B, B -> A
+    directed_ab = np.max(np.min(pairwise, axis=1))
+    directed_ba = np.max(np.min(pairwise, axis=0))
+    return float(max(directed_ab, directed_ba))
+
+
+def distance_matrix(segments):
+    """
+    セグメント間の距離行列を計算
+    
+    各セグメント li, lj 間の距離をHausdorff距離で計算する。
+    
+    Parameters
+    ----------
+    segments : list of np.ndarray
+        n個のセグメント。各セグメントは (m_i, 3) 形の座標配列
+        
+    Returns
+    -------
+    distances : np.ndarray
+        (n, n) 対称距離行列
+    """
+    n = len(segments)
+    distances = np.zeros((n, n))
+    
+    for i in range(n):
+        for j in range(i+1, n):
+            h_dist = segment_hausdorff_distance(segments[i], segments[j])
+            distances[i, j] = h_dist
+            distances[j, i] = h_dist
+    
+    return distances
+
+
+
+def build_vietoris_rips_complex(distances, radius, max_dimension=2):
+    """
+    Vietoris-Rips複体を指定された半径で構築
+    TODO: 指定した次元で計算できるように一般化できないか？
+    三次元では少なすぎるのでは？単体に対するセグメントがどんなものになるか考える。
+    と言うよりセグメントは線分ではなく、折れ線のことと考えるべき？
+    
+    Parameters
+    ----------
+    distances : np.ndarray
+        (n, n) セグメント間距離行列
+    radius : float
+        VR複体の半径パラメータ
+    max_dimension : int
+        構築する最大次元（0,1,2...）。
+        計算量削減のため、まずは1（辺まで）を推奨。
+        
+    Returns
+    -------
+    simplices : dict
+        次元 -> シンプレックスリスト のマッピング
+        各シンプレックスは頂点インデックスのタプル
+    """
+    n = len(distances)
+    max_dimension = int(max_dimension)
+    if max_dimension < 0:
+        raise ValueError("max_dimension must be >= 0")
+
+    simplices = {d: [] for d in range(max_dimension + 1)}
+    
+    # 0-シンプレックス（頂点）
+    if max_dimension >= 0:
+        for i in range(n):
+            simplices[0].append((i,))
+    
+    # 1-シンプレックス（エッジ）
+    if max_dimension >= 1:
+        for i in range(n):
+            for j in range(i+1, n):
+                if distances[i, j] < radius:
+                    simplices[1].append((i, j))
+    
+    # 2-シンプレックス（三角形）
+    if max_dimension >= 2:
+        for i in range(n):
+            for j in range(i+1, n):
+                for k in range(j+1, n):
+                    # 全ペアが radius 以下の距離
+                    if (distances[i, j] < radius and 
+                        distances[i, k] < radius and 
+                        distances[j, k] < radius):
+                        simplices[2].append((i, j, k))
+    
+    return simplices
+
+
+def get_facets(simplices, dimension=None):
+    """
+    単体複体のファセット（包含関係での極大単体）を抽出する。
+
+    facet は「どのより高次の単体にも真に含まれない単体」を意味する。
+    dimension を指定した場合は、極大単体のうち指定次元のものだけを返す。
+    
+    Parameters
+    ----------
+    simplices : dict
+        build_vietoris_rips_complex の出力
+    dimension : int or None
+        指定した場合、その次元の facet だけを返す。
+        None の場合は全 facet を返す。
+        
+    Returns
+    -------
+    facets : list
+        ファセット（極大単体）のリスト
+    """
+    # 全次元の単体を 1 つの配列へ集約し、比較のために set に変換
+    all_simplices = []
+    for simplex_list in simplices.values():
+        all_simplices.extend(simplex_list) # valueはリスト(要素はタプル)なのでextendで追加している
+
+    simplex_sets = [set(simplex) for simplex in all_simplices] # 集合に変換
+
+    facets = []
+    for i, s in enumerate(simplex_sets):
+        is_maximal = True
+        for j, t in enumerate(simplex_sets):
+            if i == j:
+                continue
+            # s が t の真部分集合なら s は極大ではない
+            if s < t:
+                is_maximal = False
+                break
+        if is_maximal:
+            facets.append(all_simplices[i])
+
+    if dimension is None:
+        return facets
+
+    target_size = int(dimension) + 1
+    return [facet for facet in facets if len(facet) == target_size]
+
+
+def compute_critical_values(distances, max_iterations=None):
+    """
+    Vietoris-Rips複体の臨界値を計算
+    
+    臨界値は、複体の構造が変わる半径値
+    この値たちだけでフィルトレーションを構築すれば、同じホモロジーが得られる。
+    
+    Parameters
+    ----------
+    distances : np.ndarray
+        セグメント間距離行列
+    max_iterations : int, optional
+        最大反復数（デフォルト: 距離の一意値数）
+        
+    Returns
+    -------
+    critical_values : list
+        昇順の臨界値リスト
+    """
+    # 距離行列から0でない値を抽出し、ソート
+    unique_distances = np.unique(distances[distances > 0])
+    
+    if max_iterations is not None:
+        unique_distances = unique_distances[:max_iterations]
+    
+    return sorted(unique_distances)
+
+
+def build_vr_filtration(segments, max_radius=None, max_stages=None, max_dimension=2):
+    """
+    セグメント集合からVRフィルトレーションを構築
+    
+    Return: フィルトレーション構造体（複体の列）
+    
+    Parameters
+    ----------
+    segments : list of np.ndarray
+        セグメント集合
+    max_radius : float, optional
+        最大半径（デフォルト: 距離行列の最大値の少し先）
+    max_stages : int, optional
+        フィルトレーション段数の上限。指定時は臨界値を間引く。
+    max_dimension : int
+        構築する最大次元。計算量削減のため、まずは1を推奨。
+        
+    Returns
+    -------
+    vr_filtration : list of dict
+        各辞書は {
+            'radius': float,
+            'simplices': dict (次元 -> シンプレックスリスト),
+            'facets': list,      # 極大単体（facet）
+            'facets_1d': list,   # facet のうち1次元（辺）
+            'facets_2d': list    # facet のうち2次元（三角形）
+        }
+    """
+    # ステップ1: 距離行列を計算
+    distances = distance_matrix(segments)
+    
+    # ステップ2: 臨界値を計算
+    critical_values = compute_critical_values(distances)
+    
+    if max_radius is not None:
+        critical_values = [r for r in critical_values if r <= max_radius]
+
+    if max_stages is not None and len(critical_values) > int(max_stages):
+        stage_count = int(max_stages)
+        if stage_count <= 0:
+            raise ValueError("max_stages must be >= 1")
+        # 先頭〜末尾を保ちながら等間隔サンプリング
+        sample_idx = np.linspace(0, len(critical_values) - 1, stage_count, dtype=int)
+        critical_values = [critical_values[i] for i in sample_idx]
+    
+    # ステップ3: フィルトレーションを構築
+    vr_filtration = []
+    
+    for radius in critical_values:
+        simplices = build_vietoris_rips_complex(
+            distances,
+            radius,
+            max_dimension=max_dimension,
+        )
+        facets = get_facets(simplices, dimension=None)
+        
+        vr_filtration.append({
+            'radius': radius,
+            'simplices': simplices,
+            'facets': facets,
+            'facets_1d': [facet for facet in facets if len(facet) == 2],
+            'facets_2d': [facet for facet in facets if len(facet) == 3],
+        })
+    
+    return vr_filtration, distances
+
+
+# これ怪しい　使えなそう
+def extract_facet_presence_from_filtration(vr_filtration, dimension=1):
+    """
+    VR フィルトレーション中で facet がいつ観測されたかの要約を返す。
+
+    これは persistent homology の barcode ではない。
+    ここで追っているのは、各次元の最大単体がフィルトレーション中で
+    いつ最初に現れ、最後にいつ観測されたかという履歴。
+
+    Parameters
+    ----------
+    vr_filtration : list of dict
+        build_vr_filtration の出力
+    dimension : int
+        対象次元（1 = エッジ, 2 = 三角形）
+
+    Returns
+    -------
+    summary : list of dicts
+        各要素は {
+            'facet': tuple,
+            'first_seen_radius': float,
+            'last_seen_radius': float,
+            'presence_span': float,
+            'active_stages': int
+        }
+    """
+    facet_key = f'facets_{dimension}d'
+
+    first_seen = {}
+    last_seen = {}
+    active_stages = {}
+
+    for stage in vr_filtration:
+        radius = stage['radius']
+        for facet in stage[facet_key]:
+            if facet not in first_seen:
+                first_seen[facet] = radius
+            last_seen[facet] = radius
+            active_stages[facet] = active_stages.get(facet, 0) + 1
+
+    summary = []
+    for facet in sorted(first_seen.keys()):
+        first_radius = first_seen[facet]
+        last_radius = last_seen[facet]
+        summary.append({
+            'facet': facet,
+            'first_seen_radius': first_radius,
+            'last_seen_radius': last_radius,
+            'presence_span': last_radius - first_radius,
+            'active_stages': active_stages[facet],
+        })
+
+    return summary
+
+
+def extract_barcode_from_filtration(vr_filtration, dimension=1):
+    """
+    旧名の互換ラッパー。
+
+    実際には barcode ではなく、facet の出現履歴の要約を返す。
+    """
+    return extract_facet_presence_from_filtration(vr_filtration, dimension=dimension)
+
+
+def print_vr_filtration_summary(vr_filtration):
+    """VRフィルトレーションの概要を表示"""
+    print("\n" + "="*70)
+    print("Vietoris-Rips Filtration Summary")
+    print("="*70)
+    
+    for stage_idx, stage in enumerate(vr_filtration):
+        radius = stage['radius']
+        n_vertices = len(stage['simplices'][0])
+        n_edges = len(stage['facets_1d'])
+        n_triangles = len(stage['facets_2d'])
+        
+        print(f"\nStage {stage_idx:3d}: radius = {radius:.6f}")
+        print(f"  Vertices:  {n_vertices}")
+        print(f"  Edges:     {n_edges}")
+        print(f"  Triangles: {n_triangles}")
+
+
+def segment_midpoints(segments):
+    """各セグメントを代表点（中点）に変換する。"""
+    points = []
+    for seg in segments:
+        seg = np.asarray(seg, dtype=float)
+        points.append(seg.mean(axis=0))
+    return np.asarray(points, dtype=float)
+
+
+def pairwise_distance_matrix(points):
+    """点群からユークリッド距離行列を作る。"""
+    points = np.asarray(points, dtype=float)
+    diff = points[:, None, :] - points[None, :, :]
+    return np.linalg.norm(diff, axis=2)
+
+
+def build_vr_persistence_with_homcloud(
+    segments,
+    maxdim=2,
+    maxvalue=None,
+    save_to="rips_segments.pdgm",
+    save_graph=False,
+):
+    """
+    homcloud を使って VR フィルトレーション由来のパーシステンス図を計算する。
+
+    Parameters
+    ----------
+    segments : list[np.ndarray]
+        セグメント列（各要素は形状 (k, 3) を想定）
+    maxdim : int
+        計算する最大次元
+    maxvalue : float | None
+        VR 計算の閾値（指定時は計算コストを削減）
+    save_to : str
+        pdgm ファイルの保存先
+    save_graph : bool
+        optimal 1-cycle 用のグラフ情報も保存するか
+
+    Returns
+    -------
+    result : dict
+        {
+          "distance_matrix": np.ndarray,
+          "pdgm_path": str,
+          "diagrams": {d: {"births": np.ndarray, "deaths": np.ndarray, "essential_births": np.ndarray}}
+        }
+    """
+    try:
+        import homcloud.interface as hc  # type: ignore[import-not-found]
+    except Exception as exc:
+        raise RuntimeError(
+            "homcloud を import できませんでした。"
+            "この環境では homcloud ビルド時に CGAL ヘッダが必要です。"
+            "macOS の場合は CGAL を導入してから再インストールしてください。"
+        ) from exc
+
+    points = segment_midpoints(segments)
+    dmatrix = pairwise_distance_matrix(points)
+
+    save_path = Path(save_to)
+    save_path.parent.mkdir(parents=True, exist_ok=True)
+
+    kwargs = {
+        "maxdim": int(maxdim),
+        "save_to": str(save_path),
+        "save_graph": bool(save_graph),
+    }
+    if maxvalue is not None:
+        kwargs["maxvalue"] = float(maxvalue)
+
+    pdlist = hc.PDList.from_rips_filtration(dmatrix, **kwargs)
+    pdlist = hc.PDList(str(save_path)) if pdlist is None else pdlist
+
+    diagrams = {}
+    for d in range(maxdim + 1):
+        pd = pdlist.dth_diagram(d)
+        births = np.asarray(getattr(pd, "births"), dtype=float)
+        deaths = np.asarray(getattr(pd, "deaths"), dtype=float)
+        essential_births = np.asarray(getattr(pd, "essential_births", np.array([])), dtype=float)
+
+        diagrams[d] = {
+            "births": births,
+            "deaths": deaths,
+            "essential_births": essential_births,
+        }
+
+    return {
+        "distance_matrix": dmatrix,
+        "pdgm_path": str(save_path),
+        "diagrams": diagrams,
+    }
