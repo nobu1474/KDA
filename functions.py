@@ -587,7 +587,7 @@ def generate_unit_sphere_points(n_points, seed=None):
     return unit_points
 
 # --- Configuration ---
-N_POINTS = 10  # Number of points in the 3D point cloud
+N_POINTS = 10000  # Number of points in the 3D point cloud
 RANDOM_SEED = 42 # Fixed random seed for reproducibility
 sphere_points = generate_unit_sphere_points(N_POINTS,RANDOM_SEED)
 
@@ -597,7 +597,8 @@ def integrated_jones_polynomial(curves, sphere_points=sphere_points):
     交点検出から Jones polynomial の計算までを統合している。
     """
     poly_map = {} # projection_vector -> jones_polynomial の辞書
-    for projection_vector in sphere_points:
+    for i,projection_vector in enumerate(sphere_points):
+        print(i)
         jones_poly_of_v = jones_polynomial(curves, projection_vector=projection_vector)
         poly_map[tuple(projection_vector)] = jones_poly_of_v
 

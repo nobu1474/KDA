@@ -236,7 +236,7 @@ print(f"  Number of distinct polynomials: {len({tuple(sorted(v.items(), key=lamb
 
 
 # 可視化のための人たち
-# plot_poly_map_on_sphere(poly_map, title="Jones polynomial classes by projection direction")
+plot_poly_map_on_sphere(poly_map, title="Jones polynomial classes by projection direction")
 
 # 異なるJones多項式ごとに2D図式を表示
 # plot_distinct_jones_poly_diagrams(curves, poly_map)
