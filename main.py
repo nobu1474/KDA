@@ -206,6 +206,7 @@ labeled_crossings = apply_smoothing(crossings, states[0])
 
 # ===== Test Jones Polynomial Calculation =====
 from functions import jones_polynomial, format_jones_polynomial
+from classes import Knot
 
 print("\n" + "="*60)
 print("Testing Jones Polynomial Calculation")
@@ -213,11 +214,12 @@ print("="*60)
 
 curves = [nmtorus_points_3d]
 # Test 1: Calculate Jones polynomial for the (n,m)-torus knot
-jp = jones_polynomial(curves)
-print(f"\nNumber of crossings: {len(crossings)}")
+knot = Knot(curves)
+print(f"\nNumber of crossings: {len(knot.crossings)}")
 print(f"\nJones polynomial (bracket form):")
-print(f"  Raw dict: {jp}")
-print(f"\nFormatted: {format_jones_polynomial(jp)}")
+print(f"  Raw dict: {knot.jones_polynomial}")
+# print(f"\nFormatted: {format_jones_polynomial(knot)}")
+print(f"\nFormatted: {knot.jones_polynomial_str}")
 
 print("\n" + "-"*60)
 from functions import integrated_jones_polynomial, plot_poly_map_on_sphere, plot_distinct_jones_poly_diagrams
@@ -401,7 +403,11 @@ for curve in curves:
 distances = distance_matrix(segments)
 # critical_values = compute_critical_values(distances)
 complexes = build_vietoris_rips_complex(distances, 3)
-for i in range(min(5, len(complexes))):
-    print(len(complexes[i]))
+# for i in range(min(5, len(complexes))):
+#     print(len(complexes[i]))
 # vr_filtration = build_vr_filtration(segments)
 # print(vr_filtration)
+
+from functions import get_facets
+facets = get_facets(complexes)
+print(facets)
