@@ -587,7 +587,7 @@ def generate_unit_sphere_points(n_points, seed=None):
     return unit_points
 
 # --- Configuration ---
-N_POINTS = 10000  # Number of points in the 3D point cloud
+N_POINTS = 10  # Number of points in the 3D point cloud
 RANDOM_SEED = 42 # Fixed random seed for reproducibility
 sphere_points = generate_unit_sphere_points(N_POINTS,RANDOM_SEED)
 
@@ -876,25 +876,34 @@ def get_facets(simplices, dimension=None):
     facets : list
         ファセット（極大単体）のリスト
     """
-    # 全次元の単体を 1 つの配列へ集約し、比較のために set に変換
-    all_simplices = []
-    for simplex_list in simplices.values():
-        all_simplices.extend(simplex_list) # valueはリスト(要素はタプル)なのでextendで追加している
+    # 次元ごとの候補を用意し、上位次元から下へ向けて候補を削る
+    candidate_by_dim = {
+        dim: list(simplices.get(dim, []))
+        for dim in sorted(simplices.keys(), reverse=True)
+    }
 
-    simplex_sets = [set(simplex) for simplex in all_simplices] # 集合に変換
+    # すでに facet と確定した上位次元単体の集合表現
+    higher_facet_sets = []
+    facets_by_dim = {}
+
+    for dim in sorted(candidate_by_dim.keys(), reverse=True):
+        current_candidates = candidate_by_dim[dim]
+        if not current_candidates:
+            continue
+
+        # 同じ次元同士は包含しないので、比較は上位次元 facet だけで十分
+        remaining = []
+        for simplex in current_candidates:
+            simplex_set = set(simplex)
+            if not any(simplex_set.issubset(higher_facet) for higher_facet in higher_facet_sets):
+                remaining.append(simplex)
+
+        facets_by_dim[dim] = remaining
+        higher_facet_sets.extend(set(simplex) for simplex in remaining)
 
     facets = []
-    for i, s in enumerate(simplex_sets):
-        is_maximal = True
-        for j, t in enumerate(simplex_sets):
-            if i == j:
-                continue
-            # s が t の真部分集合なら s は極大ではない
-            if s < t:
-                is_maximal = False
-                break
-        if is_maximal:
-            facets.append(all_simplices[i])
+    for dim in sorted(facets_by_dim.keys(), reverse=True):
+        facets.extend(facets_by_dim[dim])
 
     if dimension is None:
         return facets
