@@ -881,6 +881,7 @@ def get_facets(simplices, dimension=None):
         dim: list(simplices.get(dim, []))
         for dim in sorted(simplices.keys(), reverse=True)
     }
+    print(candidate_by_dim)
 
     # すでに facet と確定した上位次元単体の集合表現
     higher_facet_sets = []

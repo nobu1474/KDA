@@ -239,6 +239,7 @@ import time
 
 # 可視化のための人たち
 # plot_poly_map_on_sphere(poly_map, title="Jones polynomial classes by projection direction")
+# plot_poly_map_on_sphere(poly_map, title="Jones polynomial classes by projection direction")
 
 # 異なるJones多項式ごとに2D図式を表示
 # plot_distinct_jones_poly_diagrams(curves, poly_map)
@@ -402,7 +403,7 @@ for curve in curves:
 
 distances = distance_matrix(segments)
 # critical_values = compute_critical_values(distances)
-complexes = build_vietoris_rips_complex(distances, 3)
+complexes = build_vietoris_rips_complex(distances, 2)
 # for i in range(min(5, len(complexes))):
 #     print(len(complexes[i]))
 # vr_filtration = build_vr_filtration(segments)
