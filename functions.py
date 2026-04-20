@@ -895,11 +895,31 @@ def get_facets(simplices, dimension=None):
         remaining = []
         for simplex in current_candidates:
             simplex_set = set(simplex)
-            if not any(simplex_set.issubset(higher_facet) for higher_facet in higher_facet_sets):
+            if not any(simplex_set.issubset(higher_facet) for higher_facet in higher_facet_sets): #一番上の次元に関しては higher_facet_sets は空だから、すべての simplex が remaining に入ることになる。
                 remaining.append(simplex)
 
         facets_by_dim[dim] = remaining
-        higher_facet_sets.extend(set(simplex) for simplex in remaining)
+        new_higher_facet_sets = [set(simplex) for simplex in remaining]
+        higher_facet_sets.extend(new_higher_facet_sets)
+
+        # 確定した facet の部分単体は下位次元の候補から除外して計算量を抑える。
+        remove_by_dim = {}
+        for facet in remaining:
+            facet_size = len(facet)
+            for subset_size in range(1, facet_size):
+                remove_dim = subset_size - 1
+                remove_by_dim.setdefault(remove_dim, set()).update(
+                    itertools.combinations(facet, subset_size)
+                )
+
+        for lower_dim, remove_set in remove_by_dim.items():
+            if lower_dim not in candidate_by_dim or not candidate_by_dim[lower_dim]:
+                continue
+            candidate_by_dim[lower_dim] = [
+                simplex
+                for simplex in candidate_by_dim[lower_dim]
+                if simplex not in remove_set
+            ]
 
     facets = []
     for dim in sorted(facets_by_dim.keys(), reverse=True):
@@ -1005,6 +1025,117 @@ def build_vr_filtration(segments, max_radius=None, max_stages=None, max_dimensio
         })
     
     return vr_filtration, distances
+
+
+def build_simplex_birth_time_map(vr_filtration):
+    """
+    フィルトレーション写像（単体 -> 発生時刻）を構成する。
+
+    各単体 simplex に対して、
+      f(simplex) = その単体が最初に出現した半径
+    を返す。
+
+    Parameters
+    ----------
+    vr_filtration : list of dict
+        build_vr_filtration の出力（各段に 'radius' と 'simplices' を持つ）
+
+    Returns
+    -------
+    birth_time_map : dict
+        {simplex(tuple[int,...]): birth_radius(float)}
+    """
+    birth_time_map = {}
+
+    for stage in vr_filtration:
+        radius = float(stage['radius'])
+        simplices_by_dim = stage['simplices']
+
+        for dim in sorted(simplices_by_dim.keys()):
+            for simplex in simplices_by_dim[dim]:
+                simplex_key = tuple(sorted(simplex))
+                if simplex_key not in birth_time_map:
+                    birth_time_map[simplex_key] = radius
+
+    return birth_time_map
+
+
+def extract_facet_birth_death_pairs(vr_filtration, dimension=None):
+    """
+    facet 的な生成消滅対（birth-death pair）を返す。
+
+    定義:
+    - birth: 単体（face）が最初に出現した時刻
+    - death: その単体を真に含む上位単体が最初に出現した時刻
+      （上位単体が出ると、その単体は facet ではなくなる）
+
+    Parameters
+    ----------
+    vr_filtration : list of dict
+        build_vr_filtration の出力
+    dimension : int or None
+        指定した場合、その次元の単体だけを返す。
+        None の場合は全次元を返す。
+
+    Returns
+    -------
+    pairs : list of dict
+        各要素は {
+            'simplex': tuple,
+            'dimension': int,
+            'birth': float,
+            'death': float | None,
+            'lifetime': float | None,
+        }
+        death=None は最後まで facet のまま（有限段では消滅しない）を表す。
+    """
+    birth_time_map = build_simplex_birth_time_map(vr_filtration)
+    if not birth_time_map:
+        return []
+
+    simplices = list(birth_time_map.keys())
+    simplices_by_size = {}
+    for simplex in simplices:
+        simplices_by_size.setdefault(len(simplex), []).append(simplex)
+
+    all_sizes = sorted(simplices_by_size.keys())
+    result = []
+
+    for simplex in simplices:
+        simplex_size = len(simplex)
+        simplex_dim = simplex_size - 1
+
+        if dimension is not None and simplex_dim != int(dimension):
+            continue
+
+        simplex_set = set(simplex)
+        birth = float(birth_time_map[simplex])
+
+        death_candidates = []
+        for higher_size in all_sizes:
+            if higher_size <= simplex_size:
+                continue
+            for coface in simplices_by_size[higher_size]:
+                if simplex_set.issubset(coface):
+                    death_candidates.append(float(birth_time_map[coface]))
+
+        if death_candidates:
+            death = min(death_candidates)
+            lifetime = death - birth
+        else:
+            death = None
+            lifetime = None
+
+        result.append({
+            'simplex': simplex,
+            'dimension': simplex_dim,
+            'birth': birth,
+            'death': death,
+            'lifetime': lifetime,
+        })
+
+    result.sort(key=lambda item: (item['dimension'], item['birth'], item['simplex']))
+    return result
 
 
 # これ怪しい　使えなそう
