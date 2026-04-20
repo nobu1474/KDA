@@ -6,7 +6,8 @@ import numpy as np
 from functions import (
     build_vr_filtration, 
     extract_facet_presence_from_filtration,
-    print_vr_filtration_summary
+    print_vr_filtration_summary,
+    distance_matrix,
 )
 
 # シンプルなテスト曲線を作成
@@ -45,7 +46,8 @@ print(f"セグメント形状例: {segments[0].shape}")
 
 # VRフィルトレーション構築
 print("\nVRフィルトレーションを構築中...")
-vr_filtration, distances = build_vr_filtration(segments, max_radius=1.0)
+vr_filtration = build_vr_filtration(segments, max_radius=1.0)
+distances = distance_matrix(segments)
 
 # 概要表示
 print_vr_filtration_summary(vr_filtration)

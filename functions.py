@@ -839,7 +839,7 @@ def build_vietoris_rips_complex(distances, radius, max_dimension=2):
     if max_dimension >= 1:
         for i in range(n):
             for j in range(i+1, n):
-                if distances[i, j] < radius:
+                if distances[i, j] <= radius:
                     simplices[1].append((i, j))
     
     # 2-シンプレックス（三角形）
@@ -848,9 +848,9 @@ def build_vietoris_rips_complex(distances, radius, max_dimension=2):
             for j in range(i+1, n):
                 for k in range(j+1, n):
                     # 全ペアが radius 以下の距離
-                    if (distances[i, j] < radius and 
-                        distances[i, k] < radius and 
-                        distances[j, k] < radius):
+                    if (distances[i, j] <= radius and 
+                        distances[i, k] <= radius and 
+                        distances[j, k] <= radius):
                         simplices[2].append((i, j, k))
     
     return simplices
@@ -963,9 +963,9 @@ def compute_critical_values(distances, max_iterations=None):
 
 def build_vr_filtration(segments, max_radius=None, max_stages=None, max_dimension=2):
     """
-    セグメント集合からVRフィルトレーションを構築
+    セグメント集合からVRフィルトレーション写像を構築
     
-    Return: フィルトレーション構造体（複体の列）
+    Return: 単体 -> 発生時刻（半径）の写像
     
     Parameters
     ----------
@@ -980,52 +980,105 @@ def build_vr_filtration(segments, max_radius=None, max_stages=None, max_dimensio
         
     Returns
     -------
-    vr_filtration : list of dict
-        各辞書は {
-            'radius': float,
-            'simplices': dict (次元 -> シンプレックスリスト),
-            'facets': list,      # 極大単体（facet）
-            'facets_1d': list,   # facet のうち1次元（辺）
-            'facets_2d': list    # facet のうち2次元（三角形）
-        }
+    simplex_birth_time_map : dict
+        {simplex(tuple[int,...]): birth_radius(float)}
     """
     # ステップ1: 距離行列を計算
     distances = distance_matrix(segments)
-    
-    # ステップ2: 臨界値を計算
-    critical_values = compute_critical_values(distances)
-    
-    if max_radius is not None:
-        critical_values = [r for r in critical_values if r <= max_radius]
 
-    if max_stages is not None and len(critical_values) > int(max_stages):
+    # ステップ2: 単体ごとの発生時刻を直接計算
+    # 0次単体は時刻 0 で既に存在
+    simplex_birth_time_map = {}
+    n_vertices = len(segments)
+    max_dimension = int(max_dimension)
+    if max_dimension < 0:
+        raise ValueError("max_dimension must be >= 0")
+
+    for i in range(n_vertices):
+        simplex_birth_time_map[(i,)] = 0.0
+
+    # 1次以上の単体は「含まれる辺長の最大値」を発生時刻とする
+    # （VR複体で simplex が初めて出現する最小半径）
+    for simplex_size in range(2, max_dimension + 2):
+        for simplex in itertools.combinations(range(n_vertices), simplex_size):
+            birth = 0.0
+            for i, j in itertools.combinations(simplex, 2):
+                birth = max(birth, float(distances[i, j]))
+
+            if max_radius is not None and birth > float(max_radius):
+                continue
+
+            simplex_birth_time_map[tuple(simplex)] = birth
+
+    # max_stages が指定された場合は、発生時刻を代表半径へ丸める
+    # （増大列側で段数を間引いた場合に対応する写像表現）
+    if max_stages is not None:
         stage_count = int(max_stages)
         if stage_count <= 0:
             raise ValueError("max_stages must be >= 1")
-        # 先頭〜末尾を保ちながら等間隔サンプリング
-        sample_idx = np.linspace(0, len(critical_values) - 1, stage_count, dtype=int)
-        critical_values = [critical_values[i] for i in sample_idx]
-    
-    # ステップ3: フィルトレーションを構築
+
+        positive_births = sorted({
+            float(b)
+            for simplex, b in simplex_birth_time_map.items()
+            if len(simplex) >= 2 and b > 0
+        })
+
+        if stage_count < len(positive_births) and positive_births:
+            sample_idx = np.linspace(0, len(positive_births) - 1, stage_count, dtype=int)
+            sampled_radii = [positive_births[i] for i in sample_idx]
+
+            for simplex, birth in list(simplex_birth_time_map.items()):
+                if len(simplex) == 1 or birth <= 0:
+                    continue
+                for sampled in sampled_radii:
+                    if sampled >= birth:
+                        simplex_birth_time_map[simplex] = float(sampled)
+                        break
+                else:
+                    simplex_birth_time_map[simplex] = float(sampled_radii[-1])
+
+    return simplex_birth_time_map
+
+
+def _build_filtration_from_birth_time_map(simplex_birth_time_map):
+    """
+    単体 -> 発生時刻の写像から、増大列としてのフィルトレーションを復元する。
+    """
+    if not simplex_birth_time_map:
+        return []
+
+    normalized = {
+        tuple(sorted(simplex)): float(radius)
+        for simplex, radius in simplex_birth_time_map.items()
+    }
+    radii = sorted(set(normalized.values()))
     vr_filtration = []
-    
-    for radius in critical_values:
-        simplices = build_vietoris_rips_complex(
-            distances,
-            radius,
-            max_dimension=max_dimension,
-        )
-        facets = get_facets(simplices, dimension=None)
-        
+
+    for radius in radii:
+        simplices = {}
+        for simplex, birth in normalized.items():
+            if birth <= radius:
+                dim = len(simplex) - 1
+                simplices.setdefault(dim, []).append(simplex)
+
+        if simplices:
+            max_dim = max(simplices.keys())
+            for dim in range(max_dim + 1):
+                simplices.setdefault(dim, [])
+
+        for dim in simplices:
+            simplices[dim] = sorted(simplices[dim])
+
+        facets = get_facets(simplices, dimension=None) if simplices else []
         vr_filtration.append({
-            'radius': radius,
+            'radius': float(radius),
             'simplices': simplices,
             'facets': facets,
             'facets_1d': [facet for facet in facets if len(facet) == 2],
             'facets_2d': [facet for facet in facets if len(facet) == 3],
         })
-    
-    return vr_filtration, distances
+
+    return vr_filtration
 
 
 def build_simplex_birth_time_map(vr_filtration):
@@ -1038,14 +1091,21 @@ def build_simplex_birth_time_map(vr_filtration):
 
     Parameters
     ----------
-    vr_filtration : list of dict
-        build_vr_filtration の出力（各段に 'radius' と 'simplices' を持つ）
+    vr_filtration : list of dict または dict
+        list の場合: 各段に 'radius' と 'simplices' を持つ増大列
+        dict の場合: build_vr_filtration の出力
 
     Returns
     -------
     birth_time_map : dict
         {simplex(tuple[int,...]): birth_radius(float)}
     """
+    if isinstance(vr_filtration, dict):
+        return {
+            tuple(sorted(simplex)): float(radius)
+            for simplex, radius in vr_filtration.items()
+        }
+
     birth_time_map = {}
 
     for stage in vr_filtration:
@@ -1063,83 +1123,83 @@ def build_simplex_birth_time_map(vr_filtration):
 
 def extract_facet_birth_death_pairs(vr_filtration, dimension=None):
     """
-    facet 的な生成消滅対（birth-death pair）を返す。
+        facet 的な生成消滅対（birth-death pair）を返す。
 
-    定義:
-    - birth: 単体（face）が最初に出現した時刻
-    - death: その単体を真に含む上位単体が最初に出現した時刻
-      （上位単体が出ると、その単体は facet ではなくなる）
+        手順:
+        - 単体を次元ごと（低次元→高次元）かつ birth 昇順で走査する
+        - 各単体 simplex が出現した時刻 birth(simplex) を、
+            simplex に真に含まれる face の death 候補として与える
+        - すでに death が確定している face は更新しない（最初の1回だけ設定）
 
     Parameters
     ----------
-    vr_filtration : list of dict
-        build_vr_filtration の出力
+    vr_filtration : list of dict または dict
+        list の場合: 各段に 'radius' と 'simplices' を持つ増大列
+        dict の場合: build_vr_filtration の出力（単体 -> 発生時刻）
     dimension : int or None
         指定した場合、その次元の単体だけを返す。
         None の場合は全次元を返す。
 
     Returns
     -------
-    pairs : list of dict
-        各要素は {
-            'simplex': tuple,
-            'dimension': int,
-            'birth': float,
-            'death': float | None,
-            'lifetime': float | None,
-        }
+    pairs_by_dimension : dict[int, list[dict]]
+        {dimension: [{'simplex': tuple,
+                      'birth': float,
+                      'death': float | None,
+                      'lifetime': float | None}, ...]}
         death=None は最後まで facet のまま（有限段では消滅しない）を表す。
     """
     birth_time_map = build_simplex_birth_time_map(vr_filtration)
     if not birth_time_map:
         return []
 
-    simplices = list(birth_time_map.keys())
-    simplices_by_size = {}
+    simplices = sorted(tuple(sorted(simplex)) for simplex in birth_time_map.keys())
+    max_size = max(len(simplex) for simplex in simplices)
+    simplices_by_size = {size: [] for size in range(1, max_size + 1)}
     for simplex in simplices:
-        simplices_by_size.setdefault(len(simplex), []).append(simplex)
+        simplices_by_size[len(simplex)].append(simplex)
 
-    all_sizes = sorted(simplices_by_size.keys())
-    result = []
+    for size in simplices_by_size:
+        simplices_by_size[size].sort(
+            key=lambda simplex: (float(birth_time_map[simplex]), simplex)
+        )
 
+    death_map = {simplex: None for simplex in simplices}
+
+    # 低次元→高次元で走査し、各高次単体の出現時刻を face の death に一度だけ割り当てる
+    for size in range(2, max_size + 1):
+        for simplex in simplices_by_size[size]:
+            death_time = float(birth_time_map[simplex])
+            for face_size in range(1, size):
+                for face in itertools.combinations(simplex, face_size):
+                    face = tuple(sorted(face))
+                    if face in death_map and death_map[face] is None:
+                        death_map[face] = death_time
+
+    result_by_dimension = {}
     for simplex in simplices:
-        simplex_size = len(simplex)
-        simplex_dim = simplex_size - 1
-
+        simplex_dim = len(simplex) - 1
         if dimension is not None and simplex_dim != int(dimension):
             continue
 
-        simplex_set = set(simplex)
         birth = float(birth_time_map[simplex])
+        death = death_map[simplex]
+        lifetime = (death - birth) if death is not None else None
 
-        death_candidates = []
-        for higher_size in all_sizes:
-            if higher_size <= simplex_size:
-                continue
-            for coface in simplices_by_size[higher_size]:
-                if simplex_set.issubset(coface):
-                    death_candidates.append(float(birth_time_map[coface]))
-
-        if death_candidates:
-            death = min(death_candidates)
-            lifetime = death - birth
-        else:
-            death = None
-            lifetime = None
-
-        result.append({
+        result_by_dimension.setdefault(simplex_dim, []).append({
             'simplex': simplex,
-            'dimension': simplex_dim,
             'birth': birth,
             'death': death,
             'lifetime': lifetime,
         })
 
-    result.sort(key=lambda item: (item['dimension'], item['birth'], item['simplex']))
-    return result
+    for dim in result_by_dimension:
+        result_by_dimension[dim].sort(key=lambda item: (item['birth'], item['simplex']))
+
+    return {dim: result_by_dimension[dim] for dim in sorted(result_by_dimension.keys())}
 
 
-# これ怪しい　使えなそう
+
 def extract_facet_presence_from_filtration(vr_filtration, dimension=1):
     """
     VR フィルトレーション中で facet がいつ観測されたかの要約を返す。
@@ -1150,8 +1210,9 @@ def extract_facet_presence_from_filtration(vr_filtration, dimension=1):
 
     Parameters
     ----------
-    vr_filtration : list of dict
-        build_vr_filtration の出力
+    vr_filtration : list of dict または dict
+        list の場合: 各段に 'radius' と 'simplices' を持つ増大列
+        dict の場合: build_vr_filtration の出力（単体 -> 発生時刻）
     dimension : int
         対象次元（1 = エッジ, 2 = 三角形）
 
@@ -1166,6 +1227,9 @@ def extract_facet_presence_from_filtration(vr_filtration, dimension=1):
             'active_stages': int
         }
     """
+    if isinstance(vr_filtration, dict):
+        vr_filtration = _build_filtration_from_birth_time_map(vr_filtration)
+
     facet_key = f'facets_{dimension}d'
 
     first_seen = {}
@@ -1204,8 +1268,133 @@ def extract_barcode_from_filtration(vr_filtration, dimension=1):
     return extract_facet_presence_from_filtration(vr_filtration, dimension=dimension)
 
 
+def plot_birth_death_pairs_by_dimension(
+    birth_death_pairs,
+    title_prefix="Birth-Death Diagram",
+    show_diagonal=True,
+):
+    """
+    birth-death pair を次元ごとに分けて可視化する。
+
+    Parameters
+    ----------
+    birth_death_pairs : dict[int, list[dict]] または list of dict
+        extract_facet_birth_death_pairs の出力（新形式）
+        互換のため旧形式（list）も受け付ける
+    title_prefix : str
+        図タイトルの接頭辞
+    show_diagonal : bool
+        True の場合、対角線 y=x を描画する
+
+    Returns
+    -------
+    figures_by_dimension : dict
+        {dimension: plotly.graph_objects.Figure}
+    """
+    if not birth_death_pairs:
+        raise ValueError("birth_death_pairs is empty")
+
+    if isinstance(birth_death_pairs, dict):
+        pairs_by_dim = {int(dim): list(pairs) for dim, pairs in birth_death_pairs.items()}
+    else:
+        pairs_by_dim = {}
+        for pair in birth_death_pairs:
+            dim = int(pair["dimension"])
+            normalized_pair = {
+                "simplex": pair["simplex"],
+                "birth": pair["birth"],
+                "death": pair["death"],
+                "lifetime": pair["lifetime"],
+            }
+            pairs_by_dim.setdefault(dim, []).append(normalized_pair)
+
+    figures_by_dimension = {}
+
+    for dim in sorted(pairs_by_dim.keys()):
+        pairs = pairs_by_dim[dim]
+        finite_pairs = [p for p in pairs if p["death"] is not None]
+        infinite_pairs = [p for p in pairs if p["death"] is None]
+
+        finite_births = [float(p["birth"]) for p in finite_pairs]
+        finite_deaths = [float(p["death"]) for p in finite_pairs]
+
+        all_births = [float(p["birth"]) for p in pairs]
+        max_axis = max(all_births) if all_births else 1.0
+        if finite_deaths:
+            max_axis = max(max_axis, max(finite_deaths))
+        if max_axis <= 0:
+            max_axis = 1.0
+
+        infinite_y = max_axis * 1.05
+        pad = max_axis * 0.08
+
+        fig = go.Figure()
+
+        if finite_pairs:
+            fig.add_trace(go.Scatter(
+                x=finite_births,
+                y=finite_deaths,
+                mode="markers",
+                marker=dict(size=7, color="#1f77b4", opacity=0.9),
+                name="finite",
+                hovertemplate=(
+                    "birth=%{x:.6f}<br>death=%{y:.6f}<extra>finite</extra>"
+                ),
+            ))
+
+        if infinite_pairs:
+            inf_births = [float(p["birth"]) for p in infinite_pairs]
+            inf_deaths = [infinite_y] * len(inf_births)
+            fig.add_trace(go.Scatter(
+                x=inf_births,
+                y=inf_deaths,
+                mode="markers",
+                marker=dict(size=8, symbol="x", color="#d62728", opacity=0.95),
+                name="death=None (infinite)",
+                hovertemplate=(
+                    "birth=%{x:.6f}<br>death=∞<extra>infinite</extra>"
+                ),
+            ))
+
+            fig.add_hline(
+                y=infinite_y,
+                line=dict(color="#d62728", dash="dot", width=1),
+                annotation_text="death=∞ (表示用)",
+                annotation_position="top left",
+            )
+
+        if show_diagonal:
+            diag_max = max(max_axis, infinite_y)
+            fig.add_trace(go.Scatter(
+                x=[0.0, diag_max],
+                y=[0.0, diag_max],
+                mode="lines",
+                line=dict(color="#7f7f7f", dash="dash"),
+                name="y=x",
+                hoverinfo="skip",
+            ))
+
+        fig.update_layout(
+            title=f"{title_prefix} (dimension={dim})",
+            xaxis_title="Birth",
+            yaxis_title="Death",
+            xaxis=dict(range=[0.0, max(max_axis, infinite_y) + pad]),
+            yaxis=dict(range=[0.0, max(max_axis, infinite_y) + pad]),
+            yaxis_scaleanchor="x",
+            yaxis_scaleratio=1,
+        )
+
+        fig.show()
+        figures_by_dimension[dim] = fig
+
+    return figures_by_dimension
+
+
 def print_vr_filtration_summary(vr_filtration):
     """VRフィルトレーションの概要を表示"""
+    if isinstance(vr_filtration, dict):
+        vr_filtration = _build_filtration_from_birth_time_map(vr_filtration)
+
     print("\n" + "="*70)
     print("Vietoris-Rips Filtration Summary")
     print("="*70)

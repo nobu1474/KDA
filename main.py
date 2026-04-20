@@ -414,12 +414,16 @@ from functions import get_facets
 triangle_1 = {0:[(0,),(1,),(2,)], 1:[(0, 1),(1, 2),(2, 0)], 2:[(0, 1, 2)]}
 triangle_2 = {0:[(0,),(1,),(2,)], 1:[(0, 1),(1, 2),(2, 0)], 2:[]}
 triangle_3 = {0:[(0,),(1,),(2,),(3,),(4,),(5,),(6,)], 1:[(0, 1),(1, 2),(2, 0),(0, 3),(4, 3),(4, 0)], 2:[(0, 1, 2)]}
-facets = get_facets(complexes)
-print(facets)
+# facets = get_facets(complexes)
+# print(facets)
 
 # print(get_facets(triangle_1))
 # print(get_facets(triangle_2))
 # print(get_facets(triangle_3))
 
-from functions import extract_facet_birth_death_pairs
-print(extract_facet_birth_death_pairs(triangle_1))
+from functions import build_vr_filtration, extract_facet_birth_death_pairs, plot_birth_death_pairs_by_dimension
+filtration = build_vr_filtration(segments)
+bd_pair = extract_facet_birth_death_pairs(filtration)
+for dim in range(len(bd_pair)):
+    print("number of pairs in dimension", dim, ":", len(bd_pair[dim]))
+plot_birth_death_pairs_by_dimension(bd_pair)
