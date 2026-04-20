@@ -65,9 +65,10 @@ class PersistentJonesPolynomial:
     
     def build_filtration(self, max_radius=None):
         """VRフィルトレーションを構築"""
-        self.vr_filtration, self.distances = build_vr_filtration(
+        self.vr_filtration = build_vr_filtration(
             self.segments, max_radius=max_radius
         )
+        self.distances = distance_matrix(self.segments)
         return self.vr_filtration
     
     def compute_segment_subset_jones_polynomial(self, segment_indices):
