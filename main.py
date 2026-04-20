@@ -225,20 +225,20 @@ print("\n" + "-"*60)
 from functions import integrated_jones_polynomial, plot_poly_map_on_sphere, plot_distinct_jones_poly_diagrams
 
 import time
-start = time.perf_counter() #計測開始
+# start = time.perf_counter() #計測開始
 
-poly_map = integrated_jones_polynomial(curves)
+# poly_map = integrated_jones_polynomial(curves)
 
-end = time.perf_counter() #計測終了
-print(f"{(end - start)//60} 分 {(end - start)%60} 秒") #計測結果を表示
+# end = time.perf_counter() #計測終了
+# print(f"{(end - start)//60} 分 {(end - start)%60} 秒") #計測結果を表示
 
-print(f"\nProjection -> Jones polynomial map:")
-print(f"  Number of projection directions: {len(poly_map)}")
-print(f"  Number of distinct polynomials: {len({tuple(sorted(v.items(), key=lambda item: str(item[0]))) for v in poly_map.values()})}")
+# print(f"\nProjection -> Jones polynomial map:")
+# print(f"  Number of projection directions: {len(poly_map)}")
+# print(f"  Number of distinct polynomials: {len({tuple(sorted(v.items(), key=lambda item: str(item[0]))) for v in poly_map.values()})}")
 
 
 # 可視化のための人たち
-plot_poly_map_on_sphere(poly_map, title="Jones polynomial classes by projection direction")
+# plot_poly_map_on_sphere(poly_map, title="Jones polynomial classes by projection direction")
 
 # 異なるJones多項式ごとに2D図式を表示
 # plot_distinct_jones_poly_diagrams(curves, poly_map)
@@ -409,5 +409,16 @@ complexes = build_vietoris_rips_complex(distances, 3)
 # print(vr_filtration)
 
 from functions import get_facets
+# print(complexes)
+triangle_1 = {0:[(0,),(1,),(2,)], 1:[(0, 1),(1, 2),(2, 0)], 2:[(0, 1, 2)]}
+triangle_2 = {0:[(0,),(1,),(2,)], 1:[(0, 1),(1, 2),(2, 0)], 2:[]}
+triangle_3 = {0:[(0,),(1,),(2,),(3,),(4,),(5,),(6,)], 1:[(0, 1),(1, 2),(2, 0),(0, 3),(4, 3),(4, 0)], 2:[(0, 1, 2)]}
 facets = get_facets(complexes)
 print(facets)
+
+# print(get_facets(triangle_1))
+# print(get_facets(triangle_2))
+# print(get_facets(triangle_3))
+
+from functions import extract_facet_birth_death_pairs
+print(extract_facet_birth_death_pairs(triangle_1))
