@@ -1,0 +1,25 @@
+{
+  "run_id": "20260421_190321_nm_torus_jones_eb898392",
+  "jones_polynomial": {
+    "terms": [
+      {
+        "exp": -1,
+        "coeff": 1.0
+      },
+      {
+        "exp": -3,
+        "coeff": 1.0
+      },
+      {
+        "exp": -4,
+        "coeff": -1.0
+      }
+    ],
+    "formatted": "t^-1 + t^-3 - t^-4",
+    "n_terms": 3
+  },
+  "knot_summary": {
+    "n_crossings": 3,
+    "writhe": -3
+  }
+}
