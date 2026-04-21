@@ -1,0 +1,21 @@
+{
+  "run_id": "20260421_194006_nm_torus_jones_16e2ab58",
+  "timestamp": "2026-04-21T19:40:07.532066",
+  "entrypoint": "app/run_experiment.py",
+  "config_path": "config/experiment_default.json",
+  "config": {
+    "experiment_name": "nm_torus_jones",
+    "shape": "nm_torus",
+    "n_points": 500,
+    "random_seed": 42,
+    "integration_points": 60,
+    "enable_integrated_jones": false,
+    "torus_n": 2,
+    "torus_m": 3,
+    "run_root": "outputs/runs"
+  },
+  "artifacts": {
+    "result": "result.json",
+    "metrics": "metrics.jsonl"
+  }
+}

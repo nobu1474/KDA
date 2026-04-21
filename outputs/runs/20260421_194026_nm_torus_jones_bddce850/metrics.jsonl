@@ -1,0 +1,3 @@
+{"event": "generate_curves", "elapsed_s": 0.0012358280073385686, "n_curves": 1, "n_points_first_curve": 500}
+{"event": "compute_jones", "elapsed_s": 0.5664102229929995, "n_crossings": 3, "writhe": -3}
+{"event": "total", "elapsed_s": 0.5681228089961223}

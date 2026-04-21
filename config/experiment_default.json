@@ -1,0 +1,11 @@
+{
+  "experiment_name": "nm_torus_jones",
+  "shape": "nm_torus",
+  "n_points": 500,
+  "random_seed": 42,
+  "integration_points": 60,
+  "enable_integrated_jones": false,
+  "torus_n": 2,
+  "torus_m": 3,
+  "run_root": "outputs/runs"
+}
