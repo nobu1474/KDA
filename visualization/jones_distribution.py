@@ -15,6 +15,8 @@ def plot_poly_map_on_sphere(poly_map, title="Jones polynomial classes on sphere"
     if not poly_map:
         raise ValueError("poly_map is empty")
 
+    n_projection_directions = len(poly_map)
+
     grouped_points = {}
     for projection_vector, polynomial in poly_map.items():
         key = _canonical_poly_key(polynomial)
@@ -59,7 +61,7 @@ def plot_poly_map_on_sphere(poly_map, title="Jones polynomial classes on sphere"
         )
 
     fig.update_layout(
-        title=title,
+        title=f"Distribution of Jones polynomials ({n_projection_directions} projection directions)",
         scene=dict(
             xaxis_title="X",
             yaxis_title="Y",

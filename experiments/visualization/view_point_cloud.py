@@ -13,3 +13,4 @@ from visualization.point_cloud import plot_3d_point_cloud
 if __name__ == "__main__":
 	nmtorus_points_3d = generate_unit_nm_torus_points(N_POINTS)
 	plot_3d_point_cloud(nmtorus_points_3d, title=nm_torus)
+	

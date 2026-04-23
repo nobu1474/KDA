@@ -16,6 +16,7 @@ from functions import (
     laurent_add,
     laurent_mul,
     laurent_pow,
+    launch_interactive_jones_direction_explorer,
 )
 
 __all__ = [
@@ -27,6 +28,7 @@ __all__ = [
     "kauffman_bracket",
     "jones_polynomial",
     "integrated_jones_polynomial",
+    "launch_interactive_jones_direction_explorer",
     "format_jones_polynomial",
     "_normalize_bracket_to_jones_in_A",
     "_convert_A_poly_to_t_poly",
