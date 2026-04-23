@@ -623,6 +623,79 @@ def integrated_jones_polynomial(
     return poly_map
 
 
+def crossing_number_distribution(
+    curves,
+    Number_of_projections=10,
+    RANDOM_SEED=42,
+    show_progress=True,
+):
+    """Compute crossing counts for many projection directions on the unit sphere."""
+    sphere_points = generate_unit_sphere_points(Number_of_projections, RANDOM_SEED)
+    crossing_num_map = {}
+
+    progress_print = print if show_progress else (lambda *args, **kwargs: None)
+    for i, projection_vector in enumerate(sphere_points):
+        progress_print(i)
+        crossings = find_crossings(curves, projection_vector=projection_vector)
+        crossing_num_map[tuple(projection_vector)] = len(crossings)
+
+    return crossing_num_map
+
+
+def plot_crossing_num_map_on_sphere(
+    crossing_num_map,
+    title="Crossing number classes on sphere",
+):
+    """Plot projection directions on a sphere, colored by crossing number."""
+    if not crossing_num_map:
+        raise ValueError("crossing_num_map is empty")
+
+    n_projection_directions = len(crossing_num_map)
+
+    grouped_points = {}
+    for projection_vector, crossing_num in crossing_num_map.items():
+        crossing_num = int(crossing_num)
+        if crossing_num not in grouped_points:
+            grouped_points[crossing_num] = []
+        grouped_points[crossing_num].append(np.asarray(projection_vector, dtype=float))
+
+    colors = [
+        "#1f77b4", "#ff7f0e", "#2ca02c", "#d62728", "#9467bd",
+        "#8c564b", "#e377c2", "#7f7f7f", "#bcbd22", "#17becf",
+    ]
+
+    fig = go.Figure()
+    for idx, crossing_num in enumerate(sorted(grouped_points.keys())):
+        points = np.array(grouped_points[crossing_num])
+        fig.add_trace(go.Scatter3d(
+            x=points[:, 0],
+            y=points[:, 1],
+            z=points[:, 2],
+            mode="markers",
+            marker=dict(size=5, color=colors[idx % len(colors)], opacity=0.9),
+            name=f"crossings={crossing_num}",
+            hovertemplate=(
+                "x=%{x:.3f}<br>y=%{y:.3f}<br>z=%{z:.3f}<br>"
+                + f"crossings={crossing_num}"
+                + "<extra></extra>"
+            ),
+        ))
+
+    fig.update_layout(
+        title=f"{title} ({n_projection_directions} projection directions)",
+        scene=dict(
+            xaxis_title="X",
+            yaxis_title="Y",
+            zaxis_title="Z",
+            aspectmode="cube",
+        ),
+        legend_title="crossing number",
+    )
+
+    fig.show()
+    return fig
+
+
 def _canonical_poly_key(poly):
     """
     多項式dictを比較可能な不変キーへ変換する。
@@ -687,6 +760,186 @@ def plot_poly_map_on_sphere(poly_map, title="Jones polynomial classes on sphere"
 
     fig.show()
     return fig
+
+
+def launch_interactive_jones_direction_explorer(
+    curves,
+    poly_map,
+    title="Interactive Jones polynomial explorer",
+    host="127.0.0.1",
+    port=8050,
+    debug=False,
+    run_server=True,
+):
+    """Launch an interactive app: click a sphere point to view its 2D knot diagram."""
+    if not poly_map:
+        raise ValueError("poly_map is empty")
+    if not curves or len(curves) == 0:
+        raise ValueError("curves list is empty")
+
+    try:
+        import importlib
+
+        dash_module = importlib.import_module("dash")
+        Dash = getattr(dash_module, "Dash")
+        Input = getattr(dash_module, "Input")
+        Output = getattr(dash_module, "Output")
+        dcc = getattr(dash_module, "dcc")
+        html = getattr(dash_module, "html")
+    except ImportError as exc:
+        raise ImportError(
+            "dash is required for interactive explorer. Install it with: pip install dash"
+        ) from exc
+
+    grouped_points = {}
+    for projection_vector, polynomial in poly_map.items():
+        key = _canonical_poly_key(polynomial)
+        if key not in grouped_points:
+            grouped_points[key] = {
+                "points": [],
+                "label": format_jones_polynomial(polynomial),
+            }
+        grouped_points[key]["points"].append(np.asarray(projection_vector, dtype=float))
+
+    colors = [
+        "#1f77b4", "#ff7f0e", "#2ca02c", "#d62728", "#9467bd",
+        "#8c564b", "#e377c2", "#7f7f7f", "#bcbd22", "#17becf",
+    ]
+
+    sphere_fig = go.Figure()
+    for index, (_poly_key, info) in enumerate(grouped_points.items()):
+        points = np.array(info["points"])
+        sphere_fig.add_trace(go.Scatter3d(
+            x=points[:, 0],
+            y=points[:, 1],
+            z=points[:, 2],
+            mode="markers",
+            marker=dict(size=5, color=colors[index % len(colors)], opacity=0.9),
+            name=info["label"],
+            customdata=points,
+            hovertemplate=(
+                "x=%{x:.3f}<br>y=%{y:.3f}<br>z=%{z:.3f}<br>"
+                + "<extra>"
+                + info["label"]
+                + "</extra>"
+            ),
+        ))
+
+    n_projection_directions = len(poly_map)
+    sphere_fig.update_layout(
+        title=f"{title} ({n_projection_directions} projection directions)",
+        scene=dict(
+            xaxis_title="X",
+            yaxis_title="Y",
+            zaxis_title="Z",
+            aspectmode="cube",
+        ),
+        legend_title="Jones polynomial",
+        clickmode="event+select",
+    )
+
+    first_direction = np.asarray(next(iter(poly_map.keys())), dtype=float)
+    first_diagram = project_to_2D(curves[0], first_direction)
+    diagram_fig = go.Figure(
+        data=[
+            go.Scatter(
+                x=first_diagram[:, 0],
+                y=first_diagram[:, 1],
+                mode="lines+markers",
+                marker=dict(size=5, color="#1f77b4", opacity=0.85),
+                line=dict(color="#1f77b4", width=1),
+            )
+        ]
+    )
+    diagram_fig.update_layout(
+        title=(
+            "2D diagram (initial direction): "
+            f"({first_direction[0]:.3f}, {first_direction[1]:.3f}, {first_direction[2]:.3f})"
+        ),
+        xaxis_title="X",
+        yaxis_title="Y",
+        yaxis_scaleanchor="x",
+        yaxis_scaleratio=1,
+        showlegend=False,
+    )
+
+    app = Dash(__name__)
+    app.layout = html.Div(
+        [
+            html.H3("Click a point on the sphere to view the projected 2D knot diagram"),
+            html.Div(
+                [
+                    dcc.Graph(
+                        id="sphere-plot",
+                        figure=sphere_fig,
+                        style={"height": "72vh", "width": "100%"},
+                    ),
+                    dcc.Graph(
+                        id="diagram-plot",
+                        figure=diagram_fig,
+                        style={"height": "72vh", "width": "100%"},
+                    ),
+                ],
+                style={
+                    "display": "flex",
+                    "flexDirection": "row",
+                    "gap": "12px",
+                    "alignItems": "stretch",
+                },
+            ),
+        ]
+    )
+
+    @app.callback(
+        Output("diagram-plot", "figure"),
+        Input("sphere-plot", "clickData"),
+    )
+    def _update_diagram(click_data):
+        if not click_data or "points" not in click_data or not click_data["points"]:
+            return diagram_fig
+
+        point_info = click_data["points"][0]
+        direction = point_info.get("customdata")
+        if direction is None:
+            direction = [point_info["x"], point_info["y"], point_info["z"]]
+
+        direction = np.asarray(direction, dtype=float)
+        norm = np.linalg.norm(direction)
+        if norm > 0:
+            direction = direction / norm
+
+        projected = project_to_2D(curves[0], direction)
+        figure = go.Figure(
+            data=[
+                go.Scatter(
+                    x=projected[:, 0],
+                    y=projected[:, 1],
+                    mode="lines+markers",
+                    marker=dict(size=5, color="#1f77b4", opacity=0.85),
+                    line=dict(color="#1f77b4", width=1),
+                )
+            ]
+        )
+        figure.update_layout(
+            title=(
+                "2D diagram for selected direction: "
+                f"({direction[0]:.3f}, {direction[1]:.3f}, {direction[2]:.3f})"
+            ),
+            xaxis_title="X",
+            yaxis_title="Y",
+            yaxis_scaleanchor="x",
+            yaxis_scaleratio=1,
+            showlegend=False,
+        )
+        return figure
+
+    if run_server:
+        run_fn = getattr(app, "run", None)
+        if run_fn is None:
+            run_fn = app.run_server
+        run_fn(host=host, port=port, debug=debug)
+
+    return app
 
 
 def plot_distinct_jones_poly_diagrams(curves, poly_map, title="Jones polynomial diagrams by projection direction"):
