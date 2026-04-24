@@ -1052,7 +1052,7 @@ def distance_matrix(segments):
     
     for i in range(n):
         for j in range(i+1, n):
-            h_dist = segment_hausdorff_distance(segments[i], segments[j])
+            h_dist = segment_hausdorff_distance(segments[i], segments[j]) # TODO: 距離（関数）を引数にすべき？
             distances[i, j] = h_dist
             distances[j, i] = h_dist
     
@@ -1141,7 +1141,6 @@ def get_facets(simplices, dimension=None):
         dim: list(simplices.get(dim, []))
         for dim in sorted(simplices.keys(), reverse=True)
     }
-    print(candidate_by_dim)
 
     # すでに facet と確定した上位次元単体の集合表現
     higher_facet_sets = []

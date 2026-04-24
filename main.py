@@ -427,3 +427,5 @@ bd_pair = extract_facet_birth_death_pairs(filtration)
 for dim in range(len(bd_pair)):
     print("number of pairs in dimension", dim, ":", len(bd_pair[dim]))
 plot_birth_death_pairs_by_dimension(bd_pair)
+
+print(distance_matrix(segments))
