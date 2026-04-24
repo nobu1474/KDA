@@ -24,7 +24,18 @@ if __name__ == "__main__":
         show_progress=True,
     )
     end_time = time.time()
-    print(f"実行時間：{(end_time - start_time)//60} 分 {(end_time - start_time)%60} 秒") 
+    print(f"実行時間：{(end_time - start_time)//60} 分 {(end_time - start_time)%60} 秒") #計測結果を表示
+
+    # ======== 追加：次からすぐに起動できるようにデータを保存 ========
+    import pickle
+    output_dir = PROJECT_ROOT / "outputs"
+    output_dir.mkdir(exist_ok=True)
+    save_path = output_dir / "saved_jones_explorer_data.pkl"
+    with open(save_path, "wb") as f:
+        pickle.dump({"curves": curves, "poly_map": poly_map}, f)
+    print(f"データを保存しました: {save_path}")
+    print("以降は serve_saved_jones_explorer.py を実行するだけで即座に図式が見れます。")
+    # ==============================================================
 
     launch_interactive_jones_direction_explorer(
         curves,
