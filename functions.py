@@ -128,56 +128,116 @@ def crossing_sign(p1, p2, q1, q2, over, projection_vector=np.array([0, 0, 1])):
 def find_crossings(curves, projection_vector=np.array([0, 0, 1])):
     crossings = []
 
-    # 射影方向を指定 # TODO: これも関数の引数にして、射影の方向を変えられるようにする
+    # 射影方向を指定
     projected_curves = [project_to_2D(curve, projection_vector) for curve in curves]
 
     # 全線分リスト
-    # (曲線番号, 線分番号, 始点座標, 終点座標) のタプルのリスト
+    # (曲線番号, 線分番号, 始点座標3D, 終点座標3D, 始点座標2D, 終点座標2D)
     segments = []
     for ci, curve in enumerate(curves):
         curve_2d = projected_curves[ci]
-        for i in range(len(curve)-1):
-            segments.append((ci, i, curve[i], curve[i+1], curve_2d[i], curve_2d[i+1]))
+        n_pts = len(curve)
+        # 結び目（閉曲線）として扱うため最後と最初を結ぶ
+        for i in range(n_pts):
+            next_i = (i + 1) % n_pts
+            segments.append((ci, i, curve[i], curve[next_i], curve_2d[i], curve_2d[next_i]))
 
+    n_segments = len(segments)
+    if n_segments == 0:
+        return crossings
+
+    # Numpy array 化して高速計算
+    p1_2d = np.array([seg[4] for seg in segments])
+    p2_2d = np.array([seg[5] for seg in segments])
+    p1 = np.array([seg[2] for seg in segments])
+    p2 = np.array([seg[3] for seg in segments])
+    ci_arr = np.array([seg[0] for seg in segments])
+    si_arr = np.array([seg[1] for seg in segments])
+    curve_lengths = np.array([len(curves[ci]) for ci in range(len(curves))])
+
+    dp = p2_2d - p1_2d
     
+    dp_i = dp[:, np.newaxis, :]  # (N, 1, 2)
+    dp_j = dp[np.newaxis, :, :]  # (1, N, 2)
+    p1_i = p1_2d[:, np.newaxis, :] # (N, 1, 2)
+    p1_j = p1_2d[np.newaxis, :, :] # (1, N, 2)
     
-    # 全ペアチェック
-    for i in range(len(segments)):
-        for j in range(i+1, len(segments)):
-            ci1, si1, p1, p2, p1_2d, p2_2d = segments[i]
-            ci2, si2, q1, q2, q1_2d, q2_2d = segments[j]
+    # det(A) = dp_j_x * dp_i_y - dp_i_x * dp_j_y
+    detA = dp_j[:, :, 0] * dp_i[:, :, 1] - dp_i[:, :, 0] * dp_j[:, :, 1]
+    valid_mask = np.abs(detA) > 1e-10
 
-            # 同じ曲線の隣接は無視（重要）
-            if ci1 == ci2 and abs(si1 - si2) <= 1:
-                continue
+    # i < j のペア
+    i_idx, j_idx = np.triu_indices(n_segments, k=1)
+    
+    valid = valid_mask[i_idx, j_idx]
+    i_valid = i_idx[valid]
+    j_valid = j_idx[valid]
 
-            # 2D射影はループ外で前計算済み（segments に保持）
+    # 隣接する線分の除外
+    ci1 = ci_arr[i_valid]
+    ci2 = ci_arr[j_valid]
+    si1 = si_arr[i_valid]
+    si2 = si_arr[j_valid]
+    n_segs1 = curve_lengths[ci1]
+    
+    diff = np.abs(si1 - si2)
+    adj_mask = (ci1 == ci2) & ((diff <= 1) | (diff == n_segs1 - 1))
+    
+    non_adj = ~adj_mask
+    i_final = i_valid[non_adj]
+    j_final = j_valid[non_adj]
+    
+    if len(i_final) == 0:
+        return crossings
 
-            if not segments_intersect_2d(p1_2d, p2_2d, q1_2d, q2_2d):
-                continue
-
-            params = segment_intersection_params(p1_2d, p2_2d, q1_2d, q2_2d)
-            if params is None:
-                continue
-
-            t, s = params
-
-            # segments_intersect_2dで交差していると判定された場合、t, s は [0, 1] の範囲にあるはず
-            # ただし、数値誤差のために範囲外になる可能性があるので、ここでチェックしておく
-            if not (0 <= t <= 1 and 0 <= s <= 1):
-                continue
-
-            over = crossing_over_under(p1, p2, q1, q2, t, s, projection_vector=projection_vector)
-            sign = crossing_sign(p1, p2, q1, q2, over, projection_vector=projection_vector)
-
+    det_final = detA[i_final, j_final]
+    
+    # t, s の計算
+    bx = p1_j[0, j_final, 0] - p1_i[i_final, 0, 0]
+    by = p1_j[0, j_final, 1] - p1_i[i_final, 0, 1]
+    
+    t = (by * dp_j[0, j_final, 0] - bx * dp_j[0, j_final, 1]) / det_final
+    s = (dp_i[i_final, 0, 0] * by - dp_i[i_final, 0, 1] * bx) / det_final
+    
+    # 0 <= t <= 1 and 0 <= s <= 1
+    intersect_mask = (t >= 0) & (t <= 1) & (s >= 0) & (s <= 1)
+    
+    i_intersect = i_final[intersect_mask]
+    j_intersect = j_final[intersect_mask]
+    t_intersect = t[intersect_mask]
+    s_intersect = s[intersect_mask]
+    
+    if len(i_intersect) > 0:
+        p1_i3d = p1[i_intersect]
+        dp_i3d = p2[i_intersect] - p1[i_intersect]
+        p_z = p1_i3d + t_intersect[:, np.newaxis] * dp_i3d
+        
+        q1_i3d = p1[j_intersect]
+        dq_i3d = p2[j_intersect] - p1[j_intersect]
+        q_z = q1_i3d + s_intersect[:, np.newaxis] * dq_i3d
+        
+        pz_dot = np.dot(p_z, projection_vector)
+        qz_dot = np.dot(q_z, projection_vector)
+        p_over = pz_dot > qz_dot
+        
+        v_over = np.where(p_over[:, np.newaxis], dp_i3d, dq_i3d)
+        v_under = np.where(p_over[:, np.newaxis], dq_i3d, dp_i3d)
+        
+        cross_prod = np.cross(v_over, v_under)
+        dot_cross = np.dot(cross_prod, projection_vector)
+        
+        signs = np.where(dot_cross > 0, 1, -1)
+        over_strs = np.where(p_over, "p_over", "q_over")
+        
+        for k in range(len(i_intersect)):
             crossings.append({
-                "segments": (i, j),
-                "t": t,
-                "s": s,
-                "over": over,
-                "sign": sign
+                "segments": (int(i_intersect[k]), int(j_intersect[k])),
+                "t": float(t_intersect[k]),
+                "s": float(s_intersect[k]),
+                "over": str(over_strs[k]),
+                "sign": int(signs[k])
             })
-
+            
     return crossings
 
 
