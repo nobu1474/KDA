@@ -5,6 +5,10 @@ integrated_jones_polynomialの計算時間
 50000点だと37分
 (functions.py の N_POINTS で球面上の点の個数を指定している)
 
+比較（10000点）
+macbook: 53分26秒
+imac: 94分58秒
+
 分布の図は1000点のもの
 
 tになるやつは500点ぐらいで出てくる

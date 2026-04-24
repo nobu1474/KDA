@@ -15,12 +15,16 @@ if __name__ == "__main__":
     nmtorus_points_3d = generate_unit_nm_torus_points(N_POINTS, seed=RANDOM_SEED)
     curves = [nmtorus_points_3d]
 
+    import time
+    start_time = time.time()
     poly_map = integrated_jones_polynomial(
         curves,
-        Number_of_projections=10,
+        Number_of_projections=10000,
         RANDOM_SEED=RANDOM_SEED,
         show_progress=True,
     )
+    end_time = time.time()
+    print(f"実行時間：{(end_time - start_time)//60} 分 {(end_time - start_time)%60} 秒") 
 
     launch_interactive_jones_direction_explorer(
         curves,
