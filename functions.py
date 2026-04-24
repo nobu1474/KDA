@@ -840,6 +840,7 @@ def launch_interactive_jones_direction_explorer(
 
     first_direction = np.asarray(next(iter(poly_map.keys())), dtype=float)
     first_diagram = project_to_2D(curves[0], first_direction)
+    first_crossings = len(find_crossings(curves, projection_vector=first_direction))
     diagram_fig = go.Figure(
         data=[
             go.Scatter(
@@ -854,7 +855,8 @@ def launch_interactive_jones_direction_explorer(
     diagram_fig.update_layout(
         title=(
             "2D diagram (initial direction): "
-            f"({first_direction[0]:.3f}, {first_direction[1]:.3f}, {first_direction[2]:.3f})"
+            f"({first_direction[0]:.3f}, {first_direction[1]:.3f}, {first_direction[2]:.3f})<br>"
+            f"Crossings count: {first_crossings}"
         ),
         xaxis_title="X",
         yaxis_title="Y",
@@ -909,6 +911,7 @@ def launch_interactive_jones_direction_explorer(
             direction = direction / norm
 
         projected = project_to_2D(curves[0], direction)
+        current_crossings = len(find_crossings(curves, projection_vector=direction))
         figure = go.Figure(
             data=[
                 go.Scatter(
@@ -923,7 +926,8 @@ def launch_interactive_jones_direction_explorer(
         figure.update_layout(
             title=(
                 "2D diagram for selected direction: "
-                f"({direction[0]:.3f}, {direction[1]:.3f}, {direction[2]:.3f})"
+                f"({direction[0]:.3f}, {direction[1]:.3f}, {direction[2]:.3f})<br>"
+                f"Crossings count: {current_crossings}"
             ),
             xaxis_title="X",
             yaxis_title="Y",

@@ -24,7 +24,7 @@ if __name__ == "__main__":
         show_progress=True,
     )
     end_time = time.time()
-    print(f"実行時間：{(end_time - start_time)//60} 分 {(end_time - start_time)%60} 秒") 
+    print(f"実行時間：{(end_time - start_time)//60} 分 {(end_time - start_time)%60} 秒") #計測結果を表示
 
     launch_interactive_jones_direction_explorer(
         curves,
