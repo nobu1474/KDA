@@ -1507,6 +1507,11 @@ def extract_facet_birth_death_pairs(vr_filtration, dimension=None):
 
         birth = float(birth_time_map[simplex])
         death = death_map[simplex]
+        
+        # birthとdeathが一致するものはリストに入れない（除外する）
+        if death is not None and birth == death:
+            continue
+            
         lifetime = (death - birth) if death is not None else None
 
         result_by_dimension.setdefault(simplex_dim, []).append({

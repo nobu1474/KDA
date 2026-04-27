@@ -12,7 +12,7 @@ from config.constants import N_POINTS, RANDOM_SEED
 
 
 if __name__ == "__main__":
-    curve = generate_unit_nm_torus_points(N_POINTS, seed=RANDOM_SEED)
+    curve = generate_unit_nm_torus_points(50, seed=RANDOM_SEED)
     segments = [curve[i:i + 2] for i in range(len(curve) - 1)]
 
     filtration = build_vr_filtration(segments)
@@ -24,3 +24,4 @@ if __name__ == "__main__":
             print(pair)
 
     plot_birth_death_pairs_by_dimension(bd_pair)
+    
