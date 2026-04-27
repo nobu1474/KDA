@@ -48,3 +48,24 @@ def generate_unit_sphere_points(n_points: int, seed: int | None = None) -> np.nd
     points = rng.normal(size=(n_points, 3))
     norms = np.linalg.norm(points, axis=1)
     return points / norms[:, np.newaxis]
+
+def generate_spring_points(n_points: int, coils: float = 5.0, radius: float = 1.0, height: float = 5.0) -> np.ndarray:
+    """
+    Generates N points representing a spring (helix) shape in 3D.
+    
+    Args:
+        n_points: Number of points to generate.
+        coils: Number of coils (turns) of the spring.
+        radius: Radius of the spring.
+        height: Total height of the spring.
+    
+    Returns:
+        np.ndarray: Array of shape (n_points, 3) containing the generated points.
+    """
+    t = np.linspace(0, coils * 2 * np.pi, n_points)
+    x = radius * np.cos(t)
+    y = radius * np.sin(t)
+    z = np.linspace(-height / 2, height / 2, n_points)
+    
+    return np.column_stack((x, y, z))
+

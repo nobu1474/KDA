@@ -1,7 +1,7 @@
 import plotly.graph_objects as go
 
 
-def plot_3d_point_cloud(points, title="Sphere"):
+def plot_3d_point_cloud(points, title="Sphere", equal_aspect=False):
     """Plot a 3D point cloud."""
     fig = go.Figure(
         data=[
@@ -20,13 +20,15 @@ def plot_3d_point_cloud(points, title="Sphere"):
         ]
     )
 
+    aspectmode = "data" if equal_aspect else "cube"
+
     fig.update_layout(
         title=f"3D Point Cloud on Unit {title}",
         scene=dict(
             xaxis_title="X",
             yaxis_title="Y",
             zaxis_title="Z",
-            aspectmode="cube",
+            aspectmode=aspectmode,
         ),
     )
     fig.show()
