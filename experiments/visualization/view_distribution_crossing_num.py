@@ -7,13 +7,15 @@ if str(PROJECT_ROOT) not in sys.path:
 
 from config.constants import N_POINTS, RANDOM_SEED
 from core.crossings import crossing_number_distribution
-from data.generate_point_cloud import generate_unit_nm_torus_points
+from data.generate_point_cloud import generate_unit_nm_torus_points, generate_spring_points
 from visualization.crossing_distribution import plot_crossing_num_map_on_sphere
 
 
 if __name__ == "__main__":
-    nmtorus_points_3d = generate_unit_nm_torus_points(N_POINTS, seed=RANDOM_SEED)
-    curves = [nmtorus_points_3d]
+    # nmtorus_points_3d = generate_unit_nm_torus_points(N_POINTS, seed=RANDOM_SEED)
+    # curves = [nmtorus_points_3d]
+    spring_points_3d = generate_spring_points(N_POINTS)
+    curves = [spring_points_3d]
 
     crossing_num_map = crossing_number_distribution(
         curves,

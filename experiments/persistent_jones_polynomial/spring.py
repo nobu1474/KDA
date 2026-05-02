@@ -14,9 +14,8 @@ from core.persistent_jones import plot_persistent_jones_polynomial, plot_PJP
 
 
 if __name__ == "__main__":
-    # curve = generate_spring_points(100, coils=5.0, radius=1.0, height=5.0)
-    curve = generate_unit_nm_torus_points(100, seed=RANDOM_SEED)
-    plot_3d_point_cloud(curve, title="Torus Points", equal_aspect=True)
+    curve = generate_spring_points(100, coils=5.0, radius=1.0, height=5.0)
+    plot_3d_point_cloud(curve, title="Spring Points", equal_aspect=True)
     segments = [curve[i:i + 2] for i in range(len(curve) - 1)]
 
     filtration = build_vr_filtration(segments, max_dimension = 3)
@@ -24,4 +23,4 @@ if __name__ == "__main__":
 
     # 5.2節のPersistent Jones Polynomialの図を描画
     # plot_persistent_jones_polynomial(curve, filtration, bd_pair)
-    plot_PJP(bd_pair, max_dim=2, points=curve, t_val=10.0)
+    plot_PJP(bd_pair, title_prefix="Persistence Barcode of Spring", max_dim=2, points=curve, t_val=10.0)

@@ -253,7 +253,9 @@ def plot_PJP(
             weights.append(w)
             
         min_w, max_w = (min(weights), max(weights)) if weights else (1.0, 1.0)
-        range_w = max_w - min_w if max_w > min_w else 1.0
+        diff_w = max_w - min_w
+        print(f"Dimension {dim}: Jones polynomial (t={t_val}) Max - Min difference = {diff_w:.6f}")
+        range_w = diff_w if diff_w > 0 else 1.0
 
         for i, (p, w) in enumerate(zip(pairs, weights)):
             b = float(p["birth"])
@@ -320,6 +322,18 @@ def plot_PJP(
 
             # 破線の追加
             fig.add_vline(x=global_max_x, line=dict(color="#d62728", dash="dot", width=1), row=1, col=col_idx)
+            
+            # グラフの下に差分をテキストとして追加
+            fig.add_annotation(
+                text=f"Max-Min Diff: {diff_w:.4f}",
+                x=0.5, y=-0.15,
+                xref="x domain", yref="y domain",
+                xanchor="center", yanchor="top",
+                showarrow=False,
+                bgcolor="rgba(255, 255, 255, 0.8)",
+                bordercolor="black",
+                row=1, col=col_idx
+            )
 
         else:
             fig.add_vline(
@@ -328,6 +342,18 @@ def plot_PJP(
                 annotation_text="∞",
                 annotation_position="top right"
             )
+            
+            # グラフの下に差分をテキストとして追加
+            fig.add_annotation(
+                text=f"Max-Min Diff: {diff_w:.4f}",
+                xref="paper", yref="paper",
+                x=0.5, y=-0.15,
+                xanchor="center", yanchor="top",
+                showarrow=False,
+                bgcolor="rgba(255, 255, 255, 0.8)",
+                bordercolor="black"
+            )
+
             # 画面に入る一般的な高さに固定
             plot_size = 600
             fig.update_layout(
@@ -338,7 +364,8 @@ def plot_PJP(
                 xaxis=dict(range=[0.0, infinite_death]),
                 template="plotly_white",
                 width=plot_size,
-                height=plot_size
+                height=plot_size,
+                margin=dict(b=80)
             )
             fig.show()
             figures_by_dimension[dim] = fig
@@ -350,7 +377,8 @@ def plot_PJP(
             title=title_prefix,
             template="plotly_white",
             width=plot_size * len(dims_to_plot),
-            height=plot_size
+            height=plot_size,
+            margin=dict(b=80)
         )
         fig.show()
         return fig
