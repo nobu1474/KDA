@@ -6,7 +6,7 @@ import numpy as np
 
 import math
 
-def generate_unit_nm_torus_points(n_points, n=2, m=3,seed=None, evenly_spaced=False):
+def generate_unit_nm_torus_points(n_points, n=2, m=3,seed=None, evenly_spaced=False, flatten=True):
     """Generates N points sampled on a unit (n,m)-torus in 3D."""
     if seed is not None:
         np.random.seed(seed)
@@ -44,7 +44,10 @@ def generate_unit_nm_torus_points(n_points, n=2, m=3,seed=None, evenly_spaced=Fa
         comp_points = np.column_stack((x, y, z))
         unit_points.append(comp_points)
         
-    return np.vstack(unit_points)
+    if flatten:
+        return np.vstack(unit_points)
+    # トーラス結び目・絡み目の各成分をそのままリストとして返す
+    return unit_points
 
 
 
@@ -95,7 +98,12 @@ def generate_circle_points(n_points: int, seed: int | None = None, evenly_spaced
     for i in range(points.shape[0]):
         points[i, 2] = 0  # z座標を0に固定して円を形成
     norms = np.linalg.norm(points, axis=1)
-    return points / norms[:, np.newaxis]
+    points = points / norms[:, np.newaxis]
+    
+    # 円の曲線に沿った順序になるように角度でソート
+    angles = np.arctan2(points[:, 1], points[:, 0])
+    sort_indices = np.argsort(angles)
+    return points[sort_indices]
 
 def generate_line_points(n_points: int, seed: int | None = None, evenly_spaced: bool = False, n_lines: int = 1) -> np.ndarray:
     """Generate points sampled uniformly from a line segment.

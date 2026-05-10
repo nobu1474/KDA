@@ -3,6 +3,10 @@ import plotly.graph_objects as go
 
 def plot_3d_point_cloud(points, title="Sphere", equal_aspect=False):
     """Plot a 3D point cloud."""
+    import numpy as np
+    if isinstance(points, list):
+        points = np.vstack(points)
+    
     fig = go.Figure(
         data=[
             go.Scatter3d(
