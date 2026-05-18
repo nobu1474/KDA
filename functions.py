@@ -1354,8 +1354,11 @@ def build_vr_filtration(segments, max_radius=None, max_stages=None, max_dimensio
         })
 
         if stage_count < len(positive_births) and positive_births:
-            sample_idx = np.linspace(0, len(positive_births) - 1, stage_count, dtype=int)
-            sampled_radii = [positive_births[i] for i in sample_idx]
+            if stage_count == 1:
+                sampled_radii = [positive_births[-1]]
+            else:
+                sample_idx = np.linspace(0, len(positive_births) - 1, stage_count, dtype=int)
+                sampled_radii = [positive_births[i] for i in sample_idx]
 
             for simplex, birth in list(simplex_birth_time_map.items()):
                 if len(simplex) == 1 or birth <= 0:
