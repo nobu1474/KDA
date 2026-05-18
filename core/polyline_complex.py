@@ -4,6 +4,8 @@ import itertools
 
 import numpy as np
 
+_EPS = 1e-12
+
 
 def point_to_segment_distance(p, a, b) -> float:
     """Exact distance from point p to segment [a, b]."""
@@ -16,10 +18,63 @@ def point_to_segment_distance(p, a, b) -> float:
 
 def point_to_polyline_distance(p, poly) -> float:
     """Minimum distance from point p to any edge of poly."""
+    poly = np.asarray(poly, dtype=float)
+    if len(poly) < 2:
+        raise ValueError("polyline must contain at least two points")
     return min(
         point_to_segment_distance(p, poly[i], poly[i + 1])
         for i in range(len(poly) - 1)
     )
+
+
+def _segment_distance_squared_coefficients(a, v, c, d, t_mid):
+    """Return A, B, C for squared distance from a+t*v to segment [c, d]."""
+    e = d - c
+    denom_e = float(np.dot(e, e))
+
+    if denom_e <= _EPS:
+        r0 = a - c
+        r1 = v
+    else:
+        s_mid = float(np.dot(a + t_mid * v - c, e) / denom_e)
+        if s_mid <= 0.0:
+            r0 = a - c
+            r1 = v
+        elif s_mid >= 1.0:
+            r0 = a - d
+            r1 = v
+        else:
+            u = a - c
+            r0 = u - (float(np.dot(u, e)) / denom_e) * e
+            r1 = v - (float(np.dot(v, e)) / denom_e) * e
+
+    return (
+        float(np.dot(r1, r1)),
+        2.0 * float(np.dot(r0, r1)),
+        float(np.dot(r0, r0)),
+    )
+
+
+def _real_roots_in_open_interval(A, B, C, t_left, t_right):
+    """Solve A*t^2 + B*t + C = 0 and keep real roots inside an interval."""
+    if abs(A) <= 1e-14:
+        if abs(B) <= 1e-14:
+            return []
+        roots = [-C / B]
+    else:
+        discriminant = B * B - 4.0 * A * C
+        if discriminant < -1e-14:
+            return []
+        if discriminant < 0.0:
+            discriminant = 0.0
+        sqrt_disc = float(np.sqrt(discriminant))
+        roots = [(-B - sqrt_disc) / (2.0 * A), (-B + sqrt_disc) / (2.0 * A)]
+
+    return [
+        float(root)
+        for root in roots
+        if t_left < float(root) < t_right
+    ]
 
 
 def _interior_max_on_edge(a, b, Q) -> float:
@@ -44,7 +99,7 @@ def _interior_max_on_edge(a, b, Q) -> float:
         d = Q[i + 1]
         e = d - c
         denom = np.dot(v, e)
-        if abs(denom) < 1e-12:
+        if abs(denom) < _EPS:
             continue
         t_lo = -np.dot(a - c, e) / denom
         t_hi = (np.dot(e, e) - np.dot(a - c, e)) / denom
@@ -61,40 +116,25 @@ def _interior_max_on_edge(a, b, Q) -> float:
         t_left = candidates_sorted[idx]
         t_right = candidates_sorted[idx + 1]
         t_mid = (t_left + t_right) * 0.5
-        x_mid = a + t_mid * v
 
-        # For each target edge, determine fixed clamped foot parameter at t_mid
-        Av = float(np.dot(v, v))
         A_list: list = []
         B_list: list = []
         C_list: list = []
         for i in range(n_edges):
             c = Q[i]
-            e = Q[i + 1] - c
-            denom_e = float(np.dot(e, e))
-            if denom_e > 0:
-                s_i = float(np.clip(np.dot(x_mid - c, e) / denom_e, 0.0, 1.0))
-            else:
-                s_i = 0.0
-            # f_i(t) = |x(t) - foot_i|^2  where foot_i = c + s_i*e (constant within sub-interval)
-            w_i = a - (c + s_i * e)
-            A_list.append(Av)
-            B_list.append(2.0 * float(np.dot(w_i, v)))
-            C_list.append(float(np.dot(w_i, w_i)))
+            d = Q[i + 1]
+            A, B, C = _segment_distance_squared_coefficients(a, v, c, d, t_mid)
+            A_list.append(A)
+            B_list.append(B)
+            C_list.append(C)
 
         # Solve f_i(t) - f_j(t) = 0 for each pair (i, j)
         for i, j in itertools.combinations(range(n_edges), 2):
             A_diff = A_list[i] - A_list[j]
             B_diff = B_list[i] - B_list[j]
             C_diff = C_list[i] - C_list[j]
-            if abs(A_diff) < 1e-14 and abs(B_diff) < 1e-14:
-                continue
-            roots = np.roots([A_diff, B_diff, C_diff])
-            for r in roots:
-                if np.isreal(r):
-                    t_val = float(np.real(r))
-                    if t_left < t_val < t_right:
-                        all_candidates.add(t_val)
+            for t_val in _real_roots_in_open_interval(A_diff, B_diff, C_diff, t_left, t_right):
+                all_candidates.add(t_val)
 
     # Step 3: evaluate g at all candidate t values and return the maximum
     best = 0.0
@@ -114,16 +154,25 @@ def polyline_hausdorff_distance(P, Q) -> float:
              = max(d_PQ, d_QP)
     """
     P, Q = np.asarray(P, dtype=float), np.asarray(Q, dtype=float)
+    if len(P) < 2 or len(Q) < 2:
+        raise ValueError("polylines must contain at least two points")
     d_PQ = max(_interior_max_on_edge(P[i], P[i + 1], Q) for i in range(len(P) - 1))
     d_QP = max(_interior_max_on_edge(Q[i], Q[i + 1], P) for i in range(len(Q) - 1))
     return max(d_PQ, d_QP)
 
 
 def polylines_from_curve(curve, k) -> list:
-    """Partition curve into non-overlapping k-edge polylines (stride = k)."""
+    """Partition curve into consecutive polylines without dropping tail edges."""
     curve = np.asarray(curve, dtype=float)
-    n = (len(curve) - 1) // k
-    return [curve[j * k: j * k + k + 1] for j in range(n)]
+    k = int(k)
+    if k <= 0:
+        raise ValueError("k must be >= 1")
+    if len(curve) < 2:
+        raise ValueError("curve must contain at least two points")
+    return [
+        curve[start: min(start + k, len(curve) - 1) + 1]
+        for start in range(0, len(curve) - 1, k)
+    ]
 
 
 def polyline_distance_matrix(polylines) -> np.ndarray:
@@ -192,8 +241,11 @@ def build_vr_filtration_from_distances(
         })
 
         if stage_count < len(positive_births) and positive_births:
-            sample_idx = np.linspace(0, len(positive_births) - 1, stage_count, dtype=int)
-            sampled_radii = [positive_births[i] for i in sample_idx]
+            if stage_count == 1:
+                sampled_radii = [positive_births[-1]]
+            else:
+                sample_idx = np.linspace(0, len(positive_births) - 1, stage_count, dtype=int)
+                sampled_radii = [positive_births[i] for i in sample_idx]
 
             for simplex, birth in list(simplex_birth_time_map.items()):
                 if len(simplex) == 1 or birth <= 0:
