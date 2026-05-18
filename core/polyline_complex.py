@@ -7,6 +7,7 @@ import numpy as np
 
 def point_to_segment_distance(p, a, b) -> float:
     """Exact distance from point p to segment [a, b]."""
+    p, a, b = np.asarray(p, dtype=float), np.asarray(a, dtype=float), np.asarray(b, dtype=float)
     ab = b - a
     denom = np.dot(ab, ab)
     t = np.clip(np.dot(p - a, ab) / denom, 0.0, 1.0) if denom > 0 else 0.0
@@ -136,7 +137,7 @@ def polyline_distance_matrix(polylines) -> np.ndarray:
     return D
 
 
-def _build_vr_filtration_from_distances(
+def build_vr_filtration_from_distances(
     n_vertices, D, max_radius=None, max_stages=None, max_dimension=2
 ) -> dict:
     """

@@ -12,7 +12,7 @@ from visualization.vr_birth_death import plot_birth_death_pairs_by_dimension
 from core.polyline_complex import (
     polylines_from_curve,
     polyline_distance_matrix,
-    _build_vr_filtration_from_distances,
+    build_vr_filtration_from_distances,
 )
 
 if __name__ == "__main__":
@@ -23,6 +23,6 @@ if __name__ == "__main__":
         polys = polylines_from_curve(curve, k)
         print(f"  {len(polys)} polylines, each {len(polys[0])} points")
         D = polyline_distance_matrix(polys)
-        filtration = _build_vr_filtration_from_distances(len(polys), D, max_dimension=2)
+        filtration = build_vr_filtration_from_distances(len(polys), D, max_dimension=2)
         bd_pairs = extract_facet_birth_death_pairs(filtration)
         plot_birth_death_pairs_by_dimension(bd_pairs, title_prefix=f"nm-torus polyline k={k}")
