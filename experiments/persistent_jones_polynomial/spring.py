@@ -14,7 +14,7 @@ from core.persistent_jones import plot_persistent_jones_polynomial, plot_PJP
 
 
 if __name__ == "__main__":
-    n_point = 250
+    n_point = 150
     curve = generate_spring_points(n_point, coils=5.0, radius=1.0, height=5.0)
     plot_3d_point_cloud(curve, title="Spring Points", equal_aspect=True)
     segments = [curve[i:i + 2] for i in range(len(curve) - 1)]
@@ -24,4 +24,4 @@ if __name__ == "__main__":
 
     # 5.2節のPersistent Jones Polynomialの図を描画
     # plot_persistent_jones_polynomial(curve, filtration, bd_pair)
-    plot_PJP(bd_pair, title_prefix=f"Persistence Barcode of Spring ({n_point} points)", max_dim=2, points=curve, t_val=10.0)
+    plot_PJP(bd_pair, title_prefix=f"Persistence Barcode of Spring ({n_point} points)", max_dim=2, segments=segments, t_val=10.0)

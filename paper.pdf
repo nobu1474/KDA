@@ -1,0 +1,1745 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html>
+<head>
+	<meta name=renderer  content=webkit>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1.0,maximum-scale=1.0,minimum-scale=1.0,user-scalable=no" />
+    <title>Multi-scale Jones polynomial and persistent Jones polynomial for knot data analysis</title>
+	    <meta name="_sowise_journalid" content="10002"/>
+	<meta name="WT.cg_n" content="AIMS Mathematics"/>
+    	<meta name="prism.issn" content="2473-6988"/>
+	<meta name="citation_issn" content="2473-6988"/>
+		<meta name="journal_id" content="110"/>
+	<meta name="dc.title" content="Multi-scale Jones polynomial and persistent Jones polynomial for knot data analysis"/>
+
+	<meta name="dc.source" content="AIMS Mathematics 2025 1:1463"/>
+	<meta name="dc.format" content="text/html"/>
+	
+	<meta name="dc.type" content="OriginalPaper"/>
+	<meta name="prism.section" content="OriginalPaper"/>
+	<meta name="prism.publicationName" content="AIMS Mathematics"/>
+		<meta name="dc.date" content=""/>
+	<meta name="dc.language" content="en"/>
+	<meta name="dc.copyright" content="2025 The Author(s)"/>
+		<meta name="dc.rightsAgent" content="mathematics@aimspress.org"/>
+	<meta name="prism.rightsAgent" content="mathematics@aimspress.org"/>
+			<meta name="dc.description" content="&lt;p&gt;Many structures in science, engineering, and art can be viewed as curves in 3-space. The entanglement of these curves plays a crucial role in determining the functionality and physical properties of materials. Many concepts in knot theory provide theoretical tools to explore the complexity and entanglement of curves in 3-space. However, classical knot theory focuses on global topological properties and lacks the consideration of local structural information, which is critical in practical applications. In this work, two localized models based on the Jones polynomial were proposed, namely, the multi-scale Jones polynomial and the persistent Jones polynomial. The stability of these models, especially the insensitivity of the multi-scale and persistent Jones polynomial models to small perturbations in curve collections, was analyzed, thus ensuring their robustness for real-world applications.&lt;/p&gt;"/>
+	<meta name="og:description" content="Many structures in science, engineering, and art can be viewed as curves in 3-space. The entanglement of these curves plays a crucial role in determining the functionality and physical properties of materials. Many concepts in knot theory provide theoretical tools to explore the complexity and entanglement of curves in 3-space. However, classical knot theory focuses on global topological properties and lacks the consideration of local structural information, which is critical in practical applications. In this work, two localized models based on the Jones polynomial were proposed, namely, the multi-scale Jones polynomial and the persistent Jones polynomial. The stability of these models, especially the insensitivity of the multi-scale and persistent Jones polynomial models to small perturbations in curve collections, was analyzed, thus ensuring their robustness for real-world applications."/>
+	<meta name="description" content="&lt;p&gt;Many structures in science, engineering, and art can be viewed as curves in 3-space. The entanglement of these curves plays a crucial role in determining the functionality and physical properties of materials. Many concepts in knot theory provide theoretical tools to explore the complexity and entanglement of curves in 3-space. However, classical knot theory focuses on global topological properties and lacks the consideration of local structural information, which is critical in practical applications. In this work, two localized models based on the Jones polynomial were proposed, namely, the multi-scale Jones polynomial and the persistent Jones polynomial. The stability of these models, especially the insensitivity of the multi-scale and persistent Jones polynomial models to small perturbations in curve collections, was analyzed, thus ensuring their robustness for real-world applications.&lt;/p&gt;"/>
+		<meta name="prism.publicationDate" content=""/>
+	<meta name="prism.volume" content="10"/>
+	<meta name="prism.number" content="math-10-01-068"/>
+	
+	<meta name="prism.startingPage" content="1463"/>
+	<meta name="prism.endingPage" content="1487"/>
+	<meta name="prism.copyright" content="2025 The Author(s)"/>
+	
+	<meta name="prism.url" content="http://www.aimspress.com/article/doi/10.3934/math.2025068"/>
+	<meta name="prism.doi" content="doi:10.3934/math.2025068"/>
+	<meta name="citation_pdf_url" content="http://www.aimspress.com/article/doi/10.3934/math.2025068"/>
+	<meta name="citation_fulltext_html_url" content="http://www.aimspress.com/article/doi/10.3934/math.2025068"/>
+	<meta name="citation_journal_title" content="AIMS Mathematics"/>
+	<meta name="citation_journal_abbrev" content="MATH"/>
+	
+	<meta name="citation_title" content="Multi-scale Jones polynomial and persistent Jones polynomial for knot data analysis"/>
+	<meta name="citation_volume" content="10"/>
+	<meta name="citation_issue" content="1"/>
+	<meta name="citation_online_date" content=""/>
+	<meta name="citation_firstpage" content="1463"/>
+	<meta name="citation_lastpage" content="1487"/>
+	<meta name="citation_article_type" content="Article"/>
+	<meta name="citation_fulltext_world_readable" content=""/>
+	<meta name="citation_language" content="en"/>
+	<meta name="dc.identifier" content="doi:10.3934/math.2025068"/>
+	<meta name="DOI" content="10.3934/math.2025068"/>
+	<meta name="citation_doi" content="10.3934/math.2025068"/>
+	<meta name="dc.subject" content="Research article"/>
+	<!-- more author -->
+		<meta name="dc.creator" content="Ruzhi Song"/>
+		<meta name="dc.creator" content="Fengling Li"/>
+		<meta name="dc.creator" content="Jie Wu"/>
+		<meta name="dc.creator" content="Fengchun Lei"/>
+		<meta name="dc.creator" content="Guo-Wei Wei"/>
+		<!-- more refers -->
+				<meta name="citation_reference" content="R. H. Crowell, R. H. Fox, &lt;i&gt;Introduction to knot theory&lt;/i&gt;, New York: Springer, 1963. &lt;ext-link ext-link-type=&quot;uri&quot; xmlns:xlink=&quot;http://www.w3.org/1999/xlink&quot; xlink:href=&quot;https://dx.doi.org/10.1007/978-1-4612-9935-6&quot;&gt;https://dx.doi.org/10.1007/978-1-4612-9935-6&lt;/ext-link&gt;"/>
+					<meta name="citation_reference" content="J. W. Alexander, Topological invariants of knots and links, &lt;i&gt;Trans. Amer. Math. Soc.&lt;/i&gt;, &lt;b&gt;30&lt;/b&gt; (1928), 275&#8211;306. https://dx.doi.org/10.1090/S0002-9947-1928-1501429-1"/>
+					<meta name="citation_reference" content="V. F. R. Jones, A polynomial invariant for knots via von Neumann algebras, &lt;i&gt;Bull. Amer. Math. Soc.&lt;/i&gt;, &lt;b&gt;12&lt;/b&gt; (1985), 103&#8211;111. https://dx.doi.org/10.1090/s0273-0979-1985-15304-2"/>
+					<meta name="citation_reference" content="C. Manolescu, An introduction to knot Floer homology, 2014, arXiv: 1401.7107."/>
+					<meta name="citation_reference" content="M. Khovanov, A categorification of the Jones polynomial, &lt;i&gt;Duke Math. J.&lt;/i&gt;, &lt;b&gt;101&lt;/b&gt; (2000), 359&#8211;426. https://dx.doi.org/10.1215/S0012-7094-00-10131-7"/>
+					<meta name="citation_reference" content="T. Ohtsuki, &lt;i&gt;Quantum invariants: A study of knots, 3-manifolds, and their sets&lt;/i&gt;, Singapore: World Scientific, 2001. &lt;ext-link ext-link-type=&quot;uri&quot; xmlns:xlink=&quot;http://www.w3.org/1999/xlink&quot; xlink:href=&quot;https://dx.doi.org/10.1142/4746&quot;&gt;https://dx.doi.org/10.1142/4746&lt;/ext-link&gt;"/>
+					<meta name="citation_reference" content="C. Z. Liang, K. Mislow, Knots in proteins, &lt;i&gt;J. Am. Chem. Soc.&lt;/i&gt;, &lt;b&gt;116&lt;/b&gt; (1994), 11189&#8211;11190. &lt;ext-link ext-link-type=&quot;uri&quot; xmlns:xlink=&quot;http://www.w3.org/1999/xlink&quot; xlink:href=&quot;https://dx.doi.org/10.1021/ja00103a057&quot;&gt;https://dx.doi.org/10.1021/ja00103a057&lt;/ext-link&gt;"/>
+					<meta name="citation_reference" content="D. W. Sumners, &lt;i&gt;The role of knot theory in DNA research&lt;/i&gt;, Boca Raton: CRC Press, 1986."/>
+					<meta name="citation_reference" content="T. Schlick, Q. Y. Zhu, A. Dey, S. Jain, S. T. Yan, A. Laederach, To knot or not to knot: multiple conformations of the SARS-CoV-2 frameshifting RNA element, &lt;i&gt;J. Am. Chem. Soc.&lt;/i&gt;, &lt;b&gt;143&lt;/b&gt; (2021), 11404&#8211;11422. https://dx.doi.org/10.1021/jacs.1c03003"/>
+					<meta name="citation_reference" content="K. C. Millett, E. J. Rawdon, A. Stasiak, J. I. Su&#322;kowska, Identifying knots in proteins, &lt;i&gt;Biochem. Soc. Trans.&lt;/i&gt;, &lt;b&gt;41&lt;/b&gt; (2013), 533&#8211;537. https://dx.doi.org/10.1042/bst20120339"/>
+					<meta name="citation_reference" content="J. Qin, S. T. Milner, Counting polymer knots to find the entanglement length, &lt;i&gt;Soft Matter&lt;/i&gt;, &lt;b&gt;7&lt;/b&gt; (2011), 10676&#8211;10693. https://dx.doi.org/10.1039/c1sm05972f"/>
+					<meta name="citation_reference" content="Y. Z. Liu, M. O&apos;Keeffe, M. M. J. Treacy, O. M. Yaghi, The geometry of periodic knots, polycatenanes and weaving from a chemical perspective: a library for reticular chemistry, &lt;i&gt;Chem. Soc. Rev.&lt;/i&gt;, &lt;b&gt;47&lt;/b&gt; (2018), 4642&#8211;4664. https://dx.doi.org/10.1039/c7cs00695k"/>
+					<meta name="citation_reference" content="R. L. Ricca, Topology bounds energy of knots and links, &lt;i&gt;Proc. R. Soc. A.&lt;/i&gt;, &lt;b&gt;464&lt;/b&gt; (2008), 293&#8211;300. https://dx.doi.org/10.1098/rspa.2007.0174"/>
+					<meta name="citation_reference" content="E. Panagiotou, K. C. Millett, P. J. Atzberger, Topological methods for polymeric materials: characterizing the relationship between polymer entanglement and viscoelasticity, &lt;i&gt;Polymers&lt;/i&gt;, &lt;b&gt;11&lt;/b&gt; (2019), 437. https://dx.doi.org/10.3390/polym11030437"/>
+					<meta name="citation_reference" content="J. Arsuaga, M. Vazquez, P. McGuirk, S. Trigueros, D. W. Sumners, J. Roca, DNA knots reveal a chiral organization of DNA in phage capsids, &lt;i&gt;Proc. Natl. Acad. Sci. U.S.A.&lt;/i&gt;, &lt;b&gt;102&lt;/b&gt; (2005), 9165&#8211;9169. https://dx.doi.org/10.1073/pnas.0409323102"/>
+					<meta name="citation_reference" content="J. I. Sulkowska, E. J. Rawdon, K. C. Millet, J. N. Onuchic, A. Stasiak, Conservation of complex knotting and slipknotting patterns in proteins, &lt;i&gt;Proc. Natl. Acad. Sci. U.S.A.&lt;/i&gt;, &lt;b&gt;109&lt;/b&gt; (2012), E1715&#8211;E1723. https://dx.doi.org/10.1073/pnas.1205918109"/>
+					<meta name="citation_reference" content="P. Freyd, D. Yetter, J. Hoste, W. B. R. Lickorish, K. Millett, A. Ocneanu, A new polynomial invariant of knots and links, &lt;i&gt;Bull. Amer. Math. Soc.&lt;/i&gt;, &lt;b&gt;12&lt;/b&gt; (1985), 239&#8211;246. https://dx.doi.org/10.1090/s0273-0979-1985-15361-3"/>
+					<meta name="citation_reference" content="L. H. Kauffman, An invariant of regular isotopy, &lt;i&gt;Trans. Amer. Math. Soc.&lt;/i&gt;, &lt;b&gt;318&lt;/b&gt; (1990), 417&#8211;471. https://dx.doi.org/10.1090/S0002-9947-1990-0958895-7"/>
+					<meta name="citation_reference" content="J. H. Przytycki, P. Traczyk, Conway algebras and skein equivalence of links, &lt;i&gt;Proc. Amer. Math. Soc.&lt;/i&gt;, &lt;b&gt;100&lt;/b&gt; (1987), 744&#8211;748. https://dx.doi.org/10.1090/S0002-9939-1987-0894448-2"/>
+					<meta name="citation_reference" content="L. Shen, H. S. Feng, F. L. Li, F. C. Lei, J. Wu, G.-W. Wei, Knot data analysis using multiscale Gauss link integral, &lt;i&gt;Proc. Natl. Acad. Sci. U.S.A.&lt;/i&gt;, &lt;b&gt;121&lt;/b&gt; (2024), e2408431121. https://dx.doi.org/10.1073/pnas.2408431121"/>
+					<meta name="citation_reference" content="E. Panagiotou, K. W. Plaxco, A topological study of protein folding kinetics, 2018, arXiv: 1812.08721."/>
+					<meta name="citation_reference" content="Q. Baldwin, E. Panagiotou, The local topological free energy of proteins, &lt;i&gt;J. Theor. Biol.&lt;/i&gt;, &lt;b&gt;529&lt;/b&gt; (2021), 110854. https://dx.doi.org/10.1016/j.jtbi.2021.110854"/>
+					<meta name="citation_reference" content="Q. Baldwin, B. Sumpter, E. Panagiotou, The local topological free energy of the SARS-CoV-2 Spike protein, &lt;i&gt;Polymers&lt;/i&gt;, &lt;b&gt;14&lt;/b&gt; (2022), 3014. https://dx.doi.org/10.3390/polym14153014"/>
+					<meta name="citation_reference" content="E. Panagiotou, L. H. Kauffman, Knot polynomials of open and closed curves, &lt;i&gt;Proc. R. Soc. A.&lt;/i&gt;, &lt;b&gt;476&lt;/b&gt; (2020), 20200124. https://dx.doi.org/10.1098/rspa.2020.0124"/>
+					<meta name="citation_reference" content="K. Barkataki, E. Panagiotou, The Jones polynomial of collections of open curves in 3-space, &lt;i&gt;Proc. R. Soc. A.&lt;/i&gt;, &lt;b&gt;478&lt;/b&gt; (2022), 20220302. https://dx.doi.org/10.1098/rspa.2022.0302"/>
+					<meta name="citation_reference" content="E. Panagiotou, L. H. Kauffman, Vassiliev measures of complexity of open and closed curves in 3-space, &lt;i&gt;Proc. R. Soc. A.&lt;/i&gt;, &lt;b&gt;477&lt;/b&gt; (2021), 20210440. https://dx.doi.org/10.1098/rspa.2021.0440"/>
+					<meta name="citation_reference" content="J. Wang, E. Panagiotou, The protein folding rate and the geometry and topology of the native state, &lt;i&gt;Sci. Rep.&lt;/i&gt;, &lt;b&gt;12&lt;/b&gt; (2022), 6384. https://dx.doi.org/10.1038/s41598-022-09924-0"/>
+					<meta name="citation_reference" content="T. Herschberg, K. Pifer, E. Panagiotou, A computational package for measuring Topological Entanglement in Polymers, Proteins and Periodic systems (TEPPP), &lt;i&gt;Comput. Phys. Commun.&lt;/i&gt;, &lt;b&gt;286&lt;/b&gt; (2023), 108639. https://dx.doi.org/10.1016/j.cpc.2022.108639"/>
+					<meta name="citation_reference" content="Z. X. Cang, G.-W. Wei, Persistent cohomology for data with multicomponent heterogeneous information, &lt;i&gt;SIAM J. Math. Data Sci.&lt;/i&gt;, &lt;b&gt;2&lt;/b&gt; (2020), 396&#8211;418. https://dx.doi.org/10.1137/19m1272226"/>
+					<meta name="citation_reference" content="J. K. Park, R. Jernigan, Z. J. Wu, Coarse grained normal mode analysis vs. refined gaussian network model for protein residue-level structural fluctuations, &lt;i&gt;Bull. Math. Biol.&lt;/i&gt;, &lt;b&gt;75&lt;/b&gt; (2013), 124&#8211;160. https://dx.doi.org/10.1007/s11538-012-9797-y"/>
+					<meta name="citation_reference" content="V. Turaev, Knotoids, &lt;i&gt;Osaka J. Math.&lt;/i&gt;, &lt;b&gt;49&lt;/b&gt; (2012), 195&#8211;223. &lt;ext-link ext-link-type=&quot;uri&quot; xmlns:xlink=&quot;http://www.w3.org/1999/xlink&quot; xlink:href=&quot;https://dx.doi.org/10.18910/10080&quot;&gt;https://dx.doi.org/10.18910/10080&lt;/ext-link&gt;"/>
+					<meta name="citation_reference" content="N. G&#252;g&#252;mc&#252;, L. H. Kauffman, New invariants of knotoids, &lt;i&gt;Eur. J. Combin.&lt;/i&gt;, &lt;b&gt;65&lt;/b&gt; (2017), 186&#8211;229. &lt;ext-link ext-link-type=&quot;uri&quot; xmlns:xlink=&quot;http://www.w3.org/1999/xlink&quot; xlink:href=&quot;https://dx.doi.org/10.1016/j.ejc.2017.06.004&quot;&gt;https://dx.doi.org/10.1016/j.ejc.2017.06.004&lt;/ext-link&gt;"/>
+					<meta name="citation_reference" content="N. G&#252;g&#252;mc&#252;, S. Lambropoulou, Knotoids, braidoids and applications, &lt;i&gt;Symmetry&lt;/i&gt;, &lt;b&gt;9&lt;/b&gt; (2017), 315. &lt;ext-link ext-link-type=&quot;uri&quot; xmlns:xlink=&quot;http://www.w3.org/1999/xlink&quot; xlink:href=&quot;https://dx.doi.org/10.3390/sym9120315&quot;&gt;https://dx.doi.org/10.3390/sym9120315&lt;/ext-link&gt;"/>
+					<meta name="citation_reference" content="N. G&#252;g&#252;mc&#252;, L. Kauffman, Parity in knotoids, 2019, arXiv: 1905.04089."/>
+					<meta name="citation_reference" content="M. Manouras, S. Lambropoulou, L. H. Kauffman, Finite type invariants for knotoids, &lt;i&gt;Eur. J. Combin.&lt;/i&gt;, &lt;b&gt;98&lt;/b&gt; (2021), 103402. https://dx.doi.org/10.1016/j.ejc.2021.103402"/>
+					<meta name="citation_reference" content="D. Cohen-Steiner, H. Edelsbrunner, J. Harer, Stability of persistence diagrams, In: &lt;i&gt;Proceedings of the twenty-first annual symposium on computational geometry&lt;/i&gt;, New York: Association for Computing Machinery, 2005,263&#8211;271. &lt;ext-link ext-link-type=&quot;uri&quot; xmlns:xlink=&quot;http://www.w3.org/1999/xlink&quot; xlink:href=&quot;https://dx.doi.org/10.1145/1064092.1064133&quot;&gt;https://dx.doi.org/10.1145/1064092.1064133&lt;/ext-link&gt;"/>
+					<meta name="citation_reference" content="Z. X. Cang, E. Munch, G.-W. Wei, Evolutionary homology on coupled dynamical systems with applications to protein flexibility analysis, &lt;i&gt;J. Appl. and Comput. Topology&lt;/i&gt;, &lt;b&gt;4&lt;/b&gt; (2020), 481&#8211;507. https://dx.doi.org/10.1007/s41468-020-00057-9"/>
+					<meta name="citation_reference" content="D. Bramer, G.-W. Wei, Atom-specific persistent homology and its application to protein flexibility analysis, &lt;i&gt;Comput. Math. Biophys.&lt;/i&gt;, &lt;b&gt;8&lt;/b&gt; (2020), 1&#8211;35. https://dx.doi.org/10.1515/cmb-2020-0001"/>
+					<meta name="citation_reference" content="K. Opron, K. L. Xia, G.-W. Wei, Fast and anisotropic flexibility-rigidity index for protein flexibility and fluctuation analysis, &lt;i&gt;J. Chem. Phys.&lt;/i&gt;, &lt;b&gt;140&lt;/b&gt; (2014), 234105. https://dx.doi.org/10.1063/1.4882258"/>
+			<!-- more author-->
+		<meta name="citation_author" content="Ruzhi Song"/>
+		<meta name="citation_author" content="Fengling Li"/>
+		<meta name="citation_author" content="Jie Wu"/>
+		<meta name="citation_author" content="Fengchun Lei"/>
+		<meta name="citation_author" content="Guo-Wei Wei"/>
+		<!-- more addiliations -->
+		<meta name="citation_author_institution" content="School of Mathematical Sciences, Dalian University of Technology, Dalian 116024, Liaoning, China"/>
+		<meta name="citation_author_institution" content="School of Mathematical Sciences, Hebei Normal University, Shijiazhuang 050024, Hebei, China"/>
+		<meta name="citation_author_institution" content="Beijing Institute of Mathematical Sciences and Applications, Beijing 101408, China"/>
+		<meta name="citation_author_institution" content="Department of Mathematics, Michigan State University, 426 Auditorium Road, East Lansing, MI 48824, USA"/>
+		<meta name="citation_author_institution" content="Department of Biochemistry and Molecular Biology, Michigan State University, 426 Auditorium Road, East Lansing, MI 48824, USA"/>
+		<meta name="citation_author_institution" content="Department of Electrical and Computer Engineering, Michigan State University, 426 Auditorium Road, East Lansing, MI 48824, USA"/>
+		<meta name="access_endpoint" content="http://www.aimspress.com/"/>
+	<meta name="twitter:site" content="@AIMS Mathematics"/>
+	<meta name="twitter:card" content="summary"/>
+	<meta name="twitter:image:alt" content="Content cover image"/>
+	<meta name="WT.z_cc_license_type" content="cc_by"/>
+	<meta name="WT.z_primary_atype" content="AIMS Mathematics"/>
+	<meta name="WT.z_subject_term" content="Research article"/>
+	<meta name="WT.z_subject_term_id" content="Research article"/>
+	<meta property="og:url" content="http://www.aimspress.com/article/doi/10.3934/math.2025068"/>
+	<meta property="og:type" content="article"/>
+	<meta property="og:site_name" content="AIMS Mathematics"/>
+	<meta property="og:title" content="Multi-scale Jones polynomial and persistent Jones polynomial for knot data analysis"/>
+																																																									<meta property="og:image" content="http://www.aimspress.com/aimspress-data/math/2025/1/PIC/math-10-01-068-g001.jpg"/>
+	
+	<!-- SoWise SEO 2019-9-6 -->
+	<meta name="citation_title" content="Multi-scale Jones polynomial and persistent Jones polynomial for knot data analysis" />
+		<meta name="citation_author" content="Ruzhi Song" />
+		<meta name="citation_author" content="Fengling Li" />
+		<meta name="citation_author" content="Jie Wu" />
+		<meta name="citation_author" content="Fengchun Lei" />
+		<meta name="citation_author" content="Guo-Wei Wei" />
+		<meta name="citation_keywords" content="knot data analysis, curve data analysis, Jones polynomial, localization, stability, protein flexibility, " />
+	<meta name="citation_year" content="2025"/>
+	<meta name="citation_volume" content="10"/> 
+	<meta name="citation_issue" content="1"/>
+	<meta name="citation_firstpage" content="1463"/>
+	<meta name="citation_lastpage" content="1487"/>
+	<meta name="citation_doi" content="10.3934/math.2025068"/>
+	<meta name="citation_id" content="6790e656ba35de451fe3cdab"/>
+	<meta name="citation_state" content="" />
+	
+   
+    <link type="text/css" href="/style/web/images/custom/favicon.ico" rel="shortcut icon" />
+    <link rel="stylesheet" href="/style/web/css/common/bootstrap.min.css">
+	<link rel="stylesheet" href="/style/web/css/common/swiper.min.css">
+	<link rel="stylesheet" href="/style/web/css/common/iconfont.css">
+	<link rel="stylesheet" href="/style/web/css/common/font-awesome.min.css">
+	<link rel="stylesheet" href="/style/web/css/common/owl.carousel.css">
+	<link rel="stylesheet" href="/style/web/css/common/base.css">
+	<link rel="stylesheet" href="/style/web/css/common/media.css">
+	<link rel="stylesheet" href="/style/web/css/style.css">
+	<link rel="stylesheet" href="/style/web/css/common/jquery.mCustomScrollbar.css">
+	<link rel="stylesheet" href="/style/web/css/common/article_en.css">
+	<link rel="stylesheet" href="/style/web/css/common/imgShow.css">
+	<link rel="stylesheet" href="/style/web/css/common/articleFont.css">
+	<link rel="stylesheet" href="/style/web/css/en/tpl5/style.css">
+	<link rel="stylesheet" href="/style/web/css/en/main.css">
+	
+	<script src="/style/web/js/common/jquery-1.11.2.min.js"></script>
+<script src="/style/web/js/common/bootstrap.min.js"></script>
+<script src="/style/web/js/common/swiper.min.js"></script>
+<script src="/style/web/js/common/jquery.colorbox.js"></script>
+<script src="/style/web/js/common/jquery.nicescroll.js"></script>
+<script src="/style/web/js/common/angular.min.js"></script>
+<script src="/style/web/js/common/angular-sanitize.min.js"></script>
+<script src="/style/web/js/common/wui-date.js"></script>
+<script src="/style/web/js/common/ng-infinite-scroll.min.js"></script>
+<script src="/style/web/js/common/rhhz.js"></script>
+<script src="/style/web/js/common/dataloading_news.js"></script>
+<script src="/style/web/js/common/dataloading_article.js"></script>
+<script src="/style/web/js/common/dataloading_filter.js"></script>
+<script src="/style/web/js/common/dataloading_other.js"></script>
+<script src="/style/web/js/common/base.js"></script>
+<script src="/style/web/js/common/common.js"></script>
+<script src="/style/web/js/common/owl.carousel.js"></script>
+<script src="/style/web/js/common/respond.js"></script>
+<script src="/style/web/js/common/search.js"></script>
+<script src="/style/web/js/common/user.js"></script>	<script src="/style/web/highcharts/highcharts.js"></script>
+	<script src="/style/web/highcharts/modules/exporting.js"></script>
+	<script src="/style/web/js/common/better-scroll.js"></script>
+	<script src="/style/web/js/common/jquery.mCustomScrollbar.concat.min.js"></script>
+	<script src="/style/web/js/common/article.js"></script>
+	<script src="/style/web/js/common/article_en.js"></script>
+	<script src="/style/web/js/common/imgShow_en.js"></script>
+	<script src="/style/web/js/en/tpl5/index.js"></script>
+	<script src="/style/web/js/en/tpl5/main.js"></script>
+    <script type="text/javascript" src="/aimspress-upload/platformTools/js/MathJax-master/MathJax-2.7.0/MathJax.js?config=TeX-AMS-MML_SVG"></script> 
+<!--   <script type="text/javascript" src="http://aimspress.com/aimspress-upload/platformTools/js/MathJax-master/MathJax-2.7.0/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script> -->
+	 
+	 	<!-- 2011到2015年是   用@渲染公式 -->
+				
+							<!-- 2020年之后  除了第三方 数据特殊  九个刊  用$ 渲染 -->
+								<script type='text/x-mathjax-config'>
+MathJax.Hub.Config({
+        CommonHTML: {
+            linebreaks: {
+                automatic: true,
+                width: 'container'
+            }
+        },
+        SVG: {
+            linebreaks: {
+                automatic: false
+            },
+			scale: 112
+        },
+		tex2jax: {inlineMath: [['$','$']]},
+		"HTML-CSS": {linebreaks: { automatic: true},scale: 100}
+});</script>
+					<script type='text/javascript' src='https://d1bxh8uas1mnw7.cloudfront.net/assets/embed.js'></script>
+	
+	<!-- <script src="/style/web/js/common/embed.js"></script> -->
+	<script>
+	  dataLayer = [];
+	</script>
+	
+	<!-- Google Tag Manager -->
+	<script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
+	new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
+	j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
+	'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
+	})(window,document,'script','dataLayer','GTM-K33SX87');</script>
+	<!-- End Google Tag Manager -->
+
+</head>
+								
+
+<body data-spy="scroll" data-target="#myScrollspy" class="articleBody  " >
+<input type="hidden" value="AIMS Mathematics" id="journalName"/>
+<input type="hidden" value="article" id="pageViewId" />
+<input type="hidden" value="6790e656ba35de451fe3cdab" id="articleId" />
+<input type="hidden" value="10.3934/math.2025068" id="articleDoi" />
+<input type="hidden" value="" id="htmlState" />
+<input type="hidden" value="" id="articleNum" />
+<input type="hidden" value="//www.aimspress.com" id="dataPath" />
+<input type="hidden" value="/aimspress-data/math/2025/1/PIC/" id="allSrc" />
+    <input hidden type="checkbox" checked id="reference" />
+
+
+
+<div ng-app="index">
+	<!--头部 开始 -->
+	<div id="common-top">
+	    <!-- Google Tag Manager (noscript) -->
+<noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-K33SX87"
+height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
+<!-- End Google Tag Manager (noscript) -->
+<div ng-controller="j-top-menu" >
+	<div class="header header-index bgwhite     ">
+		<div class="mid topfix header-nav">
+	        <div class="container clear">
+	            <a href="/" class="logo fl">
+	                <img src="/style/web/images/custom/index_logo.png" alt="">
+	            </a>
+	            <div class="logor fr">
+            		<div class="header-nav index-nav">
+					    <div class="clear">
+					    	 <ul class="clear fl i-top-menu top-menu">
+					    	 	<li><a href="/" >Home</a> </li>
+					        	<li type="{{newsColumn.abbreviation}}" ng-repeat="newsColumn in topMenus" ng-if="newsColumn.columnNewsShowLocation == '1' && newsColumn.abbreviation =='journals'" repeat-finish-light>
+						    		<a href="javascript:void(0);">
+						    			<i ng-bind-html="newsColumn.name"></i>
+	    								<span  ng-if="newsColumn.subColumns.length > 0"></span>
+	    								<span  ng-if="newsColumn.abbreviation == 'journals'"></span>
+						    		</a>
+						    		<ol class="data-show i-menu-journals  tpl5-journal" ng-if="newsColumn.abbreviation == 'journals'"></ol>
+						    	</li>
+					        </ul>
+					        <div class="shareBox fr" >
+						        <ul class="share-right clear ">
+						            <li class="share-facebook" onclick="shareTools('facebook');" title="share this content in facebook">
+						                <img src="/style/web/images/custom/share_facebook.png" alt="">
+						            </li>
+						            <li class="share-twitter" onclick="shareTools('twitter');" title="share this content in twitter">
+						                <img src="/style/web/images/custom/share_twitter.png" alt="">
+						            </li>
+						            <li class="share-linkedin" onclick="shareTools('linkedin');" title="share this content in linkedin">
+						                <img src="/style/web/images/custom/share_linkin.png" alt="">
+						            </li>
+						            <li class="share-mendeley" onclick="shareTools('mendeley');" title="share  this content in Mendeley">
+						                <img src="/style/web/images/custom/share_mendeley.png" alt="">
+						            </li>
+						            <li class="share-researchGate" onclick="shareTools('researchGate');" title="share this content in researchGate">
+						                <img src="/style/web/images/custom/share_researchGate.png" alt="">
+						            </li>
+						            						           <!--  <li onclick="shareTools('sina');" title="分享到微博"><img src="/style/web/images/custom/share_weibo.png"></li>
+						            <li class="weixin" title="分享到微信"><img src="/style/web/images/custom/share_weixin.png"></li>
+	                    			<li class="kongjian" title="分享到qq空间"><img src="/style/web/images/custom/share_qq.png"></li> -->
+						        </ul>
+						     </div>
+					    </div>
+					</div>
+		        </div>
+		    </div>
+		</div>
+	</div>
+	<div class="header-nav  ban-header-nav4">
+	    <div class="container clear">
+	        <ul class="nav-ul clear fl top-menu">
+	            <li type="{{newsColumn.abbreviation}}" ng-repeat="newsColumn in topMenus" ng-if="newsColumn.columnNewsShowLocation == '1' && newsColumn.abbreviation !='journals'">
+		    		<a href="{{newsColumn.links}}">
+		    			<i ng-bind-html="newsColumn.name"></i>
+		    			<span  ng-if="newsColumn.subColumns.length > 0"></span>
+		    		</a>
+		    		<ol class="data-show" ng-if="newsColumn.subColumns.length > 0">
+		    			<li ng-repeat="subColumn in newsColumn.subColumns" type="{{subColumn.abbreviation}}">
+		    				<a href="{{subColumn.links}}" target="_top">{{subColumn.name}}</a>
+		    			</li>
+		    		</ol>
+		    	</li>
+	        </ul>
+	    </div>
+	</div>
+	<!--手机菜单-->
+	<div class="phone-nav ban-phone-nav">
+	    <div class="container clear">
+	        <div class="navList fl">
+	            <span class="span1"></span>
+	            <span class="span2"></span>
+	            <span class="span3"></span>
+	        </div>
+	        <a href="/journal/math" class="logo fl">
+	            <p class="romal">AIMS Mathematics</p>
+	           <!--  <img src="/style/web/images/logo-new_03.png" alt=""> -->
+	        </a>
+	        <div class="search-app fr"></div>
+	    </div>
+	    <div class="search-app-wrap">
+	        <div class="container clear">
+	            <div class="left fl">
+	            	<form action="/search" method="POST" onsubmit="return checkSearch(this);" class="topSearchForm">
+		                <input type="text" name="q" placeholder="Search" class="fl text">
+		                <input type="hidden" name="language" value="en">
+		               	<input type="hidden" name="publisherId" value="math">
+		                <input type="submit" class="sub fl" value="">
+	                </form>
+	            </div>
+	            <a href="javascript:void(0);" onclick="advanceSearchEntrance();" class="gao fr">Search Advanced</a>
+	        </div>
+	    </div>
+	    <ul class="smallUl top-menu">
+	    	<li><a href="/">Home</a></li>
+	        <li type="{{newsColumn.abbreviation}}" ng-repeat="newsColumn in topMenus" ng-if="newsColumn.columnNewsShowLocation == '1'" repeat-finish-light>
+	    		<a href="{{newsColumn.links}}" >{{newsColumn.name}}</a>
+	    		<ol class="data-show i-menu-journals" ng-if="newsColumn.abbreviation == 'journals'"></ol>
+	    		<ol class="data-show" ng-if="newsColumn.subColumns.length > 0">
+	    			<li ng-repeat="subColumn in newsColumn.subColumns" type="{{subColumn.abbreviation}}">
+	    				<a href="{{subColumn.links}}" target="_top">{{subColumn.name}}</a>
+	    			</li>
+	    		</ol>
+	    	</li>
+	    </ul>
+	</div>
+</div>
+	</div>
+	<!-- 添加文章记录 -->
+	<script type="text/javascript">
+	$(document).ready(function () {
+		 //访问文章记录
+	    var articleId =  $("#articleId").val();
+	    if(!isNull(articleId)){
+		    //var nowUrl = window.location.href;
+			//var number = nowUrl.indexOf("viewType=HTML");
+			getVisitInfo(articleId,0);
+		}
+	});
+	</script>
+	<!--头部 结束-->
+	<!--底部暂时渲染在这-->
+	<div class="common-bottom" hidden>
+		
+
+
+<div class="footer ban-footer"  ng-controller="j-bottom-menu" >
+	<input type="hidden" id="language" value="en">
+	<input type="hidden" id="websitecn" value="">
+	<input type="hidden" id="websiteen" value="">
+	<input type="hidden" class="newsShow" value="publisherNews">
+			<input type="hidden" id="publisherId" value="math">
+		<input type="hidden" id="tplPath" value="en/tpl5">
+	   <div class="bottom-fixed"></div>
+   
+   <div class="top">
+       <ul class="clear">
+           <li ng-repeat="newsColumn in newsColumns">
+           	   <a href="{{newsColumn.links}}">{{newsColumn.name}}</a>
+           </li>
+       </ul>
+   </div>
+   <div class="bot">Copyright © AIMS Press</div>
+</div>
+<!-- <script src="//plugin.sowise.cn/sowise-plugin.js" custom-options="{'citedby':false,'suggest':false,'ipRecord':true,'journalId':999}"></script> -->
+
+<link rel="stylesheet" href="https://public.xml-journal.net/rh-public/css/rh-public.css">
+<script src="https://public.xml-journal.net/rh-public/js/rh-public.js"></script>
+
+
+	</div>
+</div>
+
+<!--电脑端 开始-->
+<div class="article-pc">
+<!-- 	<div class="article-header-new">
+	    <div class="inner clear">
+	        <ul class="fl">
+	        		            <li>
+	                <a href="javascript:void(0);" class="download-pdf" data="6790e656ba35de451fe3cdab"><i class="fa fa-file-pdf-o"></i><span>PDF</span></a>
+	            </li>
+	            	            <li>
+	                <a href="javascript:void(0);" data-target="#exportCitationModal" data-toggle="modal"><i class="fa fa-quote-left"></i><span>Cite</span></a>
+	            </li>
+	            <li>
+	                <a><i class="fa fa-share-alt"></i><span>Share</span></a>
+	                <dl>
+	                    <dd>
+	                        <a href="javascript:void(0);" onclick="shareTools('facebook');" title="share to facebook">facebook</a>
+	                    </dd>
+	                    <dd>
+	                        <a href="javascript:void(0);" onclick="shareTools('twitter');" title="share to twitter">twitter</a>
+	                    </dd>
+	                    <dd>
+	                        <a href="javascript:void(0);" onclick="shareTools('google+');" title="share to google">google</a>
+	                    </dd>
+	                    <dd>
+	                        <a href="javascript:void(0);" onclick="shareTools('linkedin');" title="share to linkedin">linkedin</a>
+	                    </dd>
+	                </dl>
+	            </li>
+	        </ul>
+	        <div class="article-search fr clear">
+	            <form  class="topSearchForm" id ="searchFormTop" action="/search" method="post" onsubmit="return checkSearch(this);" role="form">
+	                <select class="fl" name="searchField">
+	                    	                        <option value="">All</option>
+	                        <option value="titleEn">Title</option>
+	                        <option value="authors.authorNameEn">Author</option>
+	                        <option value="keywords.keywordEn">Keyword</option>
+	                        <option value="abstractinfoEn">Abstract</option>
+	                        <option value="doi">DOI</option>
+	                        <option value="classifyinfoEn">Category</option>
+	                        <option value="affiliations.affliEn">Address</option>
+	                        <option value="funds.fundsInfoEn">Fund</option>
+	                    	                </select>
+	                <input type="text" name="q" placeholder="Search" class="fl text input">
+	                <input name="language" type="hidden" value="en">
+	                <input name="publisherId" type="hidden" value="math">
+	                <input type="submit" class="sub fl" value="">
+	            </form>
+        	</div>
+    	</div>
+	</div> -->
+	<div class="article-main">
+			    <div class="inner clear content" style="position:relative;">
+	      <!--   <div class="article-main-left fl">
+	            <div class="wrapper">
+	            	            			            				<img src="//www.aimspress.com/aimspress-upload/journal/math/cover_2020410144226550.jpg" alt="" style="max-width: 100%;">
+            				            		</a>
+	            		<a href="/math/article/2025/1/archive-articles" class="volume-issue__wrap">
+	            			2025
+	            				            				<span class="volume">Volume 10</span>
+	            				            			<span class="issue">Issue 1</span>
+	                   </a>
+	            		               
+	                <div class="content-nav">
+	                    <div class="contents-title">Article Contents</div>
+	                    <a class="switchFormula" href="javascript:void(0);" onclick="switchFormula();">Turn off MathJax</a>
+	                    <div class="Abstract-left-list">
+	                        <a href=""></a>
+	                    </div>
+	                    <div class="jumplink-list">
+	                    	
+	                    		
+	                    	
+	                    </div>
+	                    <div class="References-left-list">
+	                        <a href=""></a>
+	                    </div>
+	                    <div class="Supplements-left-list">
+	                        <a href=""></a>
+	                    </div>
+	
+	                </div>
+	            </div>
+	        </div> -->
+	        <div class="article-main-mid fl bgwhite gongshi">
+				<div class="clear">
+					<div class="article-journal fl" >
+	            		<h3 class="journal-con" ><a href="/journal/math" class="journal-tit">
+					     AIMS Mathematics
+		        		 </a></h3>
+		        		 
+		        		 <div  class="article-list-time">
+		        		 
+					        <font >  2025, 						        <span><a href="/math/article/archives" class="mainColor">Volume 10</a>, </span> <a href="/math/article/2025/1/archive-articles" class="mainColor">Issue 1</a><span>:</span>  <span>1463-1487</span>.					        </font>
+							<font>doi: <a href="/article/doi/10.3934/math.2025068" target="_blank" class="mainColor">10.3934/math.2025068</a></font>					    </div>
+					    
+					    
+	            	</div>
+					<div class="fr changebtn" >
+																					<a href="/article/doi/10.3934/math.2025067" class="page-btn prev-page fl">Previous Article</a>
+														
+												
+																					<a href="/article/doi/10.3934/math.2025069" class="page-btn next-page fl">Next Article</a>
+																		</div>	
+				</div>
+	            <div class="article-left">
+	            	<div class="article-column ">
+	            	
+	            							<span class="columnli">Research article</span>
+										
+											<span class="columnli access">Special Issues</span>
+										
+						<!-- <span class="columnli access">
+							Open Access
+						</span> -->
+						<!-- <span class="columnli" id="article_special_show" hidden>
+							Special Issue
+						</span> -->
+					</div>
+	                <div class="articleEn">
+	                		                    <div class="article-title left-title">
+	                        <h1>Multi-scale Jones polynomial and persistent Jones polynomial for knot data analysis</h1>
+	                        	                    </div>
+	                   
+	                    <ul class="article-author clear">
+	                    		                    		<li >
+	                    			<a href="javascript:void(0);" class="mainColor" data-relate="" data="{{author.authorNameEn}}" type="authors.authorNameEn">Ruzhi Song</a>
+	                    			
+	                    			
+	                    			<sup class="authorTag">
+	                    				                    			<a href="javascript:void(0);" class="com-num" data-tagVal="1,3">1,3</a>
+	                    				                    			</sup>,&nbsp;	                    		</li>
+	                    		                    		<li >
+	                    			<a href="javascript:void(0);" class="mainColor" data-relate="fenglingli@dlut.edu.cn" data="{{author.authorNameEn}}" type="authors.authorNameEn">Fengling Li</a>
+	                    			
+	                    			
+	                    			<sup class="authorTag">
+	                    				                    			<a href="javascript:void(0);" class="com-num" data-tagVal="1">1</a>
+	                    				                    				                    			,&nbsp;
+	                    				                    			<a href="javascript:void(0);" class="com-user" title="Corresponding Author:&nbsp;Fengling Li,&nbsp;fenglingli@dlut.edu.cn"></a>,&nbsp;<a href="mailto:fenglingli@dlut.edu.cn" class="com-mail" title="mailto:&nbsp;fenglingli@dlut.edu.cn"></a></sup>,&nbsp;	                    		</li>
+	                    		                    		<li >
+	                    			<a href="javascript:void(0);" class="mainColor" data-relate="" data="{{author.authorNameEn}}" type="authors.authorNameEn">Jie Wu</a>
+	                    			
+	                    			
+	                    			<sup class="authorTag">
+	                    				                    			<a href="javascript:void(0);" class="com-num" data-tagVal="2,3">2,3</a>
+	                    				                    			</sup>,&nbsp;	                    		</li>
+	                    		                    		<li >
+	                    			<a href="javascript:void(0);" class="mainColor" data-relate="" data="{{author.authorNameEn}}" type="authors.authorNameEn">Fengchun Lei</a>
+	                    			
+	                    			
+	                    			<sup class="authorTag">
+	                    				                    			<a href="javascript:void(0);" class="com-num" data-tagVal="1">1</a>
+	                    				                    			</sup>,&nbsp;	                    		</li>
+	                    		                    		<li >
+	                    			<a href="javascript:void(0);" class="mainColor" data-relate="" data="{{author.authorNameEn}}" type="authors.authorNameEn">Guo-Wei Wei</a>
+	                    			
+	                    			
+	                    			<sup class="authorTag">
+	                    				                    			<a href="javascript:void(0);" class="com-num" data-tagVal="4,5,6">4,5,6</a>
+	                    				                    			</sup>	                    		</li>
+	                    		                    </ul>
+	                    <ul class="about-author">
+	                        <!-- 英文作者地址 -->
+	                        	                        		                        		<li class="article-author-address">
+	       								<span class="">
+	       										            								1.
+            									  									</span>
+	                                    <div  class="lostOf" >
+	                                    School of Mathematical Sciences, Dalian University of Technology, Dalian 116024, Liaoning, China
+	                                    </div>
+	                                </li>
+	                        		                        	                        		                        		<li class="article-author-address">
+	       								<span class="">
+	       										            								2.
+            									  									</span>
+	                                    <div  class="lostOf" >
+	                                    School of Mathematical Sciences, Hebei Normal University, Shijiazhuang 050024, Hebei, China
+	                                    </div>
+	                                </li>
+	                        		                        	                        		                        		<li class="article-author-address">
+	       								<span class="">
+	       										            								3.
+            									  									</span>
+	                                    <div  class="lostOf" >
+	                                    Beijing Institute of Mathematical Sciences and Applications, Beijing 101408, China
+	                                    </div>
+	                                </li>
+	                        		                        	                        		                        		<li class="article-author-address">
+	       								<span class="">
+	       										            								4.
+            									  									</span>
+	                                    <div  class="lostOf" >
+	                                    Department of Mathematics, Michigan State University, 426 Auditorium Road, East Lansing, MI 48824, USA
+	                                    </div>
+	                                </li>
+	                        		                        	                        		                        		<li class="article-author-address">
+	       								<span class="">
+	       										            								5.
+            									  									</span>
+	                                    <div  class="lostOf" >
+	                                    Department of Biochemistry and Molecular Biology, Michigan State University, 426 Auditorium Road, East Lansing, MI 48824, USA
+	                                    </div>
+	                                </li>
+	                        		                        	                        		                        		<li class="article-author-address">
+	       								<span class="">
+	       										            								6.
+            									  									</span>
+	                                    <div  class="lostOf" >
+	                                    Department of Electrical and Computer Engineering, Michigan State University, 426 Auditorium Road, East Lansing, MI 48824, USA
+	                                    </div>
+	                                </li>
+	                        		                        	                        	                    </ul>
+	                    <ul class="about-article">
+
+	                        <!-- 稿件日期和基金项目0308 -->
+	                        <li class="com-author-info timewrap">
+	                        				    					<span class="hidden-md hidden-sm hidden-xs"><b>Received:</b>
+			    						16 November 2024
+			    					</span>
+	                            																	<span class="hidden-md hidden-sm hidden-xs"><b>Revised:</b>
+			    						04 January 2025
+			    					</span>
+									                            			    					<span class="hidden-md hidden-sm hidden-xs"><b>Accepted:</b>
+			    						13 January 2025
+			    					</span>
+	                            	                            			    					<span><b>Published:</b>
+			    						22 January 2025
+			    					</span>
+	                            	                        </li>
+	                        <li class="fundwrap">
+	                        	 	                            		                            		                            	                        
+	                        </li>
+	                        <li class="com-author-info">
+		    								    					<p class="com-author-info">
+			    								    								    					<b>MSC : </b>
+			    								    						57K10, 92C10
+			    					</p>
+	    								    				</li>
+		    				<li class="com-author-info">
+		    					<span class="columnli" id="article_special_show" hidden>
+									
+								</span>
+		    				</li>
+		    				
+		    										</ul>
+	                </div>
+	            </div>
+	            <ul id="myTab" class="tab-ul tab-ul-article clear">
+	                <li class="active abs"><a  href="#Abstract" data-toggle="tab">Abstract</a></li>
+	                <li class="htm"><a href="#FullTextWrap" data-toggle="tab">Full Text(HTML)</a></li>
+	               <!--  <div class="pdf-xml clearfix">
+				                       <div class="download-pdf" data="6790e656ba35de451fe3cdab"><a href="javascript:void(0);" >
+				                       Download PDF</a></div>
+				                       <div class="download-xml"><a href="javascript:void(0);" onclick="toExportXML('6790e656ba35de451fe3cdab');">
+				                       Download XML</a></div>
+				                       
+				                        <li class="pdf"><a href="javascript:void(0);" data-toggle="tab">Download PDF</a></li>
+			                     </div> -->
+	                		            <li class="pdf hidden-sm hidden-xs"><div class="download-pdf" data="6790e656ba35de451fe3cdab"><a href="javascript:void(0);" >
+				                       Download PDF</a></div></li>
+				    <li class="pdf hidden-lg hidden-md">                   
+				    					    	<a href="/aimspress-data/math/2025/1/PDF/math-10-01-068.pdf" >
+				                Download PDF
+				          </a>
+				    					     </li>                 
+				                       
+		            
+		            	               		                			            				</ul>
+							  					    			  					    			  					    			  					    			  					    			  					    			  					    			  					    	            <ul class="article-tab-box tab-content" id="myTabContent">
+	            	
+	                <!-- 摘要 -->
+	                <li id="Abstract" class="articleListBox tab-pane  fade in active">
+	                		                  <!--   <h3 class="navTitle" id="Abstract-list">Abstract</h3> -->
+	                  <!-- <p>Many structures in science, engineering, and art can be viewed as curves in 3-space. The entanglement of these curves plays a crucial role in determining the functionality and physical properties of materials. Many concepts in knot theory provide theoretical tools to explore the complexity and entanglement of curves in 3-space. However, classical knot theory focuses on global topological properties and lacks the consideration of local structural information, which is critical in practical applications. In this work, two localized models based on the Jones polynomial were proposed, namely, the multi-scale Jones polynomial and the persistent Jones polynomial. The stability of these models, especially the insensitivity of the multi-scale and persistent Jones polynomial models to small perturbations in curve collections, was analyzed, thus ensuring their robustness for real-world applications.</p> -->
+	                        <div class="article-abstract">
+	                        	<p>Many structures in science, engineering, and art can be viewed as curves in 3-space. The entanglement of these curves plays a crucial role in determining the functionality and physical properties of materials. Many concepts in knot theory provide theoretical tools to explore the complexity and entanglement of curves in 3-space. However, classical knot theory focuses on global topological properties and lacks the consideration of local structural information, which is critical in practical applications. In this work, two localized models based on the Jones polynomial were proposed, namely, the multi-scale Jones polynomial and the persistent Jones polynomial. The stability of these models, especially the insensitivity of the multi-scale and persistent Jones polynomial models to small perturbations in curve collections, was analyzed, thus ensuring their robustness for real-world applications.</p>
+	                        	 	                        </div>
+	                    		                	                    
+	                    	                    	                    		                    		                    	                    		                    		                    	                    		                    		                    	                    		                    		                    	                    		                    		                    	                    		                    		                    	                    	                    	<ul class="article-keyword article-info-en">
+	                    		<b>Keywords:</b>
+			                    			                    				                    		<li><a class="underHigh mainColor" href="javascript:void(0);" data="knot data analysis" type="keywords.keywordEn">knot data analysis</a>, 			                    		</li>
+			                    				                    			                    				                    		<li><a class="underHigh mainColor" href="javascript:void(0);" data="curve data analysis" type="keywords.keywordEn">curve data analysis</a>, 			                    		</li>
+			                    				                    			                    				                    		<li><a class="underHigh mainColor" href="javascript:void(0);" data="Jones polynomial" type="keywords.keywordEn">Jones polynomial</a>, 			                    		</li>
+			                    				                    			                    				                    		<li><a class="underHigh mainColor" href="javascript:void(0);" data="localization" type="keywords.keywordEn">localization</a>, 			                    		</li>
+			                    				                    			                    				                    		<li><a class="underHigh mainColor" href="javascript:void(0);" data="stability" type="keywords.keywordEn">stability</a>, 			                    		</li>
+			                    				                    			                    				                    		<li><a class="underHigh mainColor" href="javascript:void(0);" data="protein flexibility" type="keywords.keywordEn">protein flexibility</a>			                    		</li>
+			                    				                    		                    </ul>
+	                    	                    
+	                    <p class="citation-p"><b class="subtit-b">Citation:</b> 										Ruzhi Song, Fengling Li, Jie Wu, Fengchun Lei, Guo-Wei Wei. Multi-scale Jones polynomial and persistent Jones polynomial for knot data analysis[J]. <i>AIMS Mathematics</i>, 2025, 10(1): 1463-1487. <span style="display:inline-block;">doi: <a class="mainColor" href="https://doi.org/10.3934/math.2025068" target="_blank" class="mainColor">10.3934/math.2025068</a></span>								</p>
+	                    
+	                     <!-- 相关文章 -->
+	                    		                		                <div id="RelatedPages" class="articleListBox">
+		                	<h3><b class="subtit-b">Related Papers:</b></h3>
+		                	<div id="RelatedPagesHtml"></div>
+		                				                </div>
+		                		                	                    
+	                    
+	                </li>
+	                <!-- 全文 -->
+                	
+		                <li id="FullTextWrap" class="articleListBox FullText-all tab-pane  fade in">
+		                			                	 <h3 class="navTitle" id="Abstract-list">Abstract</h3>
+		                	    <!-- changedby qmn:20210416    //CDATA域字符-->
+		                        <div class="article-abstract">
+									<p>Many structures in science, engineering, and art can be viewed as curves in 3-space. The entanglement of these curves plays a crucial role in determining the functionality and physical properties of materials. Many concepts in knot theory provide theoretical tools to explore the complexity and entanglement of curves in 3-space. However, classical knot theory focuses on global topological properties and lacks the consideration of local structural information, which is critical in practical applications. In this work, two localized models based on the Jones polynomial were proposed, namely, the multi-scale Jones polynomial and the persistent Jones polynomial. The stability of these models, especially the insensitivity of the multi-scale and persistent Jones polynomial models to small perturbations in curve collections, was analyzed, thus ensuring their robustness for real-world applications.</p>
+											                       				                        </div>
+		                    			                		                    
+		                     <br />
+		                    <div class="nodeTitle"><b></b></div>
+		                    <br />
+		                    <div class="nodeContent">
+	                  		 
+		                    </div>
+		                    
+
+
+		                    
+		                
+		                			                	<div id="FullText" >
+		                    	<img style="display:block;margin:10px auto;" src="/style/web/images/article/1.gif" alt="加载中" />
+		                	 </div>
+		                			                
+		                								  <!-- 缩写 -->
+														
+		                	</br>
+		                    <!-- 致谢 -->
+									                	
+		                	  <!-- 利益冲突 -->
+														
+							
+		                	   </br>
+		                	   
+		                	 		          
+		                   		                   			                	 <h3 class="navTitle" id="References-list">References</h3>
+			                  			                  <div  id="References">
+			                    			                        <div class="References-wrap">
+	<table class="reference-tab">
+							<tr class="document-box" id="b1">
+									<td valign="top" class="td1">
+	                    [1]
+	                </td>
+					<td class="td2">
+												    <!-- R. H. Crowell, R. H. Fox, <i>Introduction to knot theory</i>, New York: Springer, 1963. <ext-link ext-link-type="uri" xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="https://dx.doi.org/10.1007/978-1-4612-9935-6">https://dx.doi.org/10.1007/978-1-4612-9935-6</ext-link> -->
+						    R. H. Crowell, R. H. Fox, <i>Introduction to knot theory</i>, New York: Springer, 1963. <a target="_blank" xmlns:xlink="http://www.w3.org/1999/xlink" href="https://dx.doi.org/10.1007/978-1-4612-9935-6">https://dx.doi.org/10.1007/978-1-4612-9935-6</a>
+																	</td>
+							</tr>
+					<tr class="document-box" id="b2">
+									<td valign="top" class="td1">
+	                    [2]
+	                </td>
+					<td class="td2">
+												    <!-- J. W. Alexander, Topological invariants of knots and links, <i>Trans. Amer. Math. Soc.</i>, <b>30</b> (1928), 275–306. https://dx.doi.org/10.1090/S0002-9947-1928-1501429-1 -->
+						    J. W. Alexander, Topological invariants of knots and links, <i>Trans. Amer. Math. Soc.</i>, <b>30</b> (1928), 275–306. https://dx.doi.org/10.1090/S0002-9947-1928-1501429-1 doi: <a href="https://doi.org/10.1090/S0002-9947-1928-1501429-1" target="_blank">10.1090/S0002-9947-1928-1501429-1</a>
+																			<span><a href="https://doi.org/10.1090/S0002-9947-1928-1501429-1" target="_blank" class="crossref-img"><img alt="" src="/style/web/images/custom/crossref.jpeg"></a></span>
+											</td>
+							</tr>
+					<tr class="document-box" id="b3">
+									<td valign="top" class="td1">
+	                    [3]
+	                </td>
+					<td class="td2">
+												    <!-- V. F. R. Jones, A polynomial invariant for knots via von Neumann algebras, <i>Bull. Amer. Math. Soc.</i>, <b>12</b> (1985), 103–111. https://dx.doi.org/10.1090/s0273-0979-1985-15304-2 -->
+						    V. F. R. Jones, A polynomial invariant for knots via von Neumann algebras, <i>Bull. Amer. Math. Soc.</i>, <b>12</b> (1985), 103–111. https://dx.doi.org/10.1090/s0273-0979-1985-15304-2 doi: <a href="https://doi.org/10.1090/s0273-0979-1985-15304-2" target="_blank">10.1090/s0273-0979-1985-15304-2</a>
+																			<span><a href="https://doi.org/10.1090/s0273-0979-1985-15304-2" target="_blank" class="crossref-img"><img alt="" src="/style/web/images/custom/crossref.jpeg"></a></span>
+											</td>
+							</tr>
+					<tr class="document-box" id="b4">
+									<td valign="top" class="td1">
+	                    [4]
+	                </td>
+					<td class="td2">
+												    <!-- C. Manolescu, An introduction to knot Floer homology, 2014, arXiv: 1401.7107. -->
+						    C. Manolescu, An introduction to knot Floer homology, 2014, arXiv: 1401.7107.
+																	</td>
+							</tr>
+					<tr class="document-box" id="b5">
+									<td valign="top" class="td1">
+	                    [5]
+	                </td>
+					<td class="td2">
+												    <!-- M. Khovanov, A categorification of the Jones polynomial, <i>Duke Math. J.</i>, <b>101</b> (2000), 359–426. https://dx.doi.org/10.1215/S0012-7094-00-10131-7 -->
+						    M. Khovanov, A categorification of the Jones polynomial, <i>Duke Math. J.</i>, <b>101</b> (2000), 359–426. https://dx.doi.org/10.1215/S0012-7094-00-10131-7 doi: <a href="https://doi.org/10.1215/S0012-7094-00-10131-7" target="_blank">10.1215/S0012-7094-00-10131-7</a>
+																			<span><a href="https://doi.org/10.1215/S0012-7094-00-10131-7" target="_blank" class="crossref-img"><img alt="" src="/style/web/images/custom/crossref.jpeg"></a></span>
+											</td>
+							</tr>
+					<tr class="document-box" id="b6">
+									<td valign="top" class="td1">
+	                    [6]
+	                </td>
+					<td class="td2">
+												    <!-- T. Ohtsuki, <i>Quantum invariants: A study of knots, 3-manifolds, and their sets</i>, Singapore: World Scientific, 2001. <ext-link ext-link-type="uri" xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="https://dx.doi.org/10.1142/4746">https://dx.doi.org/10.1142/4746</ext-link> -->
+						    T. Ohtsuki, <i>Quantum invariants: A study of knots, 3-manifolds, and their sets</i>, Singapore: World Scientific, 2001. <a target="_blank" xmlns:xlink="http://www.w3.org/1999/xlink" href="https://dx.doi.org/10.1142/4746">https://dx.doi.org/10.1142/4746</a>
+																	</td>
+							</tr>
+					<tr class="document-box" id="b7">
+									<td valign="top" class="td1">
+	                    [7]
+	                </td>
+					<td class="td2">
+												    <!-- C. Z. Liang, K. Mislow, Knots in proteins, <i>J. Am. Chem. Soc.</i>, <b>116</b> (1994), 11189–11190. <ext-link ext-link-type="uri" xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="https://dx.doi.org/10.1021/ja00103a057">https://dx.doi.org/10.1021/ja00103a057</ext-link> -->
+						    C. Z. Liang, K. Mislow, Knots in proteins, <i>J. Am. Chem. Soc.</i>, <b>116</b> (1994), 11189–11190. <a target="_blank" xmlns:xlink="http://www.w3.org/1999/xlink" href="https://dx.doi.org/10.1021/ja00103a057">https://dx.doi.org/10.1021/ja00103a057</a>
+																	</td>
+							</tr>
+					<tr class="document-box" id="b8">
+									<td valign="top" class="td1">
+	                    [8]
+	                </td>
+					<td class="td2">
+												    <!-- D. W. Sumners, <i>The role of knot theory in DNA research</i>, Boca Raton: CRC Press, 1986. -->
+						    D. W. Sumners, <i>The role of knot theory in DNA research</i>, Boca Raton: CRC Press, 1986.
+																	</td>
+							</tr>
+					<tr class="document-box" id="b9">
+									<td valign="top" class="td1">
+	                    [9]
+	                </td>
+					<td class="td2">
+												    <!-- T. Schlick, Q. Y. Zhu, A. Dey, S. Jain, S. T. Yan, A. Laederach, To knot or not to knot: multiple conformations of the SARS-CoV-2 frameshifting RNA element, <i>J. Am. Chem. Soc.</i>, <b>143</b> (2021), 11404–11422. https://dx.doi.org/10.1021/jacs.1c03003 -->
+						    T. Schlick, Q. Y. Zhu, A. Dey, S. Jain, S. T. Yan, A. Laederach, To knot or not to knot: multiple conformations of the SARS-CoV-2 frameshifting RNA element, <i>J. Am. Chem. Soc.</i>, <b>143</b> (2021), 11404–11422. https://dx.doi.org/10.1021/jacs.1c03003 doi: <a href="https://doi.org/10.1021/jacs.1c03003" target="_blank">10.1021/jacs.1c03003</a>
+																			<span><a href="https://doi.org/10.1021/jacs.1c03003" target="_blank" class="crossref-img"><img alt="" src="/style/web/images/custom/crossref.jpeg"></a></span>
+											</td>
+							</tr>
+					<tr class="document-box" id="b10">
+									<td valign="top" class="td1">
+	                    [10]
+	                </td>
+					<td class="td2">
+												    <!-- K. C. Millett, E. J. Rawdon, A. Stasiak, J. I. Sułkowska, Identifying knots in proteins, <i>Biochem. Soc. Trans.</i>, <b>41</b> (2013), 533–537. https://dx.doi.org/10.1042/bst20120339 -->
+						    K. C. Millett, E. J. Rawdon, A. Stasiak, J. I. Sułkowska, Identifying knots in proteins, <i>Biochem. Soc. Trans.</i>, <b>41</b> (2013), 533–537. https://dx.doi.org/10.1042/bst20120339 doi: <a href="https://doi.org/10.1042/bst20120339" target="_blank">10.1042/bst20120339</a>
+																			<span><a href="https://doi.org/10.1042/bst20120339" target="_blank" class="crossref-img"><img alt="" src="/style/web/images/custom/crossref.jpeg"></a></span>
+											</td>
+							</tr>
+					<tr class="document-box" id="b11">
+									<td valign="top" class="td1">
+	                    [11]
+	                </td>
+					<td class="td2">
+												    <!-- J. Qin, S. T. Milner, Counting polymer knots to find the entanglement length, <i>Soft Matter</i>, <b>7</b> (2011), 10676–10693. https://dx.doi.org/10.1039/c1sm05972f -->
+						    J. Qin, S. T. Milner, Counting polymer knots to find the entanglement length, <i>Soft Matter</i>, <b>7</b> (2011), 10676–10693. https://dx.doi.org/10.1039/c1sm05972f doi: <a href="https://doi.org/10.1039/c1sm05972f" target="_blank">10.1039/c1sm05972f</a>
+																			<span><a href="https://doi.org/10.1039/c1sm05972f" target="_blank" class="crossref-img"><img alt="" src="/style/web/images/custom/crossref.jpeg"></a></span>
+											</td>
+							</tr>
+					<tr class="document-box" id="b12">
+									<td valign="top" class="td1">
+	                    [12]
+	                </td>
+					<td class="td2">
+												    <!-- Y. Z. Liu, M. O'Keeffe, M. M. J. Treacy, O. M. Yaghi, The geometry of periodic knots, polycatenanes and weaving from a chemical perspective: a library for reticular chemistry, <i>Chem. Soc. Rev.</i>, <b>47</b> (2018), 4642–4664. https://dx.doi.org/10.1039/c7cs00695k -->
+						    Y. Z. Liu, M. O'Keeffe, M. M. J. Treacy, O. M. Yaghi, The geometry of periodic knots, polycatenanes and weaving from a chemical perspective: a library for reticular chemistry, <i>Chem. Soc. Rev.</i>, <b>47</b> (2018), 4642–4664. https://dx.doi.org/10.1039/c7cs00695k doi: <a href="https://doi.org/10.1039/c7cs00695k" target="_blank">10.1039/c7cs00695k</a>
+																			<span><a href="https://doi.org/10.1039/c7cs00695k" target="_blank" class="crossref-img"><img alt="" src="/style/web/images/custom/crossref.jpeg"></a></span>
+											</td>
+							</tr>
+					<tr class="document-box" id="b13">
+									<td valign="top" class="td1">
+	                    [13]
+	                </td>
+					<td class="td2">
+												    <!-- R. L. Ricca, Topology bounds energy of knots and links, <i>Proc. R. Soc. A.</i>, <b>464</b> (2008), 293–300. https://dx.doi.org/10.1098/rspa.2007.0174 -->
+						    R. L. Ricca, Topology bounds energy of knots and links, <i>Proc. R. Soc. A.</i>, <b>464</b> (2008), 293–300. https://dx.doi.org/10.1098/rspa.2007.0174 doi: <a href="https://doi.org/10.1098/rspa.2007.0174" target="_blank">10.1098/rspa.2007.0174</a>
+																			<span><a href="https://doi.org/10.1098/rspa.2007.0174" target="_blank" class="crossref-img"><img alt="" src="/style/web/images/custom/crossref.jpeg"></a></span>
+											</td>
+							</tr>
+					<tr class="document-box" id="b14">
+									<td valign="top" class="td1">
+	                    [14]
+	                </td>
+					<td class="td2">
+												    <!-- E. Panagiotou, K. C. Millett, P. J. Atzberger, Topological methods for polymeric materials: characterizing the relationship between polymer entanglement and viscoelasticity, <i>Polymers</i>, <b>11</b> (2019), 437. https://dx.doi.org/10.3390/polym11030437 -->
+						    E. Panagiotou, K. C. Millett, P. J. Atzberger, Topological methods for polymeric materials: characterizing the relationship between polymer entanglement and viscoelasticity, <i>Polymers</i>, <b>11</b> (2019), 437. https://dx.doi.org/10.3390/polym11030437 doi: <a href="https://doi.org/10.3390/polym11030437" target="_blank">10.3390/polym11030437</a>
+																			<span><a href="https://doi.org/10.3390/polym11030437" target="_blank" class="crossref-img"><img alt="" src="/style/web/images/custom/crossref.jpeg"></a></span>
+											</td>
+							</tr>
+					<tr class="document-box" id="b15">
+									<td valign="top" class="td1">
+	                    [15]
+	                </td>
+					<td class="td2">
+												    <!-- J. Arsuaga, M. Vazquez, P. McGuirk, S. Trigueros, D. W. Sumners, J. Roca, DNA knots reveal a chiral organization of DNA in phage capsids, <i>Proc. Natl. Acad. Sci. U.S.A.</i>, <b>102</b> (2005), 9165–9169. https://dx.doi.org/10.1073/pnas.0409323102 -->
+						    J. Arsuaga, M. Vazquez, P. McGuirk, S. Trigueros, D. W. Sumners, J. Roca, DNA knots reveal a chiral organization of DNA in phage capsids, <i>Proc. Natl. Acad. Sci. U.S.A.</i>, <b>102</b> (2005), 9165–9169. https://dx.doi.org/10.1073/pnas.0409323102 doi: <a href="https://doi.org/10.1073/pnas.0409323102" target="_blank">10.1073/pnas.0409323102</a>
+																			<span><a href="https://doi.org/10.1073/pnas.0409323102" target="_blank" class="crossref-img"><img alt="" src="/style/web/images/custom/crossref.jpeg"></a></span>
+											</td>
+							</tr>
+					<tr class="document-box" id="b16">
+									<td valign="top" class="td1">
+	                    [16]
+	                </td>
+					<td class="td2">
+												    <!-- J. I. Sulkowska, E. J. Rawdon, K. C. Millet, J. N. Onuchic, A. Stasiak, Conservation of complex knotting and slipknotting patterns in proteins, <i>Proc. Natl. Acad. Sci. U.S.A.</i>, <b>109</b> (2012), E1715–E1723. https://dx.doi.org/10.1073/pnas.1205918109 -->
+						    J. I. Sulkowska, E. J. Rawdon, K. C. Millet, J. N. Onuchic, A. Stasiak, Conservation of complex knotting and slipknotting patterns in proteins, <i>Proc. Natl. Acad. Sci. U.S.A.</i>, <b>109</b> (2012), E1715–E1723. https://dx.doi.org/10.1073/pnas.1205918109 doi: <a href="https://doi.org/10.1073/pnas.1205918109" target="_blank">10.1073/pnas.1205918109</a>
+																			<span><a href="https://doi.org/10.1073/pnas.1205918109" target="_blank" class="crossref-img"><img alt="" src="/style/web/images/custom/crossref.jpeg"></a></span>
+											</td>
+							</tr>
+					<tr class="document-box" id="b17">
+									<td valign="top" class="td1">
+	                    [17]
+	                </td>
+					<td class="td2">
+												    <!-- P. Freyd, D. Yetter, J. Hoste, W. B. R. Lickorish, K. Millett, A. Ocneanu, A new polynomial invariant of knots and links, <i>Bull. Amer. Math. Soc.</i>, <b>12</b> (1985), 239–246. https://dx.doi.org/10.1090/s0273-0979-1985-15361-3 -->
+						    P. Freyd, D. Yetter, J. Hoste, W. B. R. Lickorish, K. Millett, A. Ocneanu, A new polynomial invariant of knots and links, <i>Bull. Amer. Math. Soc.</i>, <b>12</b> (1985), 239–246. https://dx.doi.org/10.1090/s0273-0979-1985-15361-3 doi: <a href="https://doi.org/10.1090/s0273-0979-1985-15361-3" target="_blank">10.1090/s0273-0979-1985-15361-3</a>
+																			<span><a href="https://doi.org/10.1090/s0273-0979-1985-15361-3" target="_blank" class="crossref-img"><img alt="" src="/style/web/images/custom/crossref.jpeg"></a></span>
+											</td>
+							</tr>
+					<tr class="document-box" id="b18">
+									<td valign="top" class="td1">
+	                    [18]
+	                </td>
+					<td class="td2">
+												    <!-- L. H. Kauffman, An invariant of regular isotopy, <i>Trans. Amer. Math. Soc.</i>, <b>318</b> (1990), 417–471. https://dx.doi.org/10.1090/S0002-9947-1990-0958895-7 -->
+						    L. H. Kauffman, An invariant of regular isotopy, <i>Trans. Amer. Math. Soc.</i>, <b>318</b> (1990), 417–471. https://dx.doi.org/10.1090/S0002-9947-1990-0958895-7 doi: <a href="https://doi.org/10.1090/S0002-9947-1990-0958895-7" target="_blank">10.1090/S0002-9947-1990-0958895-7</a>
+																			<span><a href="https://doi.org/10.1090/S0002-9947-1990-0958895-7" target="_blank" class="crossref-img"><img alt="" src="/style/web/images/custom/crossref.jpeg"></a></span>
+											</td>
+							</tr>
+					<tr class="document-box" id="b19">
+									<td valign="top" class="td1">
+	                    [19]
+	                </td>
+					<td class="td2">
+												    <!-- J. H. Przytycki, P. Traczyk, Conway algebras and skein equivalence of links, <i>Proc. Amer. Math. Soc.</i>, <b>100</b> (1987), 744–748. https://dx.doi.org/10.1090/S0002-9939-1987-0894448-2 -->
+						    J. H. Przytycki, P. Traczyk, Conway algebras and skein equivalence of links, <i>Proc. Amer. Math. Soc.</i>, <b>100</b> (1987), 744–748. https://dx.doi.org/10.1090/S0002-9939-1987-0894448-2 doi: <a href="https://doi.org/10.1090/S0002-9939-1987-0894448-2" target="_blank">10.1090/S0002-9939-1987-0894448-2</a>
+																			<span><a href="https://doi.org/10.1090/S0002-9939-1987-0894448-2" target="_blank" class="crossref-img"><img alt="" src="/style/web/images/custom/crossref.jpeg"></a></span>
+											</td>
+							</tr>
+					<tr class="document-box" id="b20">
+									<td valign="top" class="td1">
+	                    [20]
+	                </td>
+					<td class="td2">
+												    <!-- L. Shen, H. S. Feng, F. L. Li, F. C. Lei, J. Wu, G.-W. Wei, Knot data analysis using multiscale Gauss link integral, <i>Proc. Natl. Acad. Sci. U.S.A.</i>, <b>121</b> (2024), e2408431121. https://dx.doi.org/10.1073/pnas.2408431121 -->
+						    L. Shen, H. S. Feng, F. L. Li, F. C. Lei, J. Wu, G.-W. Wei, Knot data analysis using multiscale Gauss link integral, <i>Proc. Natl. Acad. Sci. U.S.A.</i>, <b>121</b> (2024), e2408431121. https://dx.doi.org/10.1073/pnas.2408431121 doi: <a href="https://doi.org/10.1073/pnas.2408431121" target="_blank">10.1073/pnas.2408431121</a>
+																			<span><a href="https://doi.org/10.1073/pnas.2408431121" target="_blank" class="crossref-img"><img alt="" src="/style/web/images/custom/crossref.jpeg"></a></span>
+											</td>
+							</tr>
+					<tr class="document-box" id="b21">
+									<td valign="top" class="td1">
+	                    [21]
+	                </td>
+					<td class="td2">
+												    <!-- E. Panagiotou, K. W. Plaxco, A topological study of protein folding kinetics, 2018, arXiv: 1812.08721. -->
+						    E. Panagiotou, K. W. Plaxco, A topological study of protein folding kinetics, 2018, arXiv: 1812.08721.
+																	</td>
+							</tr>
+					<tr class="document-box" id="b22">
+									<td valign="top" class="td1">
+	                    [22]
+	                </td>
+					<td class="td2">
+												    <!-- Q. Baldwin, E. Panagiotou, The local topological free energy of proteins, <i>J. Theor. Biol.</i>, <b>529</b> (2021), 110854. https://dx.doi.org/10.1016/j.jtbi.2021.110854 -->
+						    Q. Baldwin, E. Panagiotou, The local topological free energy of proteins, <i>J. Theor. Biol.</i>, <b>529</b> (2021), 110854. https://dx.doi.org/10.1016/j.jtbi.2021.110854 doi: <a href="https://doi.org/10.1016/j.jtbi.2021.110854" target="_blank">10.1016/j.jtbi.2021.110854</a>
+																			<span><a href="https://doi.org/10.1016/j.jtbi.2021.110854" target="_blank" class="crossref-img"><img alt="" src="/style/web/images/custom/crossref.jpeg"></a></span>
+											</td>
+							</tr>
+					<tr class="document-box" id="b23">
+									<td valign="top" class="td1">
+	                    [23]
+	                </td>
+					<td class="td2">
+												    <!-- Q. Baldwin, B. Sumpter, E. Panagiotou, The local topological free energy of the SARS-CoV-2 Spike protein, <i>Polymers</i>, <b>14</b> (2022), 3014. https://dx.doi.org/10.3390/polym14153014 -->
+						    Q. Baldwin, B. Sumpter, E. Panagiotou, The local topological free energy of the SARS-CoV-2 Spike protein, <i>Polymers</i>, <b>14</b> (2022), 3014. https://dx.doi.org/10.3390/polym14153014 doi: <a href="https://doi.org/10.3390/polym14153014" target="_blank">10.3390/polym14153014</a>
+																			<span><a href="https://doi.org/10.3390/polym14153014" target="_blank" class="crossref-img"><img alt="" src="/style/web/images/custom/crossref.jpeg"></a></span>
+											</td>
+							</tr>
+					<tr class="document-box" id="b24">
+									<td valign="top" class="td1">
+	                    [24]
+	                </td>
+					<td class="td2">
+												    <!-- E. Panagiotou, L. H. Kauffman, Knot polynomials of open and closed curves, <i>Proc. R. Soc. A.</i>, <b>476</b> (2020), 20200124. https://dx.doi.org/10.1098/rspa.2020.0124 -->
+						    E. Panagiotou, L. H. Kauffman, Knot polynomials of open and closed curves, <i>Proc. R. Soc. A.</i>, <b>476</b> (2020), 20200124. https://dx.doi.org/10.1098/rspa.2020.0124 doi: <a href="https://doi.org/10.1098/rspa.2020.0124" target="_blank">10.1098/rspa.2020.0124</a>
+																			<span><a href="https://doi.org/10.1098/rspa.2020.0124" target="_blank" class="crossref-img"><img alt="" src="/style/web/images/custom/crossref.jpeg"></a></span>
+											</td>
+							</tr>
+					<tr class="document-box" id="b25">
+									<td valign="top" class="td1">
+	                    [25]
+	                </td>
+					<td class="td2">
+												    <!-- K. Barkataki, E. Panagiotou, The Jones polynomial of collections of open curves in 3-space, <i>Proc. R. Soc. A.</i>, <b>478</b> (2022), 20220302. https://dx.doi.org/10.1098/rspa.2022.0302 -->
+						    K. Barkataki, E. Panagiotou, The Jones polynomial of collections of open curves in 3-space, <i>Proc. R. Soc. A.</i>, <b>478</b> (2022), 20220302. https://dx.doi.org/10.1098/rspa.2022.0302 doi: <a href="https://doi.org/10.1098/rspa.2022.0302" target="_blank">10.1098/rspa.2022.0302</a>
+																			<span><a href="https://doi.org/10.1098/rspa.2022.0302" target="_blank" class="crossref-img"><img alt="" src="/style/web/images/custom/crossref.jpeg"></a></span>
+											</td>
+							</tr>
+					<tr class="document-box" id="b26">
+									<td valign="top" class="td1">
+	                    [26]
+	                </td>
+					<td class="td2">
+												    <!-- E. Panagiotou, L. H. Kauffman, Vassiliev measures of complexity of open and closed curves in 3-space, <i>Proc. R. Soc. A.</i>, <b>477</b> (2021), 20210440. https://dx.doi.org/10.1098/rspa.2021.0440 -->
+						    E. Panagiotou, L. H. Kauffman, Vassiliev measures of complexity of open and closed curves in 3-space, <i>Proc. R. Soc. A.</i>, <b>477</b> (2021), 20210440. https://dx.doi.org/10.1098/rspa.2021.0440 doi: <a href="https://doi.org/10.1098/rspa.2021.0440" target="_blank">10.1098/rspa.2021.0440</a>
+																			<span><a href="https://doi.org/10.1098/rspa.2021.0440" target="_blank" class="crossref-img"><img alt="" src="/style/web/images/custom/crossref.jpeg"></a></span>
+											</td>
+							</tr>
+					<tr class="document-box" id="b27">
+									<td valign="top" class="td1">
+	                    [27]
+	                </td>
+					<td class="td2">
+												    <!-- J. Wang, E. Panagiotou, The protein folding rate and the geometry and topology of the native state, <i>Sci. Rep.</i>, <b>12</b> (2022), 6384. https://dx.doi.org/10.1038/s41598-022-09924-0 -->
+						    J. Wang, E. Panagiotou, The protein folding rate and the geometry and topology of the native state, <i>Sci. Rep.</i>, <b>12</b> (2022), 6384. https://dx.doi.org/10.1038/s41598-022-09924-0 doi: <a href="https://doi.org/10.1038/s41598-022-09924-0" target="_blank">10.1038/s41598-022-09924-0</a>
+																			<span><a href="https://doi.org/10.1038/s41598-022-09924-0" target="_blank" class="crossref-img"><img alt="" src="/style/web/images/custom/crossref.jpeg"></a></span>
+											</td>
+							</tr>
+					<tr class="document-box" id="b28">
+									<td valign="top" class="td1">
+	                    [28]
+	                </td>
+					<td class="td2">
+												    <!-- T. Herschberg, K. Pifer, E. Panagiotou, A computational package for measuring Topological Entanglement in Polymers, Proteins and Periodic systems (TEPPP), <i>Comput. Phys. Commun.</i>, <b>286</b> (2023), 108639. https://dx.doi.org/10.1016/j.cpc.2022.108639 -->
+						    T. Herschberg, K. Pifer, E. Panagiotou, A computational package for measuring Topological Entanglement in Polymers, Proteins and Periodic systems (TEPPP), <i>Comput. Phys. Commun.</i>, <b>286</b> (2023), 108639. https://dx.doi.org/10.1016/j.cpc.2022.108639 doi: <a href="https://doi.org/10.1016/j.cpc.2022.108639" target="_blank">10.1016/j.cpc.2022.108639</a>
+																			<span><a href="https://doi.org/10.1016/j.cpc.2022.108639" target="_blank" class="crossref-img"><img alt="" src="/style/web/images/custom/crossref.jpeg"></a></span>
+											</td>
+							</tr>
+					<tr class="document-box" id="b29">
+									<td valign="top" class="td1">
+	                    [29]
+	                </td>
+					<td class="td2">
+												    <!-- Z. X. Cang, G.-W. Wei, Persistent cohomology for data with multicomponent heterogeneous information, <i>SIAM J. Math. Data Sci.</i>, <b>2</b> (2020), 396–418. https://dx.doi.org/10.1137/19m1272226 -->
+						    Z. X. Cang, G.-W. Wei, Persistent cohomology for data with multicomponent heterogeneous information, <i>SIAM J. Math. Data Sci.</i>, <b>2</b> (2020), 396–418. https://dx.doi.org/10.1137/19m1272226 doi: <a href="https://doi.org/10.1137/19m1272226" target="_blank">10.1137/19m1272226</a>
+																			<span><a href="https://doi.org/10.1137/19m1272226" target="_blank" class="crossref-img"><img alt="" src="/style/web/images/custom/crossref.jpeg"></a></span>
+											</td>
+							</tr>
+					<tr class="document-box" id="b30">
+									<td valign="top" class="td1">
+	                    [30]
+	                </td>
+					<td class="td2">
+												    <!-- J. K. Park, R. Jernigan, Z. J. Wu, Coarse grained normal mode analysis vs. refined gaussian network model for protein residue-level structural fluctuations, <i>Bull. Math. Biol.</i>, <b>75</b> (2013), 124–160. https://dx.doi.org/10.1007/s11538-012-9797-y -->
+						    J. K. Park, R. Jernigan, Z. J. Wu, Coarse grained normal mode analysis vs. refined gaussian network model for protein residue-level structural fluctuations, <i>Bull. Math. Biol.</i>, <b>75</b> (2013), 124–160. https://dx.doi.org/10.1007/s11538-012-9797-y doi: <a href="https://doi.org/10.1007/s11538-012-9797-y" target="_blank">10.1007/s11538-012-9797-y</a>
+																			<span><a href="https://doi.org/10.1007/s11538-012-9797-y" target="_blank" class="crossref-img"><img alt="" src="/style/web/images/custom/crossref.jpeg"></a></span>
+											</td>
+							</tr>
+					<tr class="document-box" id="b31">
+									<td valign="top" class="td1">
+	                    [31]
+	                </td>
+					<td class="td2">
+												    <!-- V. Turaev, Knotoids, <i>Osaka J. Math.</i>, <b>49</b> (2012), 195–223. <ext-link ext-link-type="uri" xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="https://dx.doi.org/10.18910/10080">https://dx.doi.org/10.18910/10080</ext-link> -->
+						    V. Turaev, Knotoids, <i>Osaka J. Math.</i>, <b>49</b> (2012), 195–223. <a target="_blank" xmlns:xlink="http://www.w3.org/1999/xlink" href="https://dx.doi.org/10.18910/10080">https://dx.doi.org/10.18910/10080</a>
+																	</td>
+							</tr>
+					<tr class="document-box" id="b32">
+									<td valign="top" class="td1">
+	                    [32]
+	                </td>
+					<td class="td2">
+												    <!-- N. Gügümcü, L. H. Kauffman, New invariants of knotoids, <i>Eur. J. Combin.</i>, <b>65</b> (2017), 186–229. <ext-link ext-link-type="uri" xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="https://dx.doi.org/10.1016/j.ejc.2017.06.004">https://dx.doi.org/10.1016/j.ejc.2017.06.004</ext-link> -->
+						    N. Gügümcü, L. H. Kauffman, New invariants of knotoids, <i>Eur. J. Combin.</i>, <b>65</b> (2017), 186–229. <a target="_blank" xmlns:xlink="http://www.w3.org/1999/xlink" href="https://dx.doi.org/10.1016/j.ejc.2017.06.004">https://dx.doi.org/10.1016/j.ejc.2017.06.004</a>
+																	</td>
+							</tr>
+					<tr class="document-box" id="b33">
+									<td valign="top" class="td1">
+	                    [33]
+	                </td>
+					<td class="td2">
+												    <!-- N. Gügümcü, S. Lambropoulou, Knotoids, braidoids and applications, <i>Symmetry</i>, <b>9</b> (2017), 315. <ext-link ext-link-type="uri" xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="https://dx.doi.org/10.3390/sym9120315">https://dx.doi.org/10.3390/sym9120315</ext-link> -->
+						    N. Gügümcü, S. Lambropoulou, Knotoids, braidoids and applications, <i>Symmetry</i>, <b>9</b> (2017), 315. <a target="_blank" xmlns:xlink="http://www.w3.org/1999/xlink" href="https://dx.doi.org/10.3390/sym9120315">https://dx.doi.org/10.3390/sym9120315</a>
+																	</td>
+							</tr>
+					<tr class="document-box" id="b34">
+									<td valign="top" class="td1">
+	                    [34]
+	                </td>
+					<td class="td2">
+												    <!-- N. Gügümcü, L. Kauffman, Parity in knotoids, 2019, arXiv: 1905.04089. -->
+						    N. Gügümcü, L. Kauffman, Parity in knotoids, 2019, arXiv: 1905.04089.
+																	</td>
+							</tr>
+					<tr class="document-box" id="b35">
+									<td valign="top" class="td1">
+	                    [35]
+	                </td>
+					<td class="td2">
+												    <!-- M. Manouras, S. Lambropoulou, L. H. Kauffman, Finite type invariants for knotoids, <i>Eur. J. Combin.</i>, <b>98</b> (2021), 103402. https://dx.doi.org/10.1016/j.ejc.2021.103402 -->
+						    M. Manouras, S. Lambropoulou, L. H. Kauffman, Finite type invariants for knotoids, <i>Eur. J. Combin.</i>, <b>98</b> (2021), 103402. https://dx.doi.org/10.1016/j.ejc.2021.103402 doi: <a href="https://doi.org/10.1016/j.ejc.2021.103402" target="_blank">10.1016/j.ejc.2021.103402</a>
+																			<span><a href="https://doi.org/10.1016/j.ejc.2021.103402" target="_blank" class="crossref-img"><img alt="" src="/style/web/images/custom/crossref.jpeg"></a></span>
+											</td>
+							</tr>
+					<tr class="document-box" id="b36">
+									<td valign="top" class="td1">
+	                    [36]
+	                </td>
+					<td class="td2">
+												    <!-- D. Cohen-Steiner, H. Edelsbrunner, J. Harer, Stability of persistence diagrams, In: <i>Proceedings of the twenty-first annual symposium on computational geometry</i>, New York: Association for Computing Machinery, 2005,263–271. <ext-link ext-link-type="uri" xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="https://dx.doi.org/10.1145/1064092.1064133">https://dx.doi.org/10.1145/1064092.1064133</ext-link> -->
+						    D. Cohen-Steiner, H. Edelsbrunner, J. Harer, Stability of persistence diagrams, In: <i>Proceedings of the twenty-first annual symposium on computational geometry</i>, New York: Association for Computing Machinery, 2005,263–271. <a target="_blank" xmlns:xlink="http://www.w3.org/1999/xlink" href="https://dx.doi.org/10.1145/1064092.1064133">https://dx.doi.org/10.1145/1064092.1064133</a>
+																	</td>
+							</tr>
+					<tr class="document-box" id="b37">
+									<td valign="top" class="td1">
+	                    [37]
+	                </td>
+					<td class="td2">
+												    <!-- Z. X. Cang, E. Munch, G.-W. Wei, Evolutionary homology on coupled dynamical systems with applications to protein flexibility analysis, <i>J. Appl. and Comput. Topology</i>, <b>4</b> (2020), 481–507. https://dx.doi.org/10.1007/s41468-020-00057-9 -->
+						    Z. X. Cang, E. Munch, G.-W. Wei, Evolutionary homology on coupled dynamical systems with applications to protein flexibility analysis, <i>J. Appl. and Comput. Topology</i>, <b>4</b> (2020), 481–507. https://dx.doi.org/10.1007/s41468-020-00057-9 doi: <a href="https://doi.org/10.1007/s41468-020-00057-9" target="_blank">10.1007/s41468-020-00057-9</a>
+																			<span><a href="https://doi.org/10.1007/s41468-020-00057-9" target="_blank" class="crossref-img"><img alt="" src="/style/web/images/custom/crossref.jpeg"></a></span>
+											</td>
+							</tr>
+					<tr class="document-box" id="b38">
+									<td valign="top" class="td1">
+	                    [38]
+	                </td>
+					<td class="td2">
+												    <!-- D. Bramer, G.-W. Wei, Atom-specific persistent homology and its application to protein flexibility analysis, <i>Comput. Math. Biophys.</i>, <b>8</b> (2020), 1–35. https://dx.doi.org/10.1515/cmb-2020-0001 -->
+						    D. Bramer, G.-W. Wei, Atom-specific persistent homology and its application to protein flexibility analysis, <i>Comput. Math. Biophys.</i>, <b>8</b> (2020), 1–35. https://dx.doi.org/10.1515/cmb-2020-0001 doi: <a href="https://doi.org/10.1515/cmb-2020-0001" target="_blank">10.1515/cmb-2020-0001</a>
+																			<span><a href="https://doi.org/10.1515/cmb-2020-0001" target="_blank" class="crossref-img"><img alt="" src="/style/web/images/custom/crossref.jpeg"></a></span>
+											</td>
+							</tr>
+					<tr class="document-box" id="b39">
+									<td valign="top" class="td1">
+	                    [39]
+	                </td>
+					<td class="td2">
+												    <!-- K. Opron, K. L. Xia, G.-W. Wei, Fast and anisotropic flexibility-rigidity index for protein flexibility and fluctuation analysis, <i>J. Chem. Phys.</i>, <b>140</b> (2014), 234105. https://dx.doi.org/10.1063/1.4882258 -->
+						    K. Opron, K. L. Xia, G.-W. Wei, Fast and anisotropic flexibility-rigidity index for protein flexibility and fluctuation analysis, <i>J. Chem. Phys.</i>, <b>140</b> (2014), 234105. https://dx.doi.org/10.1063/1.4882258 doi: <a href="https://doi.org/10.1063/1.4882258" target="_blank">10.1063/1.4882258</a>
+																			<span><a href="https://doi.org/10.1063/1.4882258" target="_blank" class="crossref-img"><img alt="" src="/style/web/images/custom/crossref.jpeg"></a></span>
+											</td>
+							</tr>
+			</table>
+</div>			                    			                    </div>
+			                    		                    
+		                    		                    
+		                    
+		                 <!-- 权限声明 -->
+		                 
+		  				 <!--         
+		    		    		                </br>Copyright © 2025 by AIMS Mathematics
+		                		                		                2025
+		                		                		                		                <license-p>This work is licensed under a Creative Commons Attribution-NonCommercial-Share Alike 4.0 Unported License. To view a copy of this license, visit <a a-type="uri" xmlns:xlink="http://www.w3.org/1999/xlink" href="http://creativecommons.org/licenses/by-nc-sa/4.0/">http://creativecommons.org/licenses/by-nc-sa/4.0/</a></license-p>
+		                		                -->
+		                
+		                </li>
+		               
+	                <!-- 参考文献 -->
+	                			                <li id="References" class="articleListBox">
+		                   
+		                </li>
+		                		               
+		                
+	
+	                <!-- 相关文章 -->
+	                	                <!-- <li id="RelatedPages" class="articleListBox">
+	                			                </li> -->
+	                	
+	                <!-- 附件  -->
+	                	                <li id="Supplements" class="articleListBox tab-pane fade in">
+	                		                       <!--  <h3 class="navTitle" id="Supplements-list">Supplements</h3> -->
+	                        	                        <table class="zgjx-table">
+	                        						        </table>
+				        			        </li>
+			        	
+			        <!-- 访问统计 -->
+			       <!-- <li id="metric_count" class="articleListBox">
+			            <h3 class="navTitle" id="Access-list">Access History</h3>
+			             <img id="downLoading" style="display:block;margin:10px auto;" src="/style/web/images/article/1.gif" alt="加载中" />
+			            <div class="hichart_box" id="article_visit_count_column"></div>
+			            <div class="hichart_box" id="article_visit_type_pie"></div>
+			            <div class="hichart_box" id="article_visit_area_pie"></div> 
+			            
+			            
+			        </li>-->
+			       
+			      					   	<!-- 详情页中加载被引数据  ：页面加载时使用ajax调用 citedby-info  -->
+			        <li id="citedby-info" class="articleListBox"></li>
+			      
+			        
+			        <li class="commentwrap" >
+						<div class="clearfix new-bio">	           
+	                        <!-- 作者简介和通讯作者 -->
+	                        	                        		                        			                        			                        		                        			                        			                        			                        		                        			                        			                        		                        			                        			                        		                        			                        			                        		                        		                        	
+	                        <!-- 	
+	                        		                        		<li class="corresponding-author">
+	                                    <b>Corresponding author:</b>
+                                    		                                    		                                    	                                    		                                    			                                    			Email: <a href="mailto:fenglingli@dlut.edu.cn">fenglingli@dlut.edu.cn</a>;&nbsp;	                                    			                                    		                                    	                                    		                                    	                                    		                                    	                                    		                                    	                                </li>
+	                        		                        	 -->
+	                        						</div>			        
+			        	 <h5 class="comment-title" ><b>Reader Comments</b></h5>
+<div class="comment-content" >
+    <form id="commentForm" class="comment-form" name="commentform" >
+      	<textarea class="comment-textarea" name="textarea" id="textarea">
+      		
+      	</textarea>
+      	<div class="line-phone common-line clear">
+      		 <label class="fl">Your name:<i class="colorRed">*</i></label>
+		 	<input name="name" id="name" placeholder="" required />
+		</div>
+       	<div class="line-phone common-line clear">
+			 <label class="fl">Email:<i class="colorRed">*</i></label>
+			 <input type="email" id="email" name="email" class="fl"  required>
+		</div>
+		<input type="submit" class="submit-comment"   value="Submit">
+    </form>
+</div>			        </li>
+			        
+			         <!-- trendmd数据显示 -->
+			        				        <li>
+				            <div id="trendmd-suggestions"></div>
+				            <script defer src='//js.trendmd.com/trendmd.min.js' data-trendmdconfig='{"journal_id":"54710","element":"#trendmd-suggestions"}'></script>
+				        </li>
+				    				    
+				    <li>
+				    <div>
+		                © 2025 the Author(s), licensee AIMS Press. This is an open access article distributed
+		                 under the terms of the Creative Commons Attribution License 
+		                 (<a href="http://creativecommons.org/licenses/by/4.0" target="_blank" >http://creativecommons.org/licenses/by/4.0</a>)
+		                </div>
+				    </li>
+			        
+		    	</ul>
+			        
+		        <div class=" contentArea-left-bg">
+		        	<div class="article-footer"></div>
+			        <!--鼠标点击悬浮框-->
+			        <div class="box box-top box-tan">
+			            <div class="box-tan-con">
+							<table class="box-content reference-tab"></table>
+						</div>
+			            <div class="triangle">
+			                <div class="triangle-bg"></div>
+			                <div class="triangle-content"></div>
+			            </div>
+			            <i class="close-box articleFont icon-cuo"></i>
+			        </div>
+			        <!--鼠标点击author悬浮框-->
+			        <div class="author-box">
+			            <div class="author-content">
+			                <h6>
+			                    <span>通讯作者: </span>陈斌, bchen63@163.com
+			                </h6>
+			                <ul>
+			                    <li><span class="">1.&nbsp;</span>
+			                        <p class="">沈阳化工大学材料科学与工程学院 沈阳 110142</p></li>
+			                </ul>
+			                <p></p>
+			                <ol>
+			                    <li><a href="search?q=">本站搜索</a>
+			                    </li>
+			                    <li><a href="http://xueshu.baidu.com/s?wd=author:(叶示舟)&tn=SE_baiduxueshu_c1gjeupa&bs=&ie=utf-8&sc_f_para=sc_tasktype%3D%7BfirstAdvancedSearch%7D">百度学术搜索</a>
+			                    </li>
+			                    <li><a
+			                            href="http://s.wanfangdata.com.cn/Paper.aspx?q=作者%3A叶示舟&f=top">万方数据库搜索</a>
+			                    </li>
+			                    <li><a
+			                            href="http://scholar.cnki.net/result.aspx?q=%E4%BD%9C%E8%80%85%3A%28叶示舟%29&rt=Journal&rl=&udb=">CNKI搜索</a>
+			                    </li>
+			                </ol>
+		            	</div>
+			            <div class="triangle">
+			                <div class="triangle-bg"></div>
+			                <div class="triangle-content"></div>
+			            </div>
+	            		<i class="close-box articleFont icon-cuo"></i>
+			        </div>
+			    </div>
+	    	</div>
+		    <div class="article-main-right fr">
+		        <div class="article-right">
+		        	 <div class="article-detail-right">
+		         <!-- journal -->
+			        	<div class="searchl right2-journal-wrap clear bgwhite">
+						 	<div class="clear">
+						  		<div class="journalcover fl">
+						  			<img src="//www.aimspress.com/aimspress-upload/journal/math/cover_2020410144226550.jpg" />
+						  		</div>
+						  		<div class="journaldetail fl">
+						  			<div class="clear">
+								   		  <a href="/journal/math" class="journal-tit">
+											     AIMS Mathematics
+								         </a>
+						        	</div>
+						       </div>
+						      </div>
+						      <div class="ifcitewrap">
+																	    <span class="ifcon"> 1.8</span>
+														        						        	<span class="citecon" >3.1</span>
+						        						  	</div>
+						</div>
+			            <div class="metrics bgwhite margin20">
+		                			                    <h2>Metrics</h2>
+		                   
+							<div class="clear">
+								<div class="fl"></div>
+								<p class="all-message fl">
+			                        <span style="display:block;" href="javascript:void(0);">Article views(<span class="mainColor">2240</span>)</span>
+			                        			                        <span style="display:block;" href="javascript:void(0);">PDF downloads(<span class="mainColor">88</span>)</span>
+			                        			                        			                        <span style="display:block;" href="javascript:void(0);">Cited by(<span class="mainColor" id="citedByCount">3</span>)</span>
+			                        			                    </p>
+							</div>
+		                    
+		                    		                    <div style="padding:10px 0;" data-badge-type="donut" data-doi="10.3934/math.2025068" data-hide-no-mentions="false" class="altmetric-embed"></div>
+		                    <div style="padding:5px 0;" class='altmetric-embed' data-badge-popover='left' data-doi='10.3934/math.2025068'></div>
+		                    		                </div>
+	                
+		                <div class="download-btns clear-size margin20">
+		                     			                     <div class="pdf-xml clearfix">
+				                       <div class="preview-pdf" data="6790e656ba35de451fe3cdab"><a href="javascript:void(0);" >
+										   Preview PDF</a></div>
+				                       <div class="download-xml"><a href="javascript:void(0);" onclick="toExportXML('6790e656ba35de451fe3cdab');">
+				                       Download XML</a></div>
+			                     </div>
+		                     	                         <div class="download-btn"><a href="javascript:void(0);" data-target="#exportCitationModal" data-toggle="modal">
+		                        Export Citation</a></div>
+		                </div>
+		             </div>
+		                 <div class="content-nav bgwhite rightpadding">
+		                    <div class="contents-title">Article outline</div>
+		                   	<div class="showfullbtn">
+		                   		<label><input type="checkbox" /> Show full outline</label>
+		                   	</div>
+		                   <div class="article-nav-wrap" >
+			                    <div class="Abstract-left-list">
+			                        <a href=""></a>
+			                    </div>
+			                    <div class="jumplink-list">
+			                    		
+			                    	
+			                    </div>
+			                    <div class="References-left-list">
+			                        <a href=""></a>
+			                    </div>
+			                    <div class="Supplements-left-list">
+			                        <a href=""></a>
+			                    </div>
+			               </div>
+		                </div>
+		        								        				        				                <div class="article-right-pic">
+			                	<h2 class="article-right-title" >Figures and Tables</h2>
+			                    <ul class="article-imgs">
+			                        <li class="atlas">
+			                            <a href="javascript:void(0);">
+			                            				                            				                            					                            					                                                <img src="//www.aimspress.com/aimspress-data/math/2025/1/PIC/math-10-01-068-g001.jpg"
+		                                                     onerror="this.onerror=null;this.src='//www.aimspress.com/aimspress-data/math/2025/1/PIC/math-10-01-068-g001.jpg'"/>
+			                                        			                                     			                                			                            					                            					                                                <img src="//www.aimspress.com/aimspress-data/math/2025/1/PIC/math-10-01-068-g002.jpg"
+		                                                     onerror="this.onerror=null;this.src='//www.aimspress.com/aimspress-data/math/2025/1/PIC/math-10-01-068-g002.jpg'"/>
+			                                        			                                     			                                			                            					                            					                                                <img src="//www.aimspress.com/aimspress-data/math/2025/1/PIC/math-10-01-068-g003.jpg"
+		                                                     onerror="this.onerror=null;this.src='//www.aimspress.com/aimspress-data/math/2025/1/PIC/math-10-01-068-g003.jpg'"/>
+			                                        			                                     			                                			                            					                            					                                                <img src="//www.aimspress.com/aimspress-data/math/2025/1/PIC/math-10-01-068-g004.jpg"
+		                                                     onerror="this.onerror=null;this.src='//www.aimspress.com/aimspress-data/math/2025/1/PIC/math-10-01-068-g004.jpg'"/>
+			                                        			                                     			                                			                            					                            					                                                <img src="//www.aimspress.com/aimspress-data/math/2025/1/PIC/math-10-01-068-g005.jpg"
+		                                                     onerror="this.onerror=null;this.src='//www.aimspress.com/aimspress-data/math/2025/1/PIC/math-10-01-068-g005.jpg'"/>
+			                                        			                                     			                                			                            					                            					                                                <img src="//www.aimspress.com/aimspress-data/math/2025/1/PIC/math-10-01-068-g006.jpg"
+		                                                     onerror="this.onerror=null;this.src='//www.aimspress.com/aimspress-data/math/2025/1/PIC/math-10-01-068-g006.jpg'"/>
+			                                        			                                     			                                			                            					                            					                                                <img src="//www.aimspress.com/aimspress-data/math/2025/1/PIC/math-10-01-068-g007.jpg"
+		                                                     onerror="this.onerror=null;this.src='//www.aimspress.com/aimspress-data/math/2025/1/PIC/math-10-01-068-g007.jpg'"/>
+			                                        			                                     			                                			                            					                            					                                                <img src="//www.aimspress.com/aimspress-data/math/2025/1/PIC/math-10-01-068-g008.jpg"
+		                                                     onerror="this.onerror=null;this.src='//www.aimspress.com/aimspress-data/math/2025/1/PIC/math-10-01-068-g008.jpg'"/>
+			                                        			                                     			                                			                            </a>
+			                        </li>
+			                    </ul>
+			                    <p style="font-size:13px;">
+			                        <span class="articleFont icon-tuce"></span>
+			                        <span class="show-tu">Figures(<span class="mainColor">8</span>)</span>			                        			                        			                    </p>
+			                </div>
+			            		            		                <div class="article-metrics">
+		                				                    <div class="trend-right-list">
+			                        <a href="#trendmd-suggestions">
+			                            <img src="/style/web/images/trend_03.jpg"/>
+			                        </a>
+			                        <!--   <script defer src='//js.trendmd.com/trendmd.min.js' data-trendmdconfig='{"journal_id":"59917","element":"#trendmd-suggestions"}'></script>
+			                    	-->
+			                    </div>
+			                    <script type="text/javascript">
+									$(document).ready(function(){
+										var trendInter = $("#trendmd-suggestions").text();
+										if(trendInter != null){
+											$("#right-trendmd").show();
+										}
+									});
+								</script>
+									                </div>
+		                
+		               <!--  <div class="article-metrics Access-right-list">
+		                    <a href="#Access-list">
+		                        <h6>Access History</h6>
+		                        <div class="img">
+		                            <img src="/style/web/images/Access-list_03.jpg"/>
+		                        </div>
+		                    </a>
+		                </div> -->
+		                <!-- <div class="associate-wrap bgwhite rightpadding margin20" >
+		                	<h2 class="article-right-title">Associated material</h2>
+		                	<div class="article-right-con"><a class="article-right-a" href ="">PubMed record</a> </div>
+		                </div> -->
+		                <div class="metrics metric-author bgwhite margin20" >
+			                <h2>Other Articles By Authors</h2>
+			                <ul class="authorOtherArticle">
+								<li class="">
+			                        <span class="author-title"><i></i>On This Site</span>
+									<ul class="article-div clear">
+				                    					                    		<li>
+				                    			<a href="javascript:void(0);" class="search-like" data-relate="" data="Ruzhi Song" type="authors.authorNameEn">Ruzhi Song</a>
+				                    		</li>
+				                    					                    		<li>
+				                    			<a href="javascript:void(0);" class="search-like" data-relate="fenglingli@dlut.edu.cn" data="Fengling Li" type="authors.authorNameEn">Fengling Li</a>
+				                    		</li>
+				                    					                    		<li>
+				                    			<a href="javascript:void(0);" class="search-like" data-relate="" data="Jie Wu" type="authors.authorNameEn">Jie Wu</a>
+				                    		</li>
+				                    					                    		<li>
+				                    			<a href="javascript:void(0);" class="search-like" data-relate="" data="Fengchun Lei" type="authors.authorNameEn">Fengchun Lei</a>
+				                    		</li>
+				                    					                    		<li>
+				                    			<a href="javascript:void(0);" class="search-like" data-relate="" data="Guo-Wei Wei" type="authors.authorNameEn">Guo-Wei Wei</a>
+				                    		</li>
+				                    					                    </ul>
+			                    </li>
+			                    <li class="">
+			                        <span class="author-title"><i></i>On Google Scholar</span>
+			                        <ul class="article-div clear">
+			                        				                    		<li>
+			                    			<a href="http://scholar.google.com/scholar?btnG=&amp;hl=en&amp;as_sdt=0%2C23&amp;q=author:Ruzhi Song" target="_blank">Ruzhi Song</a>
+			                    		</li>
+			                    					                    		<li>
+			                    			<a href="http://scholar.google.com/scholar?btnG=&amp;hl=en&amp;as_sdt=0%2C23&amp;q=author:Fengling Li" target="_blank">Fengling Li</a>
+			                    		</li>
+			                    					                    		<li>
+			                    			<a href="http://scholar.google.com/scholar?btnG=&amp;hl=en&amp;as_sdt=0%2C23&amp;q=author:Jie Wu" target="_blank">Jie Wu</a>
+			                    		</li>
+			                    					                    		<li>
+			                    			<a href="http://scholar.google.com/scholar?btnG=&amp;hl=en&amp;as_sdt=0%2C23&amp;q=author:Fengchun Lei" target="_blank">Fengchun Lei</a>
+			                    		</li>
+			                    					                    		<li>
+			                    			<a href="http://scholar.google.com/scholar?btnG=&amp;hl=en&amp;as_sdt=0%2C23&amp;q=author:Guo-Wei Wei" target="_blank">Guo-Wei Wei</a>
+			                    		</li>
+			                    											</ul>
+			                    </li>
+			                </ul>
+		                </div>
+		                <div class="related-wrap bgwhite rightpadding margin20" >
+		                	<h2 class="article-right-title">Related pages</h2>
+		                	<ul class="article-right-con">
+		                		<li><a class="article-right-a" href ="http://scholar.google.com/scholar?btnG=&amp;hl=en&amp;as_sdt=0%2C23&amp;q=author:Multi-scale Jones polynomial and persistent Jones polynomial for knot data analysis" target="_blank">on Google Scholar</a></li>
+		                		<li><a class="article-right-a" href ="http://www.ncbi.nlm.nih.gov/pubmed/?term=Multi-scale Jones polynomial and persistent Jones polynomial for knot data analysis" target="_blank">on PubMed</a></li>
+		                	</ul>
+		                </div>
+		                <div class="related-wrap bgwhite rightpadding margin20" >
+		                	<h2 class="article-right-title">Tools</h2>
+		                	<ul class="article-right-con">
+		                		<li><a class="article-right-a" href="javascript:void(0);" a_doi="10.3934/math.2025068" a_title="Multi-scale Jones polynomial and persistent Jones polynomial for knot data analysis" onclick="emailToFriend(this);">Email to a friend</a></li>
+		                				                		<!-- <li><a class="article-right-a" href ="" target="_blank">Order reprints</a></li> -->
+		                	</ul>
+		                </div>
+	                
+	                 
+	        </div>
+	        
+	    </div>
+	</div>
+</div>
+</div>
+<!--电脑端 结束-->
+
+<!--手机端 开始-->
+
+<!--手机端 结束-->
+    <!--footer START-->
+    <footer class="hidden-lg hidden-md ">
+    	    		    	<a href="/aimspress-data/math/2025/1/PDF/math-10-01-068.pdf" >
+	                <div class="pdfView">
+	                    <div class="in-bl " >
+	                        <i class="fa fa-file-pdf-o"></i>
+	                        <span>PDF &nbsp;view</span>
+	                    </div>
+	                </div>
+	          </a>
+	    	    	
+        <!-- <div class="WeChatView">
+            <img src="" alt="WeChat" id="article-qrcode">
+            <span>follow<i></i>share</span>
+        </div> -->
+        
+        <div class="toTop">
+            <p><b>Top</b></p>
+            <span class="fa fa-angle-up"></span>
+        </div>
+    </footer>
+    <!--footer END-->
+<!--底部  开始-->
+<div id="common-bottom">
+    
+</div>
+<!--底部  结束-->
+
+<!--导出引用  开始-->
+<div class="modal fade" id="exportCitationModal">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">×</span><span class="sr-only">Close</span></button>
+                <h2 class="modal-title mainColor" id="myModalLabel"><b>Export File</b></h2>
+            </div>
+            <div class="modal-body">
+                <div class="panel panel-primary">
+                    <div class="panel-heading">
+                        <h4 class="panel-title">Citation</h4>
+                    </div>
+                    <div class="panel-body">
+                        <p class="quot">
+                            <!--<span class="mainColor">Citation:</span>-->
+                            <div class="copyCitationInfo" style="width: 0px;height: 0px;opacity:0;overflow: hidden;">Ruzhi Song, Fengling Li, Jie Wu, Fengchun Lei, Guo-Wei Wei. Multi-scale Jones polynomial and persistent Jones polynomial for knot data analysis[J]. AIMS Mathematics, 2025, 10(1): 1463-1487. doi: 10.3934/math.2025068</div>
+                            <span class="info citationEn" id="">										Ruzhi Song, Fengling Li, Jie Wu, Fengchun Lei, Guo-Wei Wei. Multi-scale Jones polynomial and persistent Jones polynomial for knot data analysis[J]. <i>AIMS Mathematics</i>, 2025, 10(1): 1463-1487. <span style="display:inline-block;">doi: <a class="mainColor" href="https://doi.org/10.3934/math.2025068" target="_blank" class="mainColor">10.3934/math.2025068</a></span>								</span>
+                            <div class="modal-footer modal-footer-copy">
+								<span class="copy-citation" onclick="copyArticle(this)" title="copy to clipboard">
+									<img class="shu" src="/style/web/images/article/shu.png" alt="shu" />
+								</span>
+                            </div>
+                        </p>
+                    </div>
+                </div>
+                <div class="panel panel-success">
+                    <div class="panel-heading">
+                        <h4 class="panel-title">Format</h4>
+                    </div>
+                    <div class="panel-body">
+                        <div class="radio">
+                            <label>
+                                <input type="radio" value="ris" name="format" checked="">
+                                RIS(for EndNote,Reference Manager,ProCite)
+                            </label>
+                        </div>
+                        <div class="radio">
+                            <label>
+                                <input type="radio" value="bib" name="format">
+                                BibTex
+                            </label>
+                        </div>
+                        <div class="radio">
+                            <label>
+                                <input type="radio" value="txt" name="format">
+                                Txt
+                            </label>
+                        </div>
+                    </div>
+                </div>
+                <div class="panel panel-success">
+                    <div class="panel-heading">
+                        <h4 class="panel-title">Content</h4>
+                    </div>
+                    <div class="panel-body">
+                        <div class="radio">
+                            <label>
+                                <input type="radio" value="0" name="content" checked="">
+                                Citation Only
+                            </label>
+                        </div>
+                        <div class="radio">
+                            <label>
+                                <input type="radio" value="1" name="content">
+                                Citation and Abstract
+                            </label>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-primary" data-dismiss="modal" onclick="toExportCitation(this,'en')" article_id="6790e656ba35de451fe3cdab" id="exportArticleId">Export</button>
+                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+            </div>
+        </div>
+    </div>
+</div>
+<!--导出引用  结束-->
+
+<!--图示功能-->
+<div id="imgShow">
+    <!--大图-->
+    <div id="originalImgs-wrapper">
+        <div class="originalImgs-wrapper">
+            <img id="originalImgs" src="" alt="" />
+        </div>
+        <!--图题-->
+        <div id="imgTitle" title="鼠标滚动">
+            <div>
+                <p class="titleEn"></p>
+            </div>
+        </div>
+        <!--页码-->
+        <p id="imgsPageNum">
+            <span id="nowImgIndex" class="underHigh"></span>/<span
+                id="allImgNum"></span>
+        </p>
+        <!--下载-->
+        <div id="downloadImgs">
+            <img src="/style/web/images/article/download.png" />DownLoad:&nbsp;
+            <a id="originalImgDownload" class="underHigh" href="javascript:void(0);">Full-Size Img</a>&nbsp;
+            <a id="originalPPTDownload" class="underHigh" href="javascript:void(0);" style="border-left: 1px solid #ccc;padding-left: 5px;">PowerPoint</a>
+        </div>
+    </div>
+    <!--小图-->
+    <div id="miniImgs-wrapper">
+        <div id="imgPrev">
+            <a href="javascript:void(0);"><span
+                    class="imgShowIcon imgShowIcon-prev"></span> </a>
+        </div>
+        <div id="miniImgs">
+            <ul>
+            	            			            		<!-- changedBy:qmn  时间：2021年1月18日15:24:19 	 缩略图中图片不能正常下载 -->
+	            		<li class="" data-img="downloadImg('Figure1','6790e656ba35de451fe3cdab')" data-ppt="downloadPPT('Figure1','6790e656ba35de451fe3cdab')">
+	            			            			<a href="//www.aimspress.com/aimspress-data/math/2025/1/PIC/math-10-01-068-g001.jpg">
+	                            <img src="//www.aimspress.com/aimspress-data/math/2025/1/PIC/math-10-01-068-g001.jpg"
+	                                 onerror="this.onerror=null;this.src='//www.aimspress.com/aimspress-data/math/2025/1/PIC/math-10-01-068-g001.jpg'"/>
+	                        </a>
+	            			            		</li>
+	            	            	            			            		<!-- changedBy:qmn  时间：2021年1月18日15:24:19 	 缩略图中图片不能正常下载 -->
+	            		<li class="" data-img="downloadImg('Figure2','6790e656ba35de451fe3cdab')" data-ppt="downloadPPT('Figure2','6790e656ba35de451fe3cdab')">
+	            			            			<a href="//www.aimspress.com/aimspress-data/math/2025/1/PIC/math-10-01-068-g002.jpg">
+	                            <img src="//www.aimspress.com/aimspress-data/math/2025/1/PIC/math-10-01-068-g002.jpg"
+	                                 onerror="this.onerror=null;this.src='//www.aimspress.com/aimspress-data/math/2025/1/PIC/math-10-01-068-g002.jpg'"/>
+	                        </a>
+	            			            		</li>
+	            	            	            			            		<!-- changedBy:qmn  时间：2021年1月18日15:24:19 	 缩略图中图片不能正常下载 -->
+	            		<li class="" data-img="downloadImg('Figure3','6790e656ba35de451fe3cdab')" data-ppt="downloadPPT('Figure3','6790e656ba35de451fe3cdab')">
+	            			            			<a href="//www.aimspress.com/aimspress-data/math/2025/1/PIC/math-10-01-068-g003.jpg">
+	                            <img src="//www.aimspress.com/aimspress-data/math/2025/1/PIC/math-10-01-068-g003.jpg"
+	                                 onerror="this.onerror=null;this.src='//www.aimspress.com/aimspress-data/math/2025/1/PIC/math-10-01-068-g003.jpg'"/>
+	                        </a>
+	            			            		</li>
+	            	            	            			            		<!-- changedBy:qmn  时间：2021年1月18日15:24:19 	 缩略图中图片不能正常下载 -->
+	            		<li class="" data-img="downloadImg('Figure4','6790e656ba35de451fe3cdab')" data-ppt="downloadPPT('Figure4','6790e656ba35de451fe3cdab')">
+	            			            			<a href="//www.aimspress.com/aimspress-data/math/2025/1/PIC/math-10-01-068-g004.jpg">
+	                            <img src="//www.aimspress.com/aimspress-data/math/2025/1/PIC/math-10-01-068-g004.jpg"
+	                                 onerror="this.onerror=null;this.src='//www.aimspress.com/aimspress-data/math/2025/1/PIC/math-10-01-068-g004.jpg'"/>
+	                        </a>
+	            			            		</li>
+	            	            	            			            		<!-- changedBy:qmn  时间：2021年1月18日15:24:19 	 缩略图中图片不能正常下载 -->
+	            		<li class="" data-img="downloadImg('Figure5','6790e656ba35de451fe3cdab')" data-ppt="downloadPPT('Figure5','6790e656ba35de451fe3cdab')">
+	            			            			<a href="//www.aimspress.com/aimspress-data/math/2025/1/PIC/math-10-01-068-g005.jpg">
+	                            <img src="//www.aimspress.com/aimspress-data/math/2025/1/PIC/math-10-01-068-g005.jpg"
+	                                 onerror="this.onerror=null;this.src='//www.aimspress.com/aimspress-data/math/2025/1/PIC/math-10-01-068-g005.jpg'"/>
+	                        </a>
+	            			            		</li>
+	            	            	            			            		<!-- changedBy:qmn  时间：2021年1月18日15:24:19 	 缩略图中图片不能正常下载 -->
+	            		<li class="" data-img="downloadImg('Figure6','6790e656ba35de451fe3cdab')" data-ppt="downloadPPT('Figure6','6790e656ba35de451fe3cdab')">
+	            			            			<a href="//www.aimspress.com/aimspress-data/math/2025/1/PIC/math-10-01-068-g006.jpg">
+	                            <img src="//www.aimspress.com/aimspress-data/math/2025/1/PIC/math-10-01-068-g006.jpg"
+	                                 onerror="this.onerror=null;this.src='//www.aimspress.com/aimspress-data/math/2025/1/PIC/math-10-01-068-g006.jpg'"/>
+	                        </a>
+	            			            		</li>
+	            	            	            			            		<!-- changedBy:qmn  时间：2021年1月18日15:24:19 	 缩略图中图片不能正常下载 -->
+	            		<li class="" data-img="downloadImg('Figure7','6790e656ba35de451fe3cdab')" data-ppt="downloadPPT('Figure7','6790e656ba35de451fe3cdab')">
+	            			            			<a href="//www.aimspress.com/aimspress-data/math/2025/1/PIC/math-10-01-068-g007.jpg">
+	                            <img src="//www.aimspress.com/aimspress-data/math/2025/1/PIC/math-10-01-068-g007.jpg"
+	                                 onerror="this.onerror=null;this.src='//www.aimspress.com/aimspress-data/math/2025/1/PIC/math-10-01-068-g007.jpg'"/>
+	                        </a>
+	            			            		</li>
+	            	            	            			            		<!-- changedBy:qmn  时间：2021年1月18日15:24:19 	 缩略图中图片不能正常下载 -->
+	            		<li class="" data-img="downloadImg('Figure8','6790e656ba35de451fe3cdab')" data-ppt="downloadPPT('Figure8','6790e656ba35de451fe3cdab')">
+	            			            			<a href="//www.aimspress.com/aimspress-data/math/2025/1/PIC/math-10-01-068-g008.jpg">
+	                            <img src="//www.aimspress.com/aimspress-data/math/2025/1/PIC/math-10-01-068-g008.jpg"
+	                                 onerror="this.onerror=null;this.src='//www.aimspress.com/aimspress-data/math/2025/1/PIC/math-10-01-068-g008.jpg'"/>
+	                        </a>
+	            			            		</li>
+	            	            	            	
+            </ul>
+        </div>
+        <div id="imgNext">
+            <a href="javascript:void(0);"><span
+                    class="imgShowIcon imgShowIcon-next"></span> </a>
+        </div>
+    </div>
+    <!--返回-->
+    <div id="imgBack">
+        <a href="javascript:void(0);"> Return<span class="triangle"></span>
+        </a>
+    </div>
+</div>
+<!-- 右侧缩略图表 -->
+<div class="show-table">
+	<div class="new-back">
+		<a href="javascript:;"> Return<span class="triangle"></span></a>
+	</div>
+    <div class="picbox">
+        <ul class="piclist">
+            
+        </ul>
+        <div id="big_play_prev" class="home-picprev thePrev"></div>
+        <div id="big_play_next" class="home-picnext theNext"></div>
+		
+    </div>
+    <div class="picsmallbox">
+		<a href="javascript:;" id="play_prev" class="play_prev">
+			<span class="imgShowIcon imgShowIcon-prev"></span>
+		</a>
+        <div class="picboxpic">
+            <ul id="picsmall" class="picsmall clear">
+                
+            </ul>
+        </div>
+        <a href="javascript:;" id="play_next" class="play_next">
+			<span class="imgShowIcon imgShowIcon-next"></span>
+		</a>
+    </div>
+</div>
+<ul id="miniImgs_title" hidden>
+	        <li>
+            Figure&nbsp;1.&nbsp;Representation of the segment cycle of $ a \in G $
+        </li>
+            <li>
+            Figure&nbsp;2.&nbsp;Hopf linkoid and its states
+        </li>
+            <li>
+            Figure&nbsp;3.&nbsp;Segment cycles of two states
+        </li>
+            <li>
+            Figure&nbsp;4.&nbsp;The multiplicity of the point $  (r_i, r_j)  $ is the alternating sum at the corners of the lower right square. When other multiplicities are added, cancellations between plus and minus signs occur
+        </li>
+            <li>
+            Figure&nbsp;5.&nbsp;The shaded squares are centered at the black points of $ D(P_{n})  $
+        </li>
+            <li>
+            Figure&nbsp;6.&nbsp;Comparison of B-factor predictions on three protein datasets between our multi-scale Jones polynomial method and other approaches from the literature
+        </li>
+            <li>
+            Figure&nbsp;7.&nbsp;The process of mJP analysis for protein B-factor prediction.  			(a) The 3D structure of the protein $ \mathrm{1V70} $;  			(b) The normalized characteristic matrix;  			(c) A comparison of the predicted B-factors with experimentally determined values
+        </li>
+            <li>
+            Figure&nbsp;8.&nbsp;The process of the pJP analysis for the $ \alpha $-helix and $ \beta $-sheets.  			(a) (b) The 3D structures of the $ \alpha $-helix and $ \beta $-sheets.  			(c) The colored barcodes visualizing the $ \alpha $-helix.  			(d) The colored barcodes visualizing the $ \beta $-sheets. The colored barcodes obtained through the pJP model can be applied to machine learning for protein structure analysis
+        </li>
+    </ul>
+
+<div class="article-btn">
+    <div class="_table">
+        <div class="_cell">
+            <span></span>
+            <span></span>
+            <span></span>
+        </div>
+    </div>
+</div>
+<div class="article-menu">
+    <h3>Catalog</h3>
+    <div class="article-menu-bot">
+    	<ul class="iphone-wrapper"></ul>
+    </div>
+</div>
+
+
+	
+	
+</body>
+</html>

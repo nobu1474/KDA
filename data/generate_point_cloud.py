@@ -105,7 +105,7 @@ def generate_circle_points(n_points: int, seed: int | None = None, evenly_spaced
     sort_indices = np.argsort(angles)
     return points[sort_indices]
 
-def generate_line_points(n_points: int, seed: int | None = None, evenly_spaced: bool = False, n_lines: int = 1) -> np.ndarray:
+def generate_line_points(n_points: int, seed: int | None = None, evenly_spaced: bool = False, n_lines: int = 1, flatten: bool = False) -> np.ndarray | list[np.ndarray]:
     """Generate points sampled uniformly from a line segment.
     
     Args:
@@ -113,6 +113,7 @@ def generate_line_points(n_points: int, seed: int | None = None, evenly_spaced: 
         seed: Random seed.
         evenly_spaced: If True, generates points evenly spaced along the line(s).
         n_lines: Number of parallel line segments to generate.
+        flatten: If True, returns a single stacked array. If False, returns a list of arrays for each line.
     """
     rng = np.random.default_rng(seed)
     points_per_line = n_points // n_lines
@@ -132,10 +133,8 @@ def generate_line_points(n_points: int, seed: int | None = None, evenly_spaced: 
         
         all_points.append(np.column_stack((x_vals, y_vals, z_vals)))
         
-    points = np.vstack(all_points)
-    
     # 割り切れなかった分の端数処理 (余りの点は最初の線分に追加)
-    remainder = n_points - len(points)
+    remainder = n_points - (points_per_line * n_lines)
     if remainder > 0:
         if evenly_spaced:
             extra_x = np.linspace(-1, 1, remainder)
@@ -143,6 +142,8 @@ def generate_line_points(n_points: int, seed: int | None = None, evenly_spaced: 
             extra_x = rng.normal(size=remainder)
         y_val = (0 - (n_lines - 1) / 2.0) if n_lines > 1 else 0.0
         extra_pts = np.column_stack((extra_x, np.full(remainder, y_val), np.zeros(remainder)))
-        points = np.vstack((points, extra_pts))
+        all_points[0] = np.vstack((all_points[0], extra_pts))
         
-    return points
+    if flatten:
+        return np.vstack(all_points)
+    return all_points
