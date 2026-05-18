@@ -30,4 +30,4 @@ if __name__ == "__main__":
 
     # 5.2節のPersistent Jones Polynomialの図を描画
     # plot_persistent_jones_polynomial(curve, filtration, bd_pair)
-    plot_PJP(bd_pair, title_prefix=f"Persistence Barcode of ({n},{m}) Torus", max_dim=2, points=segments, t_val=10.0)
+    plot_PJP(bd_pair, title_prefix=f"Persistence Barcode of ({n},{m}) Torus", max_dim=2, points=curve, t_val=10.0)
