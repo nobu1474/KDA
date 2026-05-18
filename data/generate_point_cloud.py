@@ -116,34 +116,25 @@ def generate_line_points(n_points: int, seed: int | None = None, evenly_spaced: 
         flatten: If True, returns a single stacked array. If False, returns a list of arrays for each line.
     """
     rng = np.random.default_rng(seed)
-    points_per_line = n_points // n_lines
+    base = n_points // n_lines
+    remainder = n_points % n_lines
     all_points = []
     
     for line_idx in range(n_lines):
+        count = base + (1 if line_idx < remainder else 0)
         # 複数本の場合は y 座標をずらして平行な線分にする
         y_val = (line_idx - (n_lines - 1) / 2.0) if n_lines > 1 else 0.0
         
         if evenly_spaced:
-            x_vals = np.linspace(-1, 1, points_per_line)
+            x_vals = np.linspace(-1, 1, count)
         else:
-            x_vals = rng.normal(size=points_per_line)
+            x_vals = rng.normal(size=count)
             
-        y_vals = np.full(points_per_line, y_val)
-        z_vals = np.zeros(points_per_line)
+        y_vals = np.full(count, y_val)
+        z_vals = np.zeros(count)
         
         all_points.append(np.column_stack((x_vals, y_vals, z_vals)))
         
-    # 割り切れなかった分の端数処理 (余りの点は最初の線分に追加)
-    remainder = n_points - (points_per_line * n_lines)
-    if remainder > 0:
-        if evenly_spaced:
-            extra_x = np.linspace(-1, 1, remainder)
-        else:
-            extra_x = rng.normal(size=remainder)
-        y_val = (0 - (n_lines - 1) / 2.0) if n_lines > 1 else 0.0
-        extra_pts = np.column_stack((extra_x, np.full(remainder, y_val), np.zeros(remainder)))
-        all_points[0] = np.vstack((all_points[0], extra_pts))
-        
-    if flatten:
+    if flatten or n_lines == 1:
         return np.vstack(all_points)
     return all_points
