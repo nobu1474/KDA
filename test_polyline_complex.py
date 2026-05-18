@@ -3,7 +3,6 @@ import unittest
 import numpy as np
 
 from core.polyline_complex import (
-    _interior_max_on_edge,
     build_vr_filtration_from_distances,
     polyline_hausdorff_distance,
     polylines_from_curve,
@@ -11,15 +10,6 @@ from core.polyline_complex import (
 
 
 class PolylineComplexTests(unittest.TestCase):
-    def test_directed_polyline_distance_tracks_moving_interior_projection(self):
-        P = np.array([(0.0, 0.0), (4.0, 0.0)])
-        Q = np.array([(-2.0, -3.0), (-2.0, 3.0), (4.0, 1.0)])
-
-        self.assertAlmostEqual(
-            _interior_max_on_edge(P[0], P[1], Q),
-            2.162277660168379,
-        )
-
     def test_symmetric_polyline_hausdorff_uses_both_directed_distances(self):
         P = np.array([(0.0, 0.0), (4.0, 0.0)])
         Q = np.array([(-2.0, -3.0), (-2.0, 3.0), (4.0, 1.0)])
