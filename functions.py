@@ -356,7 +356,7 @@ def _build_event_order(crossings):
         evs.sort(key=lambda item: item[1])
         ordered.append([(e[2], e[3]) for e in evs])
     return ordered
-def count_state_cycles_by_orbits(crossings, state): # なぜcrossings, stateだけで計算できる？
+def count_state_cycles_by_orbits(crossings, state, n_curves=1): # なぜcrossings, stateだけで計算できる？
     """
     smoothing 後の state ごとに cycle 数を数える関数
     「置換の軌道数」で数えている
@@ -368,14 +368,17 @@ def count_state_cycles_by_orbits(crossings, state): # なぜcrossings, stateだ�
     この関数が仕事しすぎている。えらい。
     """
 
-    # 交点がない場合は、曲線全体が1つのcycleなので、1を返す
+    # 交点がない場合は、それぞれ独立した cycle となる
     n_crossings = len(crossings)
     if n_crossings == 0:
-        return 1
+        return n_curves
 
     # crossingの中に何番目のsegments かの情報が入っているから、そこから元々どう繋がっているかを復元できる
     # TODO：kauffman_bracketのループのたびに同じ計算をしているから、引数として _build_event_order(crossings) の結果を渡してあげたほうが良さそう
     ordered_events = _build_event_order(crossings)
+    
+    # 交点を持たない曲線の数
+    missing_curves = n_curves - len(ordered_events)
 
     # half-edge ID を割り当てる
     # halfedge_id = {(crossing_index, branch_index, "in"|"out"): index, ...}
@@ -460,12 +463,12 @@ def count_state_cycles_by_orbits(crossings, state): # なぜcrossings, stateだ�
         orbits.append(orbit)
 
     # 半辺（in/out）を状態空間にしているため、1つの幾何学的 cycle を2回数えている。
-    # したがって cycle 数は軌道数の半分。
+    # したがって cycle 数は軌道数の半分プラス交点を持たない曲線の数。
     # print(orbits,len(orbits))
-    return len(orbits)
+    return len(orbits) + missing_curves
 
 
-def kauffman_bracket(crossings):
+def kauffman_bracket(crossings, n_curves=1):
     """
     Kauffman bracket <D> を A 変数で返す。
 
@@ -474,17 +477,18 @@ def kauffman_bracket(crossings):
 
     論文に合わせてこのカウフマンかっこの時点で -A^2 - A^-2 で割ってある。
     """
+    d_poly = {2: -1, -2: -1}  # -A^2 - A^-2
+
     n_crossings = len(crossings)
     if n_crossings == 0:
-        return {0: 1}
+        return laurent_pow(d_poly, n_curves - 1)
 
     states = generate_states(n_crossings)
-    d_poly = {2: -1, -2: -1}  # -A^2 - A^-2
     bracket = {}
 
     for state in states:
         sigma_s = sigma(state)
-        cycle_count = count_state_cycles_by_orbits(crossings, state) # この関数が仕事しすぎている。えらい。
+        cycle_count = count_state_cycles_by_orbits(crossings, state, n_curves) # この関数が仕事しすぎている。えらい。
 
         state_poly = {sigma_s: 1} # A^{σ(s)}
         state_poly = laurent_mul(state_poly, laurent_pow(d_poly, cycle_count - 1))
@@ -529,7 +533,7 @@ def jones_polynomial(curves, projection_vector=np.array([0, 0, 1])):
     """
     crossings = find_crossings(curves, projection_vector=projection_vector)
 
-    bracket_A = kauffman_bracket(crossings)
+    bracket_A = kauffman_bracket(crossings, n_curves=len(curves))
     # print(f"\nKauffman bracket (A variable): {format_jones_polynomial(bracket_A)}")
     normalized_A = _normalize_bracket_to_jones_in_A(bracket_A, crossings)
     # print(f"\nNormalized bracket (A variable): {format_jones_polynomial(normalized_A)}")
@@ -569,7 +573,9 @@ def format_jones_polynomial(poly, use_latex=False):
             else:
                 exp_str = f"^{exp}" if exp != 0 else ""
         
-        if coeff == 1:
+        if exp == 0:
+            term = str(coeff)
+        elif coeff == 1:
             term = f"t{exp_str}"
         elif coeff == -1:
             term = f"-t{exp_str}"

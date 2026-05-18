@@ -15,15 +15,18 @@ if __name__ == "__main__":
     # ===== Test Jones Polynomial Calculation =====
 
     n=2
-    m=5
+    m=3
+    n_point = 100
     print("\n" + "="*60)
     print("Testing Jones Polynomial Calculation")
     print("="*60)
 
-    nmtorus_points_3d = generate_unit_nm_torus_points(N_POINTS, n=n, m=m, seed=RANDOM_SEED, flatten=False)
-    # plot_3d_point_cloud(nmtorus_points_3d, title=f"({n},{m})-Torus Points", equal_aspect=True)
+    nmtorus_points_3d = generate_unit_nm_torus_points(n_point, n=n, m=m, seed=RANDOM_SEED, flatten=False)
+    plot_3d_point_cloud(nmtorus_points_3d, title=f"({n},{m})-Torus Points", equal_aspect=True)
+
     # nmtorus_points_3d is now a list of curves for the link components
     curves = nmtorus_points_3d
+    print(curves)
     # Test 1: Calculate Jones polynomial for the (n,m)-torus knot
     knot = Knot(curves)
     print(f"\nNumber of crossings: {len(knot.crossings)}")

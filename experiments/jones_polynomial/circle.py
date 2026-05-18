@@ -8,6 +8,7 @@ if str(PROJECT_ROOT) not in sys.path:
 from data.generate_point_cloud import generate_circle_points
 from config.constants import N_POINTS, RANDOM_SEED
 from model.knot import Knot
+from visualization.point_cloud import plot_3d_point_cloud
 
 
 if __name__ == "__main__":
@@ -17,8 +18,11 @@ if __name__ == "__main__":
     print("Testing Jones Polynomial Calculation")
     print("="*60)
 
-    circle_points = generate_circle_points(100, seed=RANDOM_SEED)
+    n_point = 100
+    circle_points = generate_circle_points(n_point, seed=RANDOM_SEED)
     curves = [circle_points]
+    # plot_3d_point_cloud(curves, title=f"Circle Points ({n_point} points)", equal_aspect=True)
+
     # Test 1: Calculate Jones polynomial for the (n,m)-torus knot
     knot = Knot(curves)
     print(f"\nNumber of crossings: {len(knot.crossings)}")

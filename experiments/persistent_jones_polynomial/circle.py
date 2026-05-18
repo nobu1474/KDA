@@ -14,9 +14,10 @@ from core.persistent_jones import plot_persistent_jones_polynomial, plot_PJP
 
 
 if __name__ == "__main__":
-    # curve = generate_circle_points(100, seed=RANDOM_SEED) # ランダムに配置された点を生成
-    curve = generate_circle_points(100, evenly_spaced=True) # 均等に配置された点を生成
-    plot_3d_point_cloud(curve, title="Circle Points", equal_aspect=True)
+    n_point = 50
+    # curve = generate_circle_points(n_point, seed=RANDOM_SEED) # ランダムに配置された点を生成
+    curve = generate_circle_points(n_point, evenly_spaced=True) # 均等に配置された点を生成
+    plot_3d_point_cloud(curve, title=f"Circle Points ({n_point} points)", equal_aspect=True)
     segments = [curve[i:i + 2] for i in range(len(curve) - 1)]
 
     filtration = build_vr_filtration(segments, max_dimension = 3)
@@ -24,4 +25,4 @@ if __name__ == "__main__":
 
     # 5.2節のPersistent Jones Polynomialの図を描画
     # plot_persistent_jones_polynomial(curve, filtration, bd_pair)
-    plot_PJP(bd_pair, title_prefix="Persistence Barcode of circle", max_dim=2, points=curve, t_val=10.0)
+    plot_PJP(bd_pair, title_prefix=f"Persistence Barcode of circle ({n_point} points)", max_dim=2, points=segments, t_val=10.0)

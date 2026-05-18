@@ -14,16 +14,20 @@ from core.persistent_jones import plot_persistent_jones_polynomial, plot_PJP
 
 
 if __name__ == "__main__":
-    n = 3
-    m = 5
+    n = 2
+    m = 3
+    n_point = 100
     # curve = generate_unit_nm_torus_points(100, seed=RANDOM_SEED, n = n, m = m) # ランダムに配置された点を生成
-    curve = generate_unit_nm_torus_points(100, evenly_spaced=True, n = n, m = m) # 均等に配置された点を生成
+    curve = generate_unit_nm_torus_points(n_point, evenly_spaced=True, n = n, m = m) # 均等に配置された点を生成
     plot_3d_point_cloud(curve, title="Torus Points", equal_aspect=True)
     segments = [curve[i:i + 2] for i in range(len(curve) - 1)]
+    # 全体を閉じるために最後のセグメントを追加
+    import numpy as np
+    segments.append(np.array([curve[-1], curve[0]]))
 
     filtration = build_vr_filtration(segments, max_dimension = 3)
     bd_pair = extract_facet_birth_death_pairs(filtration)
 
     # 5.2節のPersistent Jones Polynomialの図を描画
     # plot_persistent_jones_polynomial(curve, filtration, bd_pair)
-    plot_PJP(bd_pair, title_prefix=f"Persistence Barcode of ({n},{m}) Torus", max_dim=2, points=curve, t_val=10.0)
+    plot_PJP(bd_pair, title_prefix=f"Persistence Barcode of ({n},{m}) Torus", max_dim=2, points=segments, t_val=10.0)

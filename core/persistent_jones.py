@@ -236,10 +236,40 @@ def plot_PJP(
             w = 1.0
             if points is not None and len(p["simplex"]) >= 3:
                 try:
-                    sc_curve = [points[v] for v in p["simplex"]]
-                    segs = [[sc_curve[k], sc_curve[(k+1) % len(sc_curve)]] for k in range(len(sc_curve))]
-                    jp = Knot(segs, projection_vector=np.array([0, 0, 1])).jones_polynomial
-                    print(f"Debug: simplex={p['simplex']}, jp={Knot(segs, projection_vector=np.array([0, 0, 1])).jones_polynomial_str}")
+                    simplex_indices = sorted(p["simplex"])
+                    n_total = len(points)
+                    
+                    curves = []
+                    current_curve_indices = [simplex_indices[0]]
+                    
+                    for i in range(1, len(simplex_indices)):
+                        diff = simplex_indices[i] - simplex_indices[i-1]
+                        if diff == 1:
+                            current_curve_indices.append(simplex_indices[i])
+                        else:
+                            curves.append(np.array([points[v] for v in current_curve_indices]))
+                            current_curve_indices = [simplex_indices[i]]
+                            
+                    # 最後のコンポーネントと最初のコンポーネントが円環的に繋がるかチェック
+                    # (差が N-1 で全体として繋がる可能性がある場合など)
+                    if len(curves) > 0 and (simplex_indices[-1] == n_total - 1 and simplex_indices[0] == 0):
+                        last_indices = current_curve_indices
+                        first_indices_np = curves[0].tolist() if isinstance(curves[0], np.ndarray) else curves[0]
+                        # First component is basically continuing from last component
+                        # So we can prepend the last component to the first
+                        # For simplicity, we just keep them separate unless we merge them explicitly
+                        pass
+                    
+                    curves.append(np.array([points[v] for v in current_curve_indices]))
+                    
+                    # If wrap-around connects the last to the first, merge them
+                    if len(curves) > 1 and simplex_indices[-1] == n_total - 1 and simplex_indices[0] == 0:
+                        merged = np.vstack((curves.pop(), curves[0]))
+                        curves[0] = merged
+
+                    knot = Knot(curves, projection_vector=np.array([0, 0, 1]))
+                    jp = knot.jones_polynomial
+                    print(f"Debug: simplex={p['simplex']}, jp={knot.jones_polynomial_str}")
                     w = 0.0
                     for exp, coeff in jp.items():
                         if isinstance(exp, tuple):

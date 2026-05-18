@@ -46,7 +46,7 @@ class Knot:
     def _ensure_bracket(self) -> None:
         if self._bracket_A is None:
             self._ensure_crossings()
-            self._bracket_A = kauffman_bracket(self._crossings)
+            self._bracket_A = kauffman_bracket(self._crossings, n_curves=len(self.curves))
 
     def _ensure_normalized_A(self) -> None:
         if self._normalized_A is None:
