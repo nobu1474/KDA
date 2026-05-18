@@ -264,7 +264,7 @@ def plot_PJP(
                     
                     # If wrap-around connects the last to the first, merge them
                     if len(curves) > 1 and simplex_indices[-1] == n_total - 1 and simplex_indices[0] == 0:
-                        merged = np.vstack((curves.pop(), curves[0]))
+                        merged = np.vstack((curves[0], curves.pop()))
                         curves[0] = merged
 
                     knot = Knot(curves, projection_vector=np.array([0, 0, 1]))
