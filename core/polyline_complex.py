@@ -109,15 +109,13 @@ def polyline_hausdorff_distance(P, Q) -> float:
     """
     Symmetric arc-arc Hausdorff distance between two polylines.
 
-    Returns min(d_PQ, d_QP) — the lesser of the two directed Hausdorff values —
-    which correctly handles the counter-example where the interior of P is farther
-    from Q than any vertex of P (d_PQ > vertex-only estimate), while remaining
-    symmetric and bounded by the directed distance that captures interior maxima.
+    d_H(P, Q) = max(sup_{p in |P|} d(p, |Q|), sup_{q in |Q|} d(q, |P|))
+             = max(d_PQ, d_QP)
     """
     P, Q = np.asarray(P, dtype=float), np.asarray(Q, dtype=float)
     d_PQ = max(_interior_max_on_edge(P[i], P[i + 1], Q) for i in range(len(P) - 1))
     d_QP = max(_interior_max_on_edge(Q[i], Q[i + 1], P) for i in range(len(Q) - 1))
-    return min(d_PQ, d_QP)
+    return max(d_PQ, d_QP)
 
 
 def polylines_from_curve(curve, k) -> list:
