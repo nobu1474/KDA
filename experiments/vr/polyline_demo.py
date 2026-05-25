@@ -1,5 +1,6 @@
 import sys
 from pathlib import Path
+import numpy as np
 
 PROJECT_ROOT = Path(__file__).resolve().parents[2]
 if str(PROJECT_ROOT) not in sys.path:
@@ -15,20 +16,24 @@ from core.polyline_complex import (
 )
 
 if __name__ == "__main__":
-    # curve = generate_unit_nm_torus_points(100, evenly_spaced=True, n=2, m=3)
     curve = generate_spring_points(100)
-    # Tail edges are kept, so 99 edges become 99, 50, and 20 polylines.
-    for k in [1, 2, 5]:
-        print(f"\n=== k={k} ===")
-        polys = polylines_from_curve(curve, k)
-        print(f"  {len(polys)} polylines, each {len(polys[0])} points")
-        D = polyline_distance_matrix(polys)
-        filtration = build_vr_filtration_from_distances(len(polys), D, max_dimension=3)
-        bd_pairs = extract_facet_birth_death_pairs(filtration)
-        
-        # Convert polyline indices (which refer to polylines) to points.
-        # However, polylines_from_curve gives points already.
-        # Since polyline distance matrix is between distinct polylines, 
-        # visualizing them dynamically requires setting points to representative points.
-        # Let's just run it as it was or add points=...
-        plot_birth_death_pairs_by_dimension(bd_pairs, title_prefix=f"nm-torus polyline k={k}")
+    
+    # 複数回ループするとサーバーのポートが競合するため、ここでは代表して k=5 のみ実行します。
+    k = 5
+    print(f"\n=== k={k} ===")
+    polys = polylines_from_curve(curve, k)
+    print(f"  {len(polys)} polylines, each {len(polys[0])} points")
+    
+    D = polyline_distance_matrix(polys)
+    filtration = build_vr_filtration_from_distances(len(polys), D, max_dimension=3)
+    bd_pairs = extract_facet_birth_death_pairs(filtration)
+    
+    # ファセット(simplex)のインデックスはポリライン(polys)のインデックスに対応するため、
+    # 描画用の代表点として各ポリラインの重心(平均座標)を使用します。
+    repr_points = [np.mean(p, axis=0) for p in polys]
+    
+    plot_birth_death_pairs_by_dimension(
+        bd_pairs, 
+        title_prefix=f"Spring polyline k={k}", 
+        points=repr_points
+    )

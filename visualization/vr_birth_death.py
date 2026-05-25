@@ -258,7 +258,7 @@ def plot_birth_death_pairs_by_dimension(
         base_trace = go.Scatter3d(
             x=pts_arr[:, 0], y=pts_arr[:, 1], z=pts_arr[:, 2],
             mode="markers+lines", marker=dict(size=4, color="lightgrey", opacity=0.5),
-            line=dict(color="lightgrey", width=2, opacity=0.5),
+            line=dict(color="lightgrey", width=2),
             name="Point Cloud", hoverinfo="skip"
         )
         base_layout = go.Layout(
@@ -324,7 +324,7 @@ def plot_birth_death_pairs_by_dimension(
             )
             return go.Figure(data=[base_trace, hl_lines, hl_markers], layout=base_layout)
             
-        app.run_server(debug=app_debug, host=host, port=port)
+        app.run(debug=app_debug, host=host, port=port)
     else:
         if not single_figure:
             for dim, fig in figures_by_dimension.items():
