@@ -3,6 +3,42 @@ from plotly.subplots import make_subplots
 import itertools
 import numpy as np
 
+import plotly.colors as pcolors
+from core.open_curve_jones import open_curve_jones_polynomial, open_curve_PJP
+from functions import format_jones_polynomial
+
+def _evaluate_jones(poly, t_val):
+    value = 0.0
+
+    for exp, coeff in poly.items():
+        if isinstance(exp, tuple):
+            exp_val = float(exp[0]) / float(exp[1])
+        else:
+            exp_val = float(exp)
+
+        value += coeff * (t_val ** exp_val)
+
+    return float(value)
+
+def _merge_connected_segments(segments):
+    merged = []
+    i = 0
+
+    while i < len(segments):
+        current = segments[i]
+
+        while i + 1 < len(segments) and np.allclose(
+            current[-1], segments[i + 1][0]
+        ):
+            # 重複する接続点を除いて結合
+            current = np.vstack([current, segments[i + 1][1:]])
+            i += 1
+
+        merged.append(current)
+        i += 1
+
+    return merged
+
 
 def plot_birth_death_pairs_by_dimension(
     birth_death_pairs,
@@ -16,6 +52,7 @@ def plot_birth_death_pairs_by_dimension(
     host="127.0.0.1",
     port=8050,
     app_debug=False,
+    t_val=10.0
 ):
     """Visualize birth-death pairs for each dimension."""
     if not birth_death_pairs:
@@ -70,6 +107,31 @@ def plot_birth_death_pairs_by_dimension(
 
     for col_idx, dim in enumerate(dims_to_plot, start=1):
         pairs = pairs_by_dim[dim]
+
+        weights = []
+        jones_polys = []
+        w = 1.0
+        for p in pairs:
+            polys = []
+            simplex = p["simplex"]
+            for p_idx in simplex: # simplexはファセットの頂点のインデックスのリストで、ポリラインのインデックスに対応させる
+                if p_idx < len(polylines):
+                    poly = np.array(polylines[p_idx])
+                    polys.append(poly)
+            polys = _merge_connected_segments(polys)  # 必要に応じて接続されたセグメントを結合
+            
+            # jp = open_curve_jones_polynomial(polys) if polys else {0: 1.0}
+            jp = open_curve_PJP(polys) if polys else {0: 1.0}
+            w = _evaluate_jones(jp, t_val) 
+            
+            weights.append(w)
+            jones_polys.append(jp)
+
+        min_w = min(weights)
+        max_w = max(weights)
+
+        range_w = max(max_w - min_w, 1e-12)
+
         finite_pairs = [p for p in pairs if p["death"] is not None]
         infinite_pairs = [p for p in pairs if p["death"] is None]
 
@@ -100,59 +162,89 @@ def plot_birth_death_pairs_by_dimension(
         if plot_type == "barcode":
             # Barcode plot logic similar to plot_PJP
             # Sort pairs by birth time, then death time
-            sorted_pairs = sorted(
-                pairs,
-                key=lambda p: (float(p["birth"]), float(p["death"]) if p["death"] is not None else float("inf"))
+            sorted_pairs_and_weights = sorted(
+                zip(pairs, weights, jones_polys),
+                key=lambda pw: (float(pw[0]["birth"]), float(pw[0]["death"]) if pw[0]["death"] is not None else float("inf"))
             )
             
-            x_finite_lines, y_finite_lines = [], []
-            x_infinite_lines, y_infinite_lines = [], []
-            customdata_finite = []
-            customdata_infinite = []
-            
-            for i, p in enumerate(sorted_pairs):
+            for i, (p, w, jp) in enumerate(sorted_pairs_and_weights):
                 b = float(p["birth"])
                 if p["death"] is None:
-                    x_infinite_lines.extend([b, infinite_y, None])
-                    y_infinite_lines.extend([i, i, None])
-                    customdata_infinite.extend([p["simplex"], p["simplex"], p["simplex"]])
+                    d = infinite_y
+                    is_infinite = True
                 else:
                     d = float(p["death"])
-                    x_finite_lines.extend([b, d, None])
-                    y_finite_lines.extend([i, i, None])
-                    customdata_finite.extend([p["simplex"], p["simplex"], p["simplex"]])
+                    is_infinite = False
                     
-            if x_finite_lines:
+                # Jones重みによる色付け
+                if points is not None:
+
+                    norm_w = (w - min_w) / range_w
+
+                    color = pcolors.sample_colorscale(
+                        "Viridis",
+                        [norm_w]
+                    )[0]
+
+                    hover_text = (
+                        f"birth={b:.6f}<br>"
+                        f"death={'∞' if is_infinite else f'{d:.6f}'}<br>"
+                        f"Jones polynomial={format_jones_polynomial(jp)}<br>"
+                        f"Jones(t={t_val})={w:.6f}<br>"
+                        f"simplex={p['simplex']}"
+                        "<extra></extra>"
+                    )
+                else:
+
+                    color = "#d62728" if is_infinite else "#1f77b4"
+
+                    hover_text = (
+                        f"birth={b:.6f}<br>"
+                        f"death={'∞' if is_infinite else f'{d:.6f}'}"
+                        "<extra></extra>"
+                    )
+
                 add_trace(
                     go.Scatter(
-                        x=x_finite_lines,
-                        y=y_finite_lines,
-                        customdata=customdata_finite,
+                        x=[b, d],
+                        y=[i, i],
+                        customdata=[p["simplex"], p["simplex"]],
                         mode="lines",
-                        line=dict(color="#1f77b4", width=3),
-                        name="finite",
-                        hovertemplate="Feature %{customdata}<extra></extra>" if points is not None else None,
-                        hoverinfo="skip" if points is None else None,
+                        line=dict(
+                            color=color,
+                            width=4,
+                        ),
+                        showlegend=False,
+                        hovertemplate=hover_text,
                     )
                 )
-            if x_infinite_lines:
+            
+            add_vline(
+                x=infinite_y,
+                line=dict(color="#d62728", dash="dot", width=1),
+                annotation_text="∞",
+                annotation_position="top left",
+            )
+
+            # カラーバー
+            if max_w > min_w:
                 add_trace(
                     go.Scatter(
-                        x=x_infinite_lines,
-                        y=y_infinite_lines,
-                        customdata=customdata_infinite,
-                        mode="lines",
-                        line=dict(color="#d62728", width=3),
-                        name="infinite",
-                        hovertemplate="Feature %{customdata}<extra></extra>" if points is not None else None,
-                        hoverinfo="skip" if points is None else None,
+                        x=[None],
+                        y=[None],
+                        mode="markers",
+                        marker=dict(
+                            colorscale="Viridis",
+                            cmin=min_w,
+                            cmax=max_w,
+                            showscale=True,
+                            colorbar=dict(
+                                title=f"Jones(t={t_val})"
+                            ),
+                        ),
+                        showlegend=False,
+                        hoverinfo="skip",
                     )
-                )
-                add_vline(
-                    x=infinite_y,
-                    line=dict(color="#d62728", dash="dot", width=1),
-                    annotation_text="∞",
-                    annotation_position="top left",
                 )
                 
             if not single_figure:

@@ -9,6 +9,7 @@ from functions import (
     laurent_add,
     laurent_mul,
     laurent_pow,
+    generate_unit_sphere_points
 )
 
 def find_open_crossings(curves, projection_vector=np.array([0, 0, 1])):
@@ -245,3 +246,13 @@ def open_curve_jones_polynomial(curves, projection_vector=np.array([0, 0, 1])):
     bracket_A = open_curve_kauffman_bracket(crossings, n_curves=len(curves))
     normalized_A = _normalize_bracket_to_jones_in_A(bracket_A, crossings)
     return _convert_A_poly_to_t_poly(normalized_A)
+
+def open_curve_PJP(curves,Number_of_projections=1000, RANDOM_SEED=42):
+    mean_jp = {}
+    sphere_points = generate_unit_sphere_points(Number_of_projections, RANDOM_SEED)
+    for i, projection_vector in enumerate(sphere_points):
+        # print(f"Projection {i+1}/{Number_of_projections}")
+        jp = open_curve_jones_polynomial(curves, projection_vector=projection_vector)
+        mean_jp = laurent_add(mean_jp, jp)
+    mean_jp = {k: v / Number_of_projections for k, v in mean_jp.items()}
+    return mean_jp

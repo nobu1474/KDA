@@ -6,7 +6,7 @@ PROJECT_ROOT = Path(__file__).resolve().parents[2]
 if str(PROJECT_ROOT) not in sys.path:
     sys.path.insert(0, str(PROJECT_ROOT))
 
-from core.open_curve_jones import open_curve_jones_polynomial
+from core.open_curve_jones import open_curve_jones_polynomial, open_curve_PJP
 from functions import format_jones_polynomial
 from visualization.point_cloud import plot_3d_point_cloud
 
@@ -36,3 +36,6 @@ if __name__ == "__main__":
     print(f"Jones Polynomial (Y): {format_jones_polynomial(jp_y)}")
     print(f"Jones Polynomial (Z): {format_jones_polynomial(jp_z)}")
 
+    mean_jp = open_curve_PJP(curves)
+    print(f"Mean PJP: {format_jones_polynomial(mean_jp)}")
+    
