@@ -6,7 +6,7 @@ PROJECT_ROOT = Path(__file__).resolve().parents[2]
 if str(PROJECT_ROOT) not in sys.path:
     sys.path.insert(0, str(PROJECT_ROOT))
 
-from data.generate_point_cloud import generate_unit_nm_torus_points, generate_spring_points
+from data.generate_point_cloud import generate_spring_points, generate_unit_nm_torus_points
 from core.vr_filtration import extract_facet_birth_death_pairs
 from visualization.vr_birth_death import plot_birth_death_pairs_by_dimension
 from core.polyline_complex import (
@@ -16,12 +16,20 @@ from core.polyline_complex import (
 )
 
 if __name__ == "__main__":
-    curve = generate_spring_points(100)
+    n=2
+    m=4
+    curve = generate_unit_nm_torus_points(100, evenly_spaced=True, n=n, m=m, flatten=False)
+    # curve = generate_unit_nm_torus_points(100, evenly_spaced=False, n=n, m=m)
+    # curve = generate_spring_points(100)
     
-    # 複数回ループするとサーバーのポートが競合するため、ここでは代表して k=5 のみ実行します。
-    k = 5
-    print(f"\n=== k={k} ===")
-    polys = polylines_from_curve(curve, k)
+    # Webアプリを起動するため、代表して k=5 のみ実行します。
+    k = 1
+    print(f"\n=== Interactive Polyline Barcode Demo k={k} ===")
+    
+    polys = []
+    for curve_comp in curve:
+        polys.extend(polylines_from_curve(curve_comp, k))
+        
     print(f"  {len(polys)} polylines, each {len(polys[0])} points")
     
     D = polyline_distance_matrix(polys)
@@ -29,11 +37,12 @@ if __name__ == "__main__":
     bd_pairs = extract_facet_birth_death_pairs(filtration)
     
     # ファセット(simplex)のインデックスはポリライン(polys)のインデックスに対応するため、
-    # 描画用の代表点として各ポリラインの重心(平均座標)を使用します。
-    repr_points = [np.mean(p, axis=0) for p in polys]
+    # 描画用の代表点として各ポリラインの重心(平均座標)を使います。
+    # repr_points = [np.mean(p, axis=0) for p in polys]
     
     plot_birth_death_pairs_by_dimension(
         bd_pairs, 
-        title_prefix=f"Spring polyline k={k}", 
-        points=repr_points
+        title_prefix=f"Interactive Spring polyline k={k}", 
+        points=curve,
+        polylines=polys
     )

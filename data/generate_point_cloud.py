@@ -8,7 +8,7 @@ import numpy as np
 
 import math
 
-def generate_unit_nm_torus_points(n_points, n=2, m=3,seed=None, evenly_spaced=False, flatten=True):
+def generate_unit_nm_torus_points(n_points, n=2, m=3,seed=None, evenly_spaced=False, flatten=True, closed=True):
     """Generates N points sampled on a unit (n,m)-torus in 3D."""
     if seed is not None:
         np.random.seed(seed)
@@ -44,6 +44,9 @@ def generate_unit_nm_torus_points(n_points, n=2, m=3,seed=None, evenly_spaced=Fa
         z = np.sin(theta)
         
         comp_points = np.column_stack((x, y, z))
+        if closed and len(comp_points) > 0:
+            comp_points = np.vstack([comp_points, comp_points[0]])
+            
         unit_points.append(comp_points)
         
     if flatten:

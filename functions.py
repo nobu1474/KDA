@@ -906,19 +906,22 @@ def launch_interactive_jones_direction_explorer(
     )
 
     first_direction = np.asarray(next(iter(poly_map.keys())), dtype=float)
-    first_diagram = project_to_2D(curves[0], first_direction)
     first_crossings = len(find_crossings(curves, projection_vector=first_direction))
-    diagram_fig = go.Figure(
-        data=[
+    
+    diagram_traces = []
+    for curve in curves:
+        projected = project_to_2D(curve, first_direction)
+        diagram_traces.append(
             go.Scatter(
-                x=first_diagram[:, 0],
-                y=first_diagram[:, 1],
+                x=projected[:, 0],
+                y=projected[:, 1],
                 mode="lines+markers",
-                marker=dict(size=5, color="#1f77b4", opacity=0.85),
-                line=dict(color="#1f77b4", width=1),
+                marker=dict(size=5, opacity=0.85),
+                line=dict(width=1),
             )
-        ]
-    )
+        )
+        
+    diagram_fig = go.Figure(data=diagram_traces)
     diagram_fig.update_layout(
         title=(
             "2D diagram (initial direction): "
@@ -977,19 +980,22 @@ def launch_interactive_jones_direction_explorer(
         if norm > 0:
             direction = direction / norm
 
-        projected = project_to_2D(curves[0], direction)
         current_crossings = len(find_crossings(curves, projection_vector=direction))
-        figure = go.Figure(
-            data=[
+        
+        traces = []
+        for curve in curves:
+            projected = project_to_2D(curve, direction)
+            traces.append(
                 go.Scatter(
                     x=projected[:, 0],
                     y=projected[:, 1],
                     mode="lines+markers",
-                    marker=dict(size=5, color="#1f77b4", opacity=0.85),
-                    line=dict(color="#1f77b4", width=1),
+                    marker=dict(size=5, opacity=0.85),
+                    line=dict(width=1),
                 )
-            ]
-        )
+            )
+            
+        figure = go.Figure(data=traces)
         figure.update_layout(
             title=(
                 "2D diagram for selected direction: "

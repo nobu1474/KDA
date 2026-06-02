@@ -11,6 +11,7 @@ def plot_birth_death_pairs_by_dimension(
     plot_type="barcode",
     single_figure=True,
     points=None,
+    polylines=None,
     run_server=True,
     host="127.0.0.1",
     port=8050,
@@ -254,9 +255,20 @@ def plot_birth_death_pairs_by_dimension(
             return figures_by_dimension
             
         app = dash.Dash(__name__)
-        pts_arr = np.array(points)
+        
+        if isinstance(points, list) and len(points) > 0 and isinstance(points[0], np.ndarray):
+            pts_arr = np.vstack(points)
+            base_xs, base_ys, base_zs = [], [], []
+            for comp in points:
+                base_xs.extend(comp[:, 0].tolist() + [None])
+                base_ys.extend(comp[:, 1].tolist() + [None])
+                base_zs.extend(comp[:, 2].tolist() + [None])
+        else:
+            pts_arr = np.array(points)
+            base_xs, base_ys, base_zs = pts_arr[:, 0], pts_arr[:, 1], pts_arr[:, 2]
+
         base_trace = go.Scatter3d(
-            x=pts_arr[:, 0], y=pts_arr[:, 1], z=pts_arr[:, 2],
+            x=base_xs, y=base_ys, z=base_zs,
             mode="markers+lines", marker=dict(size=4, color="lightgrey", opacity=0.5),
             line=dict(color="lightgrey", width=2),
             name="Point Cloud", hoverinfo="skip"
@@ -305,14 +317,31 @@ def plot_birth_death_pairs_by_dimension(
                 return base_3d_fig
                 
             highlight_xs, highlight_ys, highlight_zs = [], [], []
-            for u, v in itertools.combinations(simplex, 2):
-                highlight_xs.extend([pts_arr[u, 0], pts_arr[v, 0], None])
-                highlight_ys.extend([pts_arr[u, 1], pts_arr[v, 1], None])
-                highlight_zs.extend([pts_arr[u, 2], pts_arr[v, 2], None])
-            
-            hx = pts_arr[simplex, 0]
-            hy = pts_arr[simplex, 1]
-            hz = pts_arr[simplex, 2]
+            hx, hy, hz = [], [], []
+
+            if polylines is not None:
+                # Polylines mode: highlight entire sequences of points
+                for p_idx in simplex:
+                    if p_idx < len(polylines):
+                        poly = np.array(polylines[p_idx])
+                        # Add lines for this polyline
+                        for i in range(len(poly) - 1):
+                            highlight_xs.extend([poly[i, 0], poly[i+1, 0], None])
+                            highlight_ys.extend([poly[i, 1], poly[i+1, 1], None])
+                            highlight_zs.extend([poly[i, 2], poly[i+1, 2], None])
+                        hx.extend(poly[:, 0].tolist())
+                        hy.extend(poly[:, 1].tolist())
+                        hz.extend(poly[:, 2].tolist())
+            else:
+                # Default points mode: highlight individual points and connect them
+                for u, v in itertools.combinations(simplex, 2):
+                    highlight_xs.extend([pts_arr[u, 0], pts_arr[v, 0], None])
+                    highlight_ys.extend([pts_arr[u, 1], pts_arr[v, 1], None])
+                    highlight_zs.extend([pts_arr[u, 2], pts_arr[v, 2], None])
+                
+                hx = pts_arr[simplex, 0]
+                hy = pts_arr[simplex, 1]
+                hz = pts_arr[simplex, 2]
             
             hl_lines = go.Scatter3d(
                 x=highlight_xs, y=highlight_ys, z=highlight_zs,

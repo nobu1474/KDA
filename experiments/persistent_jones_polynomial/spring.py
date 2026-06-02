@@ -6,7 +6,7 @@ if str(PROJECT_ROOT) not in sys.path:
     sys.path.insert(0, str(PROJECT_ROOT))
 
 from core.vr_filtration import build_vr_filtration, extract_facet_birth_death_pairs
-from data.generate_point_cloud import generate_unit_nm_torus_points, generate_spring_points
+from data.generate_point_cloud import generate_spring_points
 from visualization.vr_birth_death import plot_birth_death_pairs_by_dimension
 from config.constants import N_POINTS, RANDOM_SEED
 from visualization.point_cloud import plot_3d_point_cloud
