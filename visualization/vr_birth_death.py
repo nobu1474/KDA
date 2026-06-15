@@ -2,6 +2,7 @@ import plotly.graph_objects as go
 from plotly.subplots import make_subplots
 import itertools
 import numpy as np
+from tqdm import tqdm
 
 import plotly.colors as pcolors
 from core.open_curve_jones import open_curve_jones_polynomial, open_curve_PJP
@@ -38,6 +39,16 @@ def _merge_connected_segments(segments):
         i += 1
 
     return merged
+
+def facet_to_curves(facet, polylines):
+    polys = []
+    simplex = facet["simplex"]
+    for p_idx in simplex: # simplexはファセットの頂点のインデックスのリストで、ポリラインのインデックスに対応させる
+        if p_idx < len(polylines):
+            poly = np.array(polylines[p_idx])
+            polys.append(poly)
+    polys = _merge_connected_segments(polys)  # 必要に応じて接続されたセグメントを結合
+    return polys
 
 
 def plot_birth_death_pairs_by_dimension(
@@ -111,14 +122,8 @@ def plot_birth_death_pairs_by_dimension(
         weights = []
         jones_polys = []
         w = 1.0
-        for p in pairs:
-            polys = []
-            simplex = p["simplex"]
-            for p_idx in simplex: # simplexはファセットの頂点のインデックスのリストで、ポリラインのインデックスに対応させる
-                if p_idx < len(polylines):
-                    poly = np.array(polylines[p_idx])
-                    polys.append(poly)
-            polys = _merge_connected_segments(polys)  # 必要に応じて接続されたセグメントを結合
+        for p in tqdm(pairs, desc=f"Jones polynomial {dim}"):
+            polys = facet_to_curves(p, polylines) if polylines is not None else None
             
             # jp = open_curve_jones_polynomial(polys) if polys else {0: 1.0}
             jp = open_curve_PJP(polys) if polys else {0: 1.0}
@@ -189,7 +194,7 @@ def plot_birth_death_pairs_by_dimension(
                     hover_text = (
                         f"birth={b:.6f}<br>"
                         f"death={'∞' if is_infinite else f'{d:.6f}'}<br>"
-                        f"Jones polynomial={format_jones_polynomial(jp)}<br>"
+                        # f"Jones polynomial={format_jones_polynomial(jp)}<br>" # 一旦非表示
                         f"Jones(t={t_val})={w:.6f}<br>"
                         f"simplex={p['simplex']}"
                         "<extra></extra>"

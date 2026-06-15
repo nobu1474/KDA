@@ -247,7 +247,7 @@ def open_curve_jones_polynomial(curves, projection_vector=np.array([0, 0, 1])):
     normalized_A = _normalize_bracket_to_jones_in_A(bracket_A, crossings)
     return _convert_A_poly_to_t_poly(normalized_A)
 
-def open_curve_PJP(curves,Number_of_projections=1000, RANDOM_SEED=42):
+def open_curve_PJP(curves, Number_of_projections=1000, RANDOM_SEED=42):
     mean_jp = {}
     sphere_points = generate_unit_sphere_points(Number_of_projections, RANDOM_SEED)
     for i, projection_vector in enumerate(sphere_points):
@@ -256,3 +256,22 @@ def open_curve_PJP(curves,Number_of_projections=1000, RANDOM_SEED=42):
         mean_jp = laurent_add(mean_jp, jp)
     mean_jp = {k: v / Number_of_projections for k, v in mean_jp.items()}
     return mean_jp
+
+def open_curve_crossing_info(curves, Number_of_projections=1000, RANDOM_SEED=42):
+    crossing_info = {}
+    crossing_nums = []
+    count = 0
+    sphere_points = generate_unit_sphere_points(Number_of_projections, RANDOM_SEED)
+    for projection_vector in sphere_points:
+        crossings = find_open_crossings(curves, projection_vector=projection_vector)
+        num_crossings = len(crossings)
+        if num_crossings == 0:
+            count += 1
+        crossing_nums.append(num_crossings)
+        crossing_info[tuple(projection_vector)] = crossings
+    # print(f"Average number of crossings: {np.mean(crossing_nums)}")
+    max_crossings = np.max(crossing_nums)
+    if max_crossings > 0:
+        print(f"Max number of crossings: {max_crossings}")
+    # print(f"Number of projections with no crossings: {count}")
+    return crossing_info, crossing_nums

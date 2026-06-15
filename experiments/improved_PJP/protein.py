@@ -1,30 +1,37 @@
 import sys
 from pathlib import Path
 import numpy as np
+import time
 
 PROJECT_ROOT = Path(__file__).resolve().parents[2]
 if str(PROJECT_ROOT) not in sys.path:
     sys.path.insert(0, str(PROJECT_ROOT))
 
-from data.generate_point_cloud import generate_spring_points, generate_unit_nm_torus_points
 from core.vr_filtration import extract_facet_birth_death_pairs
 from visualization.vr_birth_death import plot_birth_death_pairs_by_dimension
+from visualization.point_cloud import plot_3d_point_cloud
 from core.polyline_complex import (
     polylines_from_curve,
     polyline_distance_matrix,
     build_vr_filtration_from_distances,
 )
 
+# 設定
+data_file = 'data/protein_data/sample_conformations.npz'
+elements_file = 'data/protein_data/elements_array.txt'
+
 if __name__ == "__main__":
-    n=2
-    m=3
-    # curve = generate_unit_nm_torus_points(500, evenly_spaced=True, n=n, m=m, flatten=False)
-    # print(curve)
-    # curve = generate_unit_nm_torus_points(100, evenly_spaced=False, n=n, m=m)
-    curve = [generate_spring_points(300, coils=15.0, radius=1.0, height=5.0)]
+    data = np.load(data_file)['arr_0'].astype('float64')
+    # num_samples = data.shape[0]
     
+    num = 0
+    # curve = [data[1]]
+    curve = [data[num][0:300]]
+    # plot_3d_point_cloud(curve[0], title="Protein Conformation Sample")
+    
+    start_time = time.time()
     # Webアプリを起動するため、代表して k=5 のみ実行します。
-    k = 10
+    k = 2
     print(f"\n=== Interactive Polyline Barcode Demo k={k} ===")
     
     polys = []
@@ -37,13 +44,16 @@ if __name__ == "__main__":
     filtration = build_vr_filtration_from_distances(len(polys), D, max_dimension=3)
     bd_pairs = extract_facet_birth_death_pairs(filtration)
     
-    # ファセット(simplex)のインデックスはポリライン(polys)のインデックスに対応するため、
-    # 描画用の代表点として各ポリラインの重心(平均座標)を使います。
-    # repr_points = [np.mean(p, axis=0) for p in polys]
     
     plot_birth_death_pairs_by_dimension(
         bd_pairs, 
-        title_prefix=f"Interactive Spring polyline k={k}", 
+        title_prefix=f"Protein Data{num} k={k}", 
         points=curve,
         polylines=polys
     )
+    end_time = time.time()
+    elapsed_time = end_time - start_time
+    elapsed_hour = elapsed_time // 3600
+    elapsed_minute = (elapsed_time % 3600) // 60
+    elapsed_second = (elapsed_time % 3600 % 60)
+    print(f"Total time: {str(elapsed_hour).zfill(2)}:{str(elapsed_minute).zfill(2)}:{str(elapsed_second).zfill(2)}")
