@@ -275,3 +275,25 @@ def open_curve_crossing_info(curves, Number_of_projections=1000, RANDOM_SEED=42)
         print(f"Max number of crossings: {max_crossings}")
     # print(f"Number of projections with no crossings: {count}")
     return crossing_info, crossing_nums
+
+def knotoid_linking_num(curves, projection_vector=np.array([0, 0, 1])):
+    crossings = find_open_crossings(curves, projection_vector=projection_vector)
+    linking_num = 0
+    for crossing in crossings:
+        if crossing["sign"] > 0:
+            linking_num += 1
+        else:
+            linking_num -= 1
+    linking_num /= 2
+
+    return linking_num
+
+def open_curve_Linking_num(curves, Number_of_projections=1000, RANDOM_SEED=42):
+    mean_Linking_num = 0
+    sphere_points = generate_unit_sphere_points(Number_of_projections, RANDOM_SEED)
+    for i, projection_vector in enumerate(sphere_points):
+        # print(f"Projection {i+1}/{Number_of_projections}")
+        Linking_num = knotoid_linking_num(curves, projection_vector=projection_vector)
+        mean_Linking_num += Linking_num
+    mean_Linking_num /= Number_of_projections
+    return mean_Linking_num

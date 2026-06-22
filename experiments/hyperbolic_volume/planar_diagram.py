@@ -93,7 +93,7 @@ pd9 = [
     (35, 23, 36, 24)
 ]
 
-L = snappy.Link(pd9)
+L = snappy.Link(pd4)
 
 L.view()
 tk.mainloop() # ウィンドウが一瞬で閉じないように画面を維持する

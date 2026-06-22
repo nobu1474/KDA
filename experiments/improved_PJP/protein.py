@@ -9,6 +9,7 @@ if str(PROJECT_ROOT) not in sys.path:
 
 from core.vr_filtration import extract_facet_birth_death_pairs
 from visualization.vr_birth_death import plot_birth_death_pairs_by_dimension
+from visualization.local_linking_num import plot_local_linking_num_by_dimension
 from visualization.point_cloud import plot_3d_point_cloud
 from core.polyline_complex import (
     polylines_from_curve,
@@ -29,9 +30,8 @@ if __name__ == "__main__":
     curve = [data[num][0:300]]
     # plot_3d_point_cloud(curve[0], title="Protein Conformation Sample")
     
-    start_time = time.time()
     # Webアプリを起動するため、代表して k=5 のみ実行します。
-    k = 2
+    k = 5
     print(f"\n=== Interactive Polyline Barcode Demo k={k} ===")
     
     polys = []
@@ -40,20 +40,24 @@ if __name__ == "__main__":
         
     print(f"  {len(polys)} polylines, each {len(polys[0])} points")
     
+    start = time.time()
     D = polyline_distance_matrix(polys)
     filtration = build_vr_filtration_from_distances(len(polys), D, max_dimension=3)
     bd_pairs = extract_facet_birth_death_pairs(filtration)
+    end = time.time()
+    print(f"Time taken for filtration and pair extraction: {end - start:.2f} seconds")
     
     
-    plot_birth_death_pairs_by_dimension(
+    # plot_birth_death_pairs_by_dimension(
+    #     bd_pairs, 
+    #     title_prefix=f"Protein Data{num} k={k}", 
+    #     points=curve,
+    #     polylines=polys
+    # )
+    
+    plot_local_linking_num_by_dimension(
         bd_pairs, 
         title_prefix=f"Protein Data{num} k={k}", 
         points=curve,
         polylines=polys
     )
-    end_time = time.time()
-    elapsed_time = end_time - start_time
-    elapsed_hour = elapsed_time // 3600
-    elapsed_minute = (elapsed_time % 3600) // 60
-    elapsed_second = (elapsed_time % 3600 % 60)
-    print(f"Total time: {str(elapsed_hour).zfill(2)}:{str(elapsed_minute).zfill(2)}:{str(elapsed_second).zfill(2)}")

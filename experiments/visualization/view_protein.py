@@ -17,6 +17,6 @@ elements_file = 'data/protein_data/elements_array.txt'
 
 if __name__ == "__main__":
 	data = np.load(data_file)['arr_0'].astype('float64')
-	num = 4
+	num = 0
 	curve = data[num]
 	plot_3d_point_cloud(curve, title=f": Protein Data{num}", equal_aspect=True)
