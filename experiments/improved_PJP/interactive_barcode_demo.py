@@ -17,14 +17,14 @@ from core.polyline_complex import (
 
 if __name__ == "__main__":
     n=2
-    m=3
+    m=2
     # curve = generate_unit_nm_torus_points(500, evenly_spaced=True, n=n, m=m, flatten=False)
     # print(curve)
-    # curve = generate_unit_nm_torus_points(100, evenly_spaced=False, n=n, m=m)
-    curve = [generate_spring_points(300, coils=15.0, radius=1.0, height=5.0)]
+    curve = [generate_unit_nm_torus_points(300, evenly_spaced=False, n=n, m=m)]
+    # curve = [generate_spring_points(300, coils=15.0, radius=1.0, height=5.0)]
     
     # Webアプリを起動するため、代表して k=5 のみ実行します。
-    k = 10
+    k = 5
     print(f"\n=== Interactive Polyline Barcode Demo k={k} ===")
     
     polys = []

@@ -8,7 +8,7 @@ import numpy as np
 
 import math
 
-def generate_unit_nm_torus_points(n_points, n=2, m=3,seed=None, evenly_spaced=False, flatten=True, closed=True):
+def generate_unit_nm_torus_points(n_points, n=2, m=3,seed=None, evenly_spaced=False, flatten=False, closed=True):
     """Generates N points sampled on a unit (n,m)-torus in 3D."""
     if seed is not None:
         np.random.seed(seed)
@@ -52,6 +52,37 @@ def generate_unit_nm_torus_points(n_points, n=2, m=3,seed=None, evenly_spaced=Fa
     if flatten:
         return np.vstack(unit_points)
     # トーラス結び目・絡み目の各成分をそのままリストとして返す
+    return unit_points
+
+def generate_unit_Figure_eight_knot_points(n_points, seed=None, evenly_spaced=False, flatten=True, closed=True):
+    """Generates N points sampled on a unit (n,m)-torus in 3D."""
+    if seed is not None:
+        np.random.seed(seed)
+
+    unit_points = []
+            
+    if evenly_spaced:
+        # パラメータtを[0, 2π)で等間隔に生成する
+        t = np.linspace(0, 2 * np.pi, n_points, endpoint=False)
+    else:
+        # パラメータtを[0, 2π)の範囲でランダムサンプリングし、曲線順になるようソートする
+        t = np.random.rand(n_points) * 2 * np.pi
+        t = np.sort(t)
+
+
+    x = np.sin(2*t + np.pi/6)
+    y = np.sin(3*t)
+    z = np.sin(5*t)
+
+    comp_points = np.column_stack((x, y, z))
+    if closed and len(comp_points) > 0:
+        comp_points = np.vstack([comp_points, comp_points[0]])
+        
+    unit_points.append(comp_points)
+        
+    if flatten:
+        return np.vstack(unit_points)
+    
     return unit_points
 
 
